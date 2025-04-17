@@ -19,32 +19,32 @@ const Hero = () => {
       <div className="z-10">
         <Slider className=" -z-10" {...settings}>
           <img
-            className=" w-[120vw]"
+            className=" w-full"
             src="https://picsum.photos/id/1/600/200"
             alt=""
           />
           <img
-            className="w-1/2 object-cover"
+            className="w-full object-cover"
             src="https://picsum.photos/id/2/600/200"
             alt=""
           />
           <img
-            className="w-1/2 object-cover"
+            className="w-full object-cover"
             src="https://picsum.photos/id/3/600/200"
             alt=""
           />
           <img
-            className="w-1/2 object-cover"
+            className="w-full object-cover"
             src="https://picsum.photos/id/4/600/200"
             alt=""
           />
           <img
-            className="w-1/2 object-cover"
+            className="w-full object-cover"
             src="https://picsum.photos/id/5/600/200"
             alt=""
           />
           <img
-            className="w-1/2 object-cover"
+            className="w-full object-cover"
             src="https://picsum.photos/id/6/600/200"
             alt=""
           />
