@@ -9,6 +9,8 @@ a.active hr {
 
 * {
   font-family: "Jost", sans-serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 body {
   overflow-x: hidden;

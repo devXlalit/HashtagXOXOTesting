@@ -1,10 +1,18 @@
 import React from "react";
+import { IoIosStar } from "react-icons/io";
 
-const TestomonialsCard = ({ image, title, desc }) => {
+const TestomonialsCard = ({ image, name, desc }) => {
   return (
-    <div className="h-64 md:h-80 px-10 flex flex-col gap-3 py-4 justify-center items-center  bg-[#f9f6df] w-60 md:w-1/5  z-30 -bottom-20">
-      <img src={image} alt="" className="w-5 md:w-14" />
-      <p className="text-center font-medium opacity-80 text-xl">{title}</p>
+    <div className="min-w-[400px]  h-64 mt-10 md:h-80 px-10 flex flex-col gap-3 py-4 justify-center items-center bg-[#f9f6df] z-30 ">
+      <img src={image} alt="" className="w-5 md:w-14 rounded-full" />
+      <p className="text-xl font-medium text-[#9A3B3B]">{name}</p>
+      <span className="flex text-[#9A3B3B] opacity-80">
+        <IoIosStar />
+        <IoIosStar />
+        <IoIosStar />
+        <IoIosStar />
+        <IoIosStar />
+      </span>
       <p className="text-center opacity-70">{desc}</p>
     </div>
   );

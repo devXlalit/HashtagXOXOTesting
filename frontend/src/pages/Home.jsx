@@ -5,6 +5,7 @@ import BestSeller from "../components/BestSeller";
 import OurPolicy from "../components/OurPolicy";
 import Feature from "../components/Feature";
 import Testomonials from "../components/Testomonials.jsx";
+import InstagramSection from "../components/InstagramSection.jsx";
 const Home = () => {
   return (
     <>
@@ -16,8 +17,9 @@ const Home = () => {
         {/* <NewsletterBox/> */}
       </div>
       <Feature />
+      <Testomonials />
       <div className="px-10">
-        <Testomonials />
+        <InstagramSection />
       </div>
     </>
   );
