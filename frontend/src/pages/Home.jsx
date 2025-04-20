@@ -6,6 +6,7 @@ import OurPolicy from "../components/OurPolicy";
 import Feature from "../components/Feature";
 import Testomonials from "../components/Testomonials.jsx";
 import InstagramSection from "../components/InstagramSection.jsx";
+import Contact from "../components/Contact.jsx";
 const Home = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const Home = () => {
       <Testomonials />
       <div className="px-10">
         <InstagramSection />
+        <Contact />
       </div>
     </>
   );

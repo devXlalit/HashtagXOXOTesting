@@ -9,7 +9,6 @@ import HashTagXOXO from "../assets/Hashatag_XOXO_logo_v2-remove-1_2_upscaled.png
 import { IoIosArrowDown } from "react-icons/io";
 
 const Navbar = () => {
-  const [visible, setVisible] = useState(false);
   const [whatnew, setWhatnew] = useState(false);
   const [offer, setOffer] = useState(false);
   const [category, setCategory] = useState(false);
@@ -211,7 +210,7 @@ const Navbar = () => {
             </ul>
           )}
         </li>
-        <NavLink to="/contact" className="flex flex-col items-center gap-1">
+        <NavLink to="#contact" className="flex flex-col items-center gap-1">
           <p>Contact</p>
         </NavLink>
 
