@@ -7,12 +7,13 @@ import { FiSearch } from "react-icons/fi";
 import { LuShoppingBag } from "react-icons/lu";
 import HashTagXOXO from "../assets/Hashatag_XOXO_logo_v2-remove-1_2_upscaled.png";
 import { IoIosArrowDown } from "react-icons/io";
-
+import { useEffect } from "react";
 const Navbar = () => {
   const [whatnew, setWhatnew] = useState(false);
   const [offer, setOffer] = useState(false);
   const [category, setCategory] = useState(false);
 
+  const { products } = useContext(ShopContext);
   const {
     setShowSearch,
     getCartCount,
@@ -21,14 +22,15 @@ const Navbar = () => {
     setToken,
     setCartItems,
   } = useContext(ShopContext);
-
+  const uniqueCategories = [...new Set(products.map((item) => item.category))];
+  const uniqueOffers = [...new Set(products.map((item) => item.offers))];
   const logout = () => {
     navigate("/login");
     localStorage.removeItem("token");
     setToken("");
     setCartItems({});
   };
-
+  console.dir(products);
   return (
     <div className="flex ring-1 z-40 bg-[#E2C799] text-black ring-zinc-200 shadow-md px-10  items-center justify-between py-3 font-medium">
       <Link to="/">
@@ -45,6 +47,7 @@ const Navbar = () => {
         >
           <p>What's New</p>
           <IoIosArrowDown />
+
           {whatnew && (
             <ul
               onMouseLeave={() => {
@@ -52,57 +55,18 @@ const Navbar = () => {
               }}
               className="absolute leading-7 top-12 z-50 px-auto w-60 pl-6 py-6 bg-zinc-100 shadow-lg"
             >
-              <a
-                href="http://localhost:5173/product/67fcb9ecd48f8132fb5f417d"
-                className=""
-              >
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Serum
-                </span>
-                <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                  New
-                </span>
-              </a>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Mamaearth Facewash
-                </span>
-                <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                  New
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Shampoo
-                </span>
-                <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                  New
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Hair Clay
-                </span>
-                <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                  New
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Parachut Hair Oil
-                </span>
-                <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                  New
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Mamaearth Face Cream
-                </span>
-                <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                  New
-                </span>
-              </li>
+              {products.map((item, index) => (
+                <Link to={`/product/${item._id}`} key={index}>
+                  <li className="">
+                    <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
+                      {item.name}
+                    </span>
+                    <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
+                      New
+                    </span>
+                  </li>
+                </Link>
+              ))}
             </ul>
           )}
         </li>
@@ -120,41 +84,17 @@ const Navbar = () => {
               onMouseLeave={() => {
                 setOffer(false);
               }}
-              className="absolute leading-7 top-12 z-50 px-auto w-48 pl-6 py-6 bg-zinc-100 shadow-lg"
+              className="absolute leading-7 top-12 z-50 px-auto w-60 pl-6 py-6 bg-zinc-100 shadow-lg"
             >
-              <a
-                href="http://localhost:5173/product/67fcb9ecd48f8132fb5f417d"
-                className=""
-              >
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Buy 2 Get 1 Free
-                </span>
-              </a>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Buy 5 Get 2 Free
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Buy any 2 @499/-
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Buy any 5 @299/-
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Buy any 8 @899/-
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Buy any 4 @99/-
-                </span>
-              </li>
+              {uniqueOffers.map((item, index) => (
+                <Link to={`/collection`} key={index}>
+                  <li className="">
+                    <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
+                      {item}
+                    </span>
+                  </li>
+                </Link>
+              ))}
             </ul>
           )}
         </li>
@@ -172,45 +112,21 @@ const Navbar = () => {
               onMouseLeave={() => {
                 setCategory(false);
               }}
-              className="absolute leading-7 top-12 z-50 px-auto w-48 pl-6 py-6 bg-zinc-100 shadow-lg"
+              className="absolute leading-7 top-12 z-50 px-auto w-60 pl-6 py-6 bg-zinc-100 shadow-lg"
             >
-              <a
-                href="http://localhost:5173/product/67fcb9ecd48f8132fb5f417d"
-                className=""
-              >
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Serum
-                </span>
-              </a>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Facewashes
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Soap
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Shampoo
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Conditioner
-                </span>
-              </li>
-              <li className="">
-                <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                  Hair Dryer
-                </span>
-              </li>
+              {uniqueCategories.map((item, index) => (
+                <Link to={`/collection`} key={index}>
+                  <li className="">
+                    <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
+                      {item}
+                    </span>
+                  </li>
+                </Link>
+              ))}
             </ul>
           )}
         </li>
-        <NavLink to="#contact" className="flex flex-col items-center gap-1">
+        <NavLink to="/contact" className="flex flex-col items-center gap-1">
           <p>Contact</p>
         </NavLink>
 

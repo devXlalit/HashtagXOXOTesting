@@ -10,7 +10,7 @@ const Product = () => {
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
-
+  
   const fetchProductData = async () => {
     products.map((item) => {
       if (item._id === productId) {

@@ -7,7 +7,7 @@ const CartTotal = () => {
   const [couponInput, setCouponInput] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(0);
 
-  const coupons = [{ code: "COUPON10", discount: 50 }]; // 10% off
+  const coupons = [{ code: "COUPON10", discount: 10 }]; // 10% off
 
   const handleApplyCoupon = () => {
     const foundCoupon = coupons.find(

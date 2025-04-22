@@ -21,7 +21,6 @@ const Home = () => {
       <Testomonials />
       <div className="px-10">
         <InstagramSection />
-        <Contact />
       </div>
     </>
   );

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import logo from "../assets/Hashatag_XOXO_logo_v2-remove-1_2_upscaled.png";
 const Footer = () => {
   return (
-    <div>
+    <div className="mt-20">
       {/* <hr className="mt-10" /> */}
-      <div className="text-sm flex   pt-14 pb-10  ">
+      <div className="text-sm flex  pt-14 pb-10  ">
         <div>
           <img src={logo} className="mb-5 w-32" alt="" />
           {/* <span className="text-2xl font-semibold"></span> */}
