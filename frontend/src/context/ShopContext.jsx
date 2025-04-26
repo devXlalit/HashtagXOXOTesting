@@ -13,6 +13,7 @@ const ShopContextProvider = (props) => {
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
+  const [couponCode, setCouponCode] = useState([]);
   const [token, setToken] = useState("");
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ const ShopContextProvider = (props) => {
     // }
 
     let cartData = structuredClone(cartItems);
-
+    console.log(cartData);
     if (cartData[itemId]) {
       if (cartData[itemId][size]) {
         cartData[itemId][size] += 1;
@@ -47,6 +48,20 @@ const ShopContextProvider = (props) => {
         console.log(error);
         toast.error(error.message);
       }
+    }
+  };
+
+  const getCouponCode = async () => {
+    try {
+      const response = await axios.get(backendUrl + "/api/coupon/list");
+      if (response.data.success) {
+        setCouponCode(response.data.coupon.reverse());
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -132,6 +147,7 @@ const ShopContextProvider = (props) => {
 
   useEffect(() => {
     getProductsData();
+    getCouponCode();
   }, []);
 
   useEffect(() => {
@@ -162,6 +178,7 @@ const ShopContextProvider = (props) => {
     backendUrl,
     setToken,
     token,
+    couponCode,
   };
 
   return (

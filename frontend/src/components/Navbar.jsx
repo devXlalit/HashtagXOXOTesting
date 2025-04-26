@@ -30,7 +30,7 @@ const Navbar = () => {
     setToken("");
     setCartItems({});
   };
-  console.dir(products);
+  // console.dir(products);
   return (
     <div className="flex ring-1 z-40 bg-[#E2C799] text-black ring-zinc-200 shadow-md px-10  items-center justify-between py-3 font-medium">
       <Link to="/">
@@ -55,18 +55,21 @@ const Navbar = () => {
               }}
               className="absolute leading-7 top-12 z-50 px-auto w-60 pl-6 py-6 bg-zinc-100 shadow-lg"
             >
-              {products.map((item, index) => (
-                <Link to={`/product/${item._id}`} key={index}>
-                  <li className="">
-                    <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                      {item.name}
-                    </span>
-                    <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                      New
-                    </span>
-                  </li>
-                </Link>
-              ))}
+              {products.map(
+                (item, index) =>
+                  item.newproduct && (
+                    <Link to={`/product/${item._id}`} key={index}>
+                      <li className="">
+                        <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
+                          {item.name}
+                        </span>
+                        <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
+                          New
+                        </span>
+                      </li>
+                    </Link>
+                  )
+              )}
             </ul>
           )}
         </li>
@@ -87,7 +90,7 @@ const Navbar = () => {
               className="absolute leading-7 top-12 z-50 px-auto w-60 pl-6 py-6 bg-zinc-100 shadow-lg"
             >
               {uniqueOffers.map((item, index) => (
-                <Link to={`/collection`} key={index}>
+                <Link to={`/collection/${item}`} key={index}>
                   <li className="">
                     <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
                       {item}
@@ -115,7 +118,7 @@ const Navbar = () => {
               className="absolute leading-7 top-12 z-50 px-auto w-60 pl-6 py-6 bg-zinc-100 shadow-lg"
             >
               {uniqueCategories.map((item, index) => (
-                <Link to={`/collection`} key={index}>
+                <Link to={`/collection/${item}`} key={index}>
                   <li className="">
                     <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
                       {item}
@@ -135,7 +138,7 @@ const Navbar = () => {
           size={25}
           onClick={() => {
             setShowSearch(true);
-            navigate("/collection");
+            navigate(`/collection/all`);
           }}
         />
         <CgProfile
@@ -161,7 +164,7 @@ const Navbar = () => {
             </div>
           </div>
         )}
-        <Link to="/cart" className="relative">
+        <Link to="/place-order" className="relative">
           {/* <img src={assets.cart_icon} className="w-5 min-w-5" alt="" /> */}
           <LuShoppingBag size={25} className="opacity-90" />
           <p className="absolute right-[-5px]  bottom-[-5px] w-4 text-center leading-4 bg-white text-slate-800 aspect-square rounded-full text-[8px]">

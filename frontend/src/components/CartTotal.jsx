@@ -3,14 +3,11 @@ import { ShopContext } from "../context/ShopContext";
 import { IoIosArrowDown } from "react-icons/io";
 
 const CartTotal = () => {
-  const { currency, delivery_fee, getCartAmount } = useContext(ShopContext);
+  const { getCartAmount, couponCode } = useContext(ShopContext);
   const [couponInput, setCouponInput] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(0);
-
-  const coupons = [{ code: "COUPON10", discount: 10 }]; // 10% off
-
   const handleApplyCoupon = () => {
-    const foundCoupon = coupons.find(
+    const foundCoupon = couponCode.find(
       (coupon) => coupon.code.toLowerCase() === couponInput.toLowerCase()
     );
     if (foundCoupon) {
