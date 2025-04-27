@@ -20,7 +20,7 @@ const InstagramSection = () => {
   ];
 
   return (
-    <div className="mt-20 px-10">
+    <div className="my-20 md:px-10">
       <Title title={"FOLLOW US ON INSTAGRAM"} />
 
       {/* Instagram profile display */}
@@ -28,22 +28,22 @@ const InstagramSection = () => {
         <img
           src={instalogo}
           alt="instalogo"
-          className="w-14 h-14 rounded-full"
+          className="h-10 w-10 md:w-14 md:h-14 rounded-full"
         />
         <div>
-          <p className="text-2xl font-medium leading-6">@hash_tagxoxo</p>
-          <p className="text-sm pl-1 text-[#C08261] font-medium opacity-80">
+          <p className="md:text-2xl font-medium leading-6">@hash_tagxoxo</p>
+          <p className="text-xs md:text-sm pl-1 text-[#C08261] font-medium opacity-80">
             Beauty, cosmetic & personal care
           </p>
         </div>
       </div>
 
       {/* Instagram video posts */}
-      <div className="grid grid-cols-3 gap-5 justify-center px-10  items-center">
+      <div className="md:grid grid md:grid-cols-3 gap-5 justify-center md:px-10  items-center">
         {videoLinks.map((link, index) => (
           <div
             key={index}
-            className="w-full max-w-sm aspect-square overflow-hidden rounded-xl shadow-lg"
+            className=" w-full max-w-sm aspect-square overflow-hidden rounded-xl shadow-lg"
           >
             <blockquote
               className="instagram-media"

@@ -92,7 +92,7 @@ const Collection = () => {
   }, [sortType]);
 
   return (
-    <div className="flex px-10 flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
+    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pr-6 pt-10 border-t">
       <div className="flex-1">
         <div className="flex justify-between text-base sm:text-2xl mb-4">
           <Title text1={"ALL"} text2={"COLLECTIONS"} />

@@ -16,7 +16,7 @@ const Add = ({ token }) => {
   const [category, setCategory] = useState("");
   const [offers, setoffers] = useState("");
   const [bestseller, setBestseller] = useState(false);
-  const [newProduct, setNewProduct] = useState(false);
+  const [newproduct, setNewProduct] = useState(false);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const Add = ({ token }) => {
       formData.append("category", category);
       formData.append("offers", offers);
       formData.append("bestseller", bestseller);
-      formData.append("newProduct", newProduct);
+      formData.append("newproduct", newproduct);
 
       image1 && formData.append("image1", image1);
       image2 && formData.append("image2", image2);
@@ -172,9 +172,9 @@ const Add = ({ token }) => {
             className="w-full px-3 py-2"
           >
             <option value="">Select Offer</option>
-            <option value="Buy 1 Get 1">Buy 1 Get 1</option>
-            <option value="Buy 2 @499/-">Buy 2 @499/-</option>
-            <option value="Buy 5 @899/-">Buy 5 @899/-</option>
+            <option value="Buy 5 at 599">Buy 5 at 599</option>
+            <option value="Buy 2 at 299">Buy 2 at 299</option>
+            <option value="Buy 3 at 399">Buy 3 at 399</option>
           </select>
         </div>
 
@@ -204,15 +204,15 @@ const Add = ({ token }) => {
       <div className="flex gap-2 mt-2">
         <input
           onChange={() => setNewProduct((prev) => !prev)}
-          checked={newProduct}
+          checked={newproduct}
           type="checkbox"
-          id="newProduct"
+          id="newproduct"
         />
-        <label className="cursor-pointer" htmlFor="newProduct">
+        <label className="cursor-pointer" htmlFor="newproduct">
           Add to new products
         </label>
       </div>
-      <button type="submit" className="w-28 py-3 mt-4 bg-black text-white">
+      <button type="submit" className="w-28 py-3 mt-4 bg-[#212529] text-white">
         ADD
       </button>
     </form>

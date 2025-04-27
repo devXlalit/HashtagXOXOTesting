@@ -32,18 +32,18 @@ const Navbar = () => {
   };
   // console.dir(products);
   return (
-    <div className="flex ring-1 z-40 bg-[#E2C799] text-black ring-zinc-200 shadow-md px-10  items-center justify-between py-3 font-medium">
+    <div className="bag flex ring-1 z-40 bg-[#E2C799] text-black ring-zinc-200 shadow-md px-10  items-center justify-between py-3 font-medium">
       <Link to="/">
         <img src={HashTagXOXO} alt="logo" className="h-12" />
       </Link>
 
-      <ul className="font-normal sm:flex gap-5 ">
+      <ul className="font-normal md:flex md:flex-wrap md:static bg-[#E2C799] top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
         <li
           onMouseEnter={() => {
             setWhatnew(true);
           }}
           to="#"
-          className="flex items-center gap-1 relative"
+          className="flex justify-center items-center gap-1 relative"
         >
           <p>What's New</p>
           <IoIosArrowDown />
@@ -78,7 +78,7 @@ const Navbar = () => {
             setOffer(true);
           }}
           to="#"
-          className="flex items-center gap-1 relative"
+          className="flex justify-center items-center gap-1 relative"
         >
           <p>Offer's</p>
           <IoIosArrowDown />
@@ -106,7 +106,7 @@ const Navbar = () => {
             setCategory(true);
           }}
           to="#"
-          className="flex items-center gap-1 relative"
+          className="flex justify-center items-center gap-1 relative"
         >
           <p>Category</p>
           <IoIosArrowDown />
@@ -129,48 +129,52 @@ const Navbar = () => {
             </ul>
           )}
         </li>
-        <NavLink to="/contact" className="flex flex-col items-center gap-1">
+        <NavLink
+          to="/contact"
+          className="flex justify-center flex-col items-center gap-1"
+        >
           <p>Contact</p>
         </NavLink>
+        <span className="flex gap-2 md:gap-4 md:flex-row flex-col items-center">
+          <FiSearch
+            className="md:ml-6 opacity-90 cursor-pointer"
+            size={25}
+            onClick={() => {
+              setShowSearch(true);
+              navigate(`/collection/all`);
+            }}
+          />
+          <CgProfile
+            className="cursor-pointer opacity-90"
+            size={25}
+            onClick={() => (token ? null : navigate("/login"))}
+          />
 
-        <FiSearch
-          className="md:ml-6 opacity-90 cursor-pointer"
-          size={25}
-          onClick={() => {
-            setShowSearch(true);
-            navigate(`/collection/all`);
-          }}
-        />
-        <CgProfile
-          className="cursor-pointer opacity-90"
-          size={25}
-          onClick={() => (token ? null : navigate("/login"))}
-        />
-
-        {/* Dropdown Menu */}
-        {token && (
-          <div className="group-hover:block z-40 hidden absolute dropdown-menu right-0 pt-4">
-            <div className="flex flex-col gap-2 w-36 py-3 px-5  bg-slate-100 text-gray-500 rounded">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p
-                onClick={() => navigate("/orders")}
-                className="cursor-pointer hover:text-black"
-              >
-                Orders
-              </p>
-              <p onClick={logout} className="cursor-pointer hover:text-black">
-                Logout
-              </p>
+          {/* Dropdown Menu */}
+          {token && (
+            <div className="group-hover:block z-40 hidden absolute dropdown-menu right-0 pt-4">
+              <div className="flex flex-col gap-2 w-36 py-3 px-5  bg-slate-100 text-gray-500 rounded">
+                <p className="cursor-pointer hover:text-black">My Profile</p>
+                <p
+                  onClick={() => navigate("/orders")}
+                  className="cursor-pointer hover:text-black"
+                >
+                  Orders
+                </p>
+                <p onClick={logout} className="cursor-pointer hover:text-black">
+                  Logout
+                </p>
+              </div>
             </div>
-          </div>
-        )}
-        <Link to="/place-order" className="relative">
-          {/* <img src={assets.cart_icon} className="w-5 min-w-5" alt="" /> */}
-          <LuShoppingBag size={25} className="opacity-90" />
-          <p className="absolute right-[-5px]  bottom-[-5px] w-4 text-center leading-4 bg-white text-slate-800 aspect-square rounded-full text-[8px]">
-            {getCartCount()}
-          </p>
-        </Link>
+          )}
+          <Link to="/place-order" className="relative">
+            {/* <img src={assets.cart_icon} className="w-5 min-w-5" alt="" /> */}
+            <LuShoppingBag size={25} className="opacity-90" />
+            <p className="absolute right-[-5px]  bottom-[-5px] w-4 text-center leading-4 bg-white text-slate-800 aspect-square rounded-full text-[8px]">
+              {getCartCount()}
+            </p>
+          </Link>
+        </span>
       </ul>
 
       {/* <div

@@ -19,7 +19,7 @@ const Hero = () => {
       <div className="z-10">
         <Slider className=" -z-10" {...settings}>
           <img
-            className=" w-full"
+            className="w-full"
             src="https://picsum.photos/id/1/600/200"
             alt=""
           />

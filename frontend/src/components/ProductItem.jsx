@@ -16,21 +16,25 @@ const ProductItem = ({ id, image, name, price }) => {
       className=" cursor-pointer"
       to={`/product/${id}`}
     >
-      <div className="w-80 hover:scale-105 duration-200 overflow-hidden relative">
+      <div className="w-40 md:w-80 hover:scale-105 duration-200 overflow-hidden relative">
         <img
           className=" p-4 transition ease-in-out"
           src={image[0]}
           // src={image1}
           alt=""
         />
-        <span className="absolute flex items-center justify-center z-10 hover:scale-105 duration-200 bottom-6 right-6 rounded-full ring-1 text-xs text-[#9A3B3B] bg-[#F2ECBE] ring-[#9A3B3B] px-2 shadow-xl py-1">
+        <span className="absolute flex items-center justify-center z-10 hover:scale-105 duration-200 md:bottom-6 right-0 bottom-3 md:right-6 rounded-full ring-1 scale-50 md:scale-100 text-xs text-[#9A3B3B] bg-[#F2ECBE] ring-[#9A3B3B] px-2 shadow-xl py-1">
           Shop Now <IoIosArrowRoundForward size={17} />
         </span>
       </div>
       {/* <p className="pl-5 pt-3 pb-1 text-lg">{name}</p> */}
-      <p className="pt-1 opacity-90 pb-2 text-2xl text-center">{name}</p>
+      <p className="pt-1 opacity-90 text-sm pb-2 md:text-2xl text-center">
+        {name}
+      </p>
 
-      <p className="text-center text-xl text-[#9A3B3B] font-medium">₹{price}</p>
+      <p className="text-center text-sm md:text-xl text-[#9A3B3B] font-medium">
+        ₹{price}
+      </p>
     </Link>
   );
 };

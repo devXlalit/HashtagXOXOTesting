@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <div className="px-10">
+      <div className="">
         <LatestCollection />
         <BestSeller />
         {/* <OurPolicy /> */}

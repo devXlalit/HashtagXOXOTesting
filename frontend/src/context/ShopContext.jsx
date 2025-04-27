@@ -24,7 +24,6 @@ const ShopContextProvider = (props) => {
     // }
 
     let cartData = structuredClone(cartItems);
-    console.log(cartData);
     if (cartData[itemId]) {
       if (cartData[itemId][size]) {
         cartData[itemId][size] += 1;
@@ -100,18 +99,90 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  const getCartAmount = () => {
-    let totalAmount = 0;
-    for (const items in cartItems) {
-      let itemInfo = products.find((product) => product._id === items);
-      for (const item in cartItems[items]) {
-        try {
-          if (cartItems[items][item] > 0) {
-            totalAmount += itemInfo.price * cartItems[items][item];
-          }
-        } catch (error) {}
+  // const getCartAmount = () => {
+  //   const totalQuantity = Object.values(cartItems).reduce(
+  //     (sum, obj) => sum + obj[""],
+  //     0
+  //   );
+
+  //   let totalAmount = 0;
+  //   let offerApplied = false;
+
+  //   for (const itemId in cartItems) {
+  //     const itemInfo = products.find((product) => product._id === itemId);
+  //     const quantity = cartItems[itemId][""];
+
+  //     if (itemInfo.offers && itemInfo.offers.startsWith("Buy")) {
+  //       // Parse the offer, e.g., "Buy 5 at 599"
+  //       const offerParts = itemInfo.offers.split(" ");
+  //       const offerQuantity = parseInt(offerParts[1]); // e.g., 5
+  //       const offerPrice = parseInt(offerParts[3]); // e.g., 599
+
+  //       if (totalQuantity === offerQuantity) {
+  //         // Exactly offerQuantity = apply offer
+  //         totalAmount = offerPrice;
+  //         offerApplied = true;
+  //       } else if (totalQuantity > offerQuantity) {
+  //         if (!offerApplied) {
+  //           // Only add offerPrice ONCE for first offerQuantity items
+  //           totalAmount = offerPrice;
+  //           offerApplied = true;
+  //         }
+  //         // Add price for extra items beyond offerQuantity
+  //         const extraItems = totalQuantity - offerQuantity;
+  //         totalAmount += extraItems * itemInfo.price;
+  //         break;
+  //       } else {
+  //         // Less than offerQuantity, no offer, normal pricing
+  //         totalAmount += itemInfo.price * quantity;
+  //       }
+  //     } else {
+  //       // No offer on this product
+  //       totalAmount += itemInfo.price * quantity;
+  //     }
+  //   }
+
+  //   return totalAmount;
+  // };
+  // Helper: Parse offer string like "Buy 5 at 599" into {quantity, price}
+  const parseOffer = (offerString) => {
+    const parts = offerString.split(" ");
+    return {
+      quantity: parseInt(parts[1], 10), // 5
+      price: parseInt(parts[3], 10), // 599
+    };
+  };
+
+  // Helper: Calculate total for one product
+  const calculateItemTotal = (itemInfo, quantity) => {
+    if (itemInfo.offers && itemInfo.offers.startsWith("Buy")) {
+      const { quantity: offerQty, price: offerPrice } = parseOffer(
+        itemInfo.offers
+      );
+
+      if (quantity >= offerQty) {
+        const bundles = Math.floor(quantity / offerQty);
+        const leftovers = quantity % offerQty;
+        return bundles * offerPrice + leftovers * itemInfo.price;
       }
     }
+    // No valid offer or quantity not enough
+    return quantity * itemInfo.price;
+  };
+
+  // Main Function: Calculate total cart amount
+  const getCartAmount = () => {
+    let totalAmount = 0;
+
+    for (const itemId in cartItems) {
+      const itemInfo = products.find((product) => product._id === itemId);
+      const quantity = cartItems[itemId][""]; // Assuming "" is the quantity key
+
+      if (itemInfo) {
+        totalAmount += calculateItemTotal(itemInfo, quantity);
+      }
+    }
+
     return totalAmount;
   };
 

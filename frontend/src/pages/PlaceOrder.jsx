@@ -19,6 +19,7 @@ const PlaceOrder = () => {
     getCartAmount,
     delivery_fee,
     products,
+    updateQuantity,
   } = useContext(ShopContext);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -48,8 +49,11 @@ const PlaceOrder = () => {
       }
       setCartData(tempData);
     }
+
+    // console.log(data);
   }, [cartItems, products]);
 
+  useEffect(() => {}, []);
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;

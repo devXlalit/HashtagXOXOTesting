@@ -14,7 +14,7 @@ const Testomonials = () => {
               key={idx}
               image={image1}
               name={"Sarita"}
-              desc={
+              desc={  
                 "I've never felt more confident in my skin! #XOXO products have transformed my self-care routine. The quality is exceptional, and I love how they celebrate individuality. Each item feels like a little hug for my skin. I can’t recommend them enough!"
               }
             />

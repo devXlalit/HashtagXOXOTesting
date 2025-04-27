@@ -18,7 +18,7 @@ const LatestCollection = () => {
       </div>
 
       {/* Rendering Products */}
-      <div className="flex flex-wrap">
+      <div className="flex  flex-wrap">
         {latestProducts.map((item, index) => (
           <ProductItem
             key={index}

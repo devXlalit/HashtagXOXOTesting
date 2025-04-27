@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { backendUrl, currency } from "../App";
+import { backendUrl   } from "../App";
 import { toast } from "react-toastify";
 
 const List = ({ token }) => {
@@ -55,7 +55,7 @@ const List = ({ token }) => {
           <b>Name</b>
           <b>Category</b>
           <b>Price</b>
-          <b className="text-center">Action</b>
+          <b className="text-center">Remove products</b>
         </div>
 
         {/* ------ Product List ------ */}
@@ -71,7 +71,7 @@ const List = ({ token }) => {
             <p>{item.price}</p>
             <p
               onClick={() => removeProduct(item._id)}
-              className="text-right md:text-center cursor-pointer text-lg"
+              className="text-right md:text-center cursor-pointer text-lg text-[#fa5252]"
             >
               X
             </p>
