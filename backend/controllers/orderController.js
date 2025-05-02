@@ -1,234 +1,182 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
-import Stripe from 'stripe'
-import razorpay from 'razorpay'
+import nodeCCAvenue from "node-ccavenue";
 
-// global variables
-const currency = 'inr'
-const deliveryCharge = 10
+const ccav = new nodeCCAvenue.Configure({
+  merchant_id: process.env.MERCHANT_ID,
+  working_key: process.env.WORKING_KEY,
+});
 
-// gateway initialize
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+// Helper function to encode order data
+const encodeOrderData = (orderData) => {
+  return Object.keys(orderData)
+    .map((key) => `${key}=${encodeURIComponent(orderData[key])}`)
+    .join("&");
+};
 
-const razorpayInstance = new razorpay({
-    key_id : process.env.RAZORPAY_KEY_ID,
-    key_secret : process.env.RAZORPAY_KEY_SECRET,
-})
+// Place order using COD method
+const placeOrder = async (req, res) => {
+  try {
+    const { userId, items, amount, address } = req.body;
 
-// Placing orders using COD Method
-const placeOrder = async (req,res) => {
-    
-    try {
-        
-        const { userId, items, amount, address} = req.body;
+    const orderData = {
+      userId,
+      items,
+      address,
+      amount,
+      paymentMethod: "COD",
+      payment: false,
+      date: Date.now(),
+    };
 
-        const orderData = {
-            userId,
-            items,
-            address,
-            amount,
-            paymentMethod:"COD",
-            payment:false,
-            date: Date.now()
-        }
+    const newOrder = new orderModel(orderData);
+    await newOrder.save();
 
-        const newOrder = new orderModel(orderData)
-        await newOrder.save()
+    await userModel.findByIdAndUpdate(userId, { cartData: {} });
 
-        await userModel.findByIdAndUpdate(userId,{cartData:{}})
+    res.json({ success: true, message: "Order Placed" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
 
-        res.json({success:true,message:"Order Placed"})
+// Place order using CCAvenue
+const placeOrderCCAvenue = async (req, res) => {
+  try {
+    const { userId, items, amount, address } = req.body;
 
-
-    } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
+    if (!userId || !items || !amount || !address) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing order details" });
     }
 
-}
+    const orderData = {
+      userId,
+      items,
+      address,
+      amount,
+      paymentMethod: "CCAvenue",
+      payment: false,
+      date: Date.now(),
+    };
 
-// Placing orders using Stripe Method
-const placeOrderStripe = async (req,res) => {
-    try {
-        
-        const { userId, items, amount, address} = req.body
-        const { origin } = req.headers;
+    const newOrder = new orderModel(orderData);
+    await newOrder.save();
 
-        const orderData = {
-            userId,
-            items,
-            address,
-            amount,
-            paymentMethod:"Stripe",
-            payment:false,
-            date: Date.now()
-        }
+    const orderId = newOrder._id.toString();
 
-        const newOrder = new orderModel(orderData)
-        await newOrder.save()
+    // Prepare order details for CCAvenue
+    const orderDetails = {
+      merchant_id: process.env.MERCHANT_ID,
+      order_id: orderId,
+      currency: "INR",
+      amount: amount.toString(),
+      redirect_url: process.env.REDIRECT_URL,
+      cancel_url: process.env.CANCEL_URL,
+      language: "EN",
+      billing_name: `${address.firstName} ${address.lastName}`,
+      billing_address: address.street,
+      billing_city: address.city,
+      billing_state: address.state,
+      billing_zip: address.zipcode,
+      billing_country: address.country,
+      billing_tel: address.phone,
+      billing_email: address.email,
+      integration_type: "iframe_normal",
+    };
 
-        const line_items = items.map((item) => ({
-            price_data: {
-                currency:currency,
-                product_data: {
-                    name:item.name
-                },
-                unit_amount: item.price * 100
-            },
-            quantity: item.quantity
-        }))
+    // Encrypt order data
+    const encryptedData = ccav.encrypt(encodeOrderData(orderDetails));
 
-        line_items.push({
-            price_data: {
-                currency:currency,
-                product_data: {
-                    name:'Delivery Charges'
-                },
-                unit_amount: deliveryCharge * 100
-            },
-            quantity: 1
-        })
+    res.status(200).json({
+      success: true,
+      encRequest: encryptedData,
+      access_code: process.env.ACCESS_CODE,
+      ccavenue_url: process.env.CCAVENUE_URL,
+    });
+  } catch (error) {
+    console.error("CCAvenue Order Error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
-        const session = await stripe.checkout.sessions.create({
-            success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
-            cancel_url:  `${origin}/verify?success=false&orderId=${newOrder._id}`,
-            line_items,
-            mode: 'payment',
-        })
+// Handle CCAvenue response
+const handleCCAvenueResponse = async (req, res) => {
+  try {
+    const { encResp } = req.body;
+    const decryptedData = ccav.decrypt(encResp);
 
-        res.json({success:true,session_url:session.url});
+    // Parse decrypted data
+    const responseData = new URLSearchParams(decryptedData);
+    const orderStatus = responseData.get("order_status");
+    const orderId = responseData.get("order_id");
+    const trackingId = responseData.get("tracking_id");
+    const amount = responseData.get("amount");
 
-    } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
-    }
-}
+    // Update order in database
+    const updateData = {
+      payment: orderStatus === "Success",
+      status: orderStatus === "Success" ? "Paid" : orderStatus,
+      tracking_id: trackingId || null,
+    };
 
-// Verify Stripe 
-const verifyStripe = async (req,res) => {
+    await orderModel.findByIdAndUpdate(orderId, updateData);
 
-    const { orderId, success, userId } = req.body
+    // Redirect to frontend with status
+    const redirectUrl = `${
+      process.env.CANCEL_URL
+    }?status=${orderStatus.toLowerCase()}&order_id=${orderId}${
+      trackingId ? `&tracking_id=${trackingId}` : ""
+    }`;
+    res.redirect(redirectUrl);
+  } catch (error) {
+    console.error("CCAvenue Response Error:", error);
+    res.redirect(`${process.env.CANCEL_URL}?status=error`);
+  }
+};
 
-    try {
-        if (success === "true") {
-            await orderModel.findByIdAndUpdate(orderId, {payment:true});
-            await userModel.findByIdAndUpdate(userId, {cartData: {}})
-            res.json({success: true});
-        } else {
-            await orderModel.findByIdAndDelete(orderId)
-            res.json({success:false})
-        }
-        
-    } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
-    }
+// Get all orders (Admin Panel)
+const allOrders = async (req, res) => {
+  try {
+    const orders = await orderModel.find({});
+    res.json({ success: true, orders });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
 
-}
+// Get user orders (Frontend)
+const userOrders = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const orders = await orderModel.find({ userId });
+    res.json({ success: true, orders });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
 
-// Placing orders using Razorpay Method
-const placeOrderRazorpay = async (req,res) => {
-    try {
-        
-        const { userId, items, amount, address} = req.body
+// Update order status (Admin Panel)
+const updateStatus = async (req, res) => {
+  try {
+    const { orderId, status } = req.body;
+    await orderModel.findByIdAndUpdate(orderId, { status });
+    res.json({ success: true, message: "Status Updated" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
 
-        const orderData = {
-            userId,
-            items,
-            address,
-            amount,
-            paymentMethod:"Razorpay",
-            payment:false,
-            date: Date.now()
-        }
-
-        const newOrder = new orderModel(orderData)
-        await newOrder.save()
-
-        const options = {
-            amount: amount * 100,
-            currency: currency.toUpperCase(),
-            receipt : newOrder._id.toString()
-        }
-
-        await razorpayInstance.orders.create(options, (error,order)=>{
-            if (error) {
-                console.log(error)
-                return res.json({success:false, message: error})
-            }
-            res.json({success:true,order})
-        })
-
-    } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
-    }
-}
-
-const verifyRazorpay = async (req,res) => {
-    try {
-        
-        const { userId, razorpay_order_id  } = req.body
-
-        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
-        if (orderInfo.status === 'paid') {
-            await orderModel.findByIdAndUpdate(orderInfo.receipt,{payment:true});
-            await userModel.findByIdAndUpdate(userId,{cartData:{}})
-            res.json({ success: true, message: "Payment Successful" })
-        } else {
-             res.json({ success: false, message: 'Payment Failed' });
-        }
-
-    } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
-    }
-}
-
-
-// All Orders data for Admin Panel
-const allOrders = async (req,res) => {
-
-    try {
-        
-        const orders = await orderModel.find({})
-        res.json({success:true,orders})
-
-    } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
-    }
-
-}
-
-// User Order Data For Forntend
-const userOrders = async (req,res) => {
-    try {
-        
-        const { userId } = req.body
-
-        const orders = await orderModel.find({ userId })
-        res.json({success:true,orders})
-
-    } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
-    }
-}
-
-// update order status from Admin Panel
-const updateStatus = async (req,res) => {
-    try {
-        
-        const { orderId, status } = req.body
-
-        await orderModel.findByIdAndUpdate(orderId, { status })
-        res.json({success:true,message:'Status Updated'})
-
-    } catch (error) {
-        console.log(error)
-        res.json({success:false,message:error.message})
-    }
-}
-
-export {verifyRazorpay, verifyStripe ,placeOrder, placeOrderStripe, placeOrderRazorpay, allOrders, userOrders, updateStatus}
+export {
+  placeOrder,
+  allOrders,
+  userOrders,
+  updateStatus,
+  placeOrderCCAvenue,
+  handleCCAvenueResponse,
+};

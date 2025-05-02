@@ -10,11 +10,7 @@ a.active hr {
 * {
   font-family: "Jost", sans-serif;
   box-sizing: border-box;
-  scroll-behavior: smooth;
-  /* overflow-x: hidden; */
-}
-body {
-  overflow-x: hidden;
+  scroll-behavior: smooth;  
 }
 
 ::-webkit-scrollbar {

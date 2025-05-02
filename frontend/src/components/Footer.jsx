@@ -34,10 +34,10 @@ const Footer = () => {
         <div className="md:w-1/4">
           <p className="md:text-xl font-medium mb-5">CONTACT US</p>
           <ul className="flex  md:text-sm text-xs flex-col gap-1 ">
-            <Link to="/" className="hover:underline">
+            <Link to="tel:+91 78286 86093" className="hover:underline">
               +91 78286 86093
             </Link>
-            <Link to="/" className="hover:underline">
+            <Link to="mailto:Hello@hashtagxoxo.com" className="hover:underline">
               Hello@hashtagxoxo.com
             </Link>
           </ul>

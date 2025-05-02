@@ -13,7 +13,7 @@ const Feature = () => {
       <span className="absolute  top-14 md:top-52 text-white font-medium text-shadow-lg text-2xl md:text-5xl w-full text-center">
         BEYOND BEAUTY <br /> WE CRAFT CONFIDENCE
       </span>
-      <div className="flex flex-wrap -translate-y-20 md:-translate-y-52  gap-5 md:gap-3 justify-center">
+      <div className="-translate-y-20 md:-translate-y-52  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-10 place-items-center">
         <FeatureCard
           image={image1}
           title="Proudly Made in India"

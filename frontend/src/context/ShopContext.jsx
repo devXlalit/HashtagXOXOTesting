@@ -145,42 +145,68 @@ const ShopContextProvider = (props) => {
   //   return totalAmount;
   // };
   // Helper: Parse offer string like "Buy 5 at 599" into {quantity, price}
+  // Helper: Parse offer string like "Buy 5 at 599" into {quantity, price}
   const parseOffer = (offerString) => {
     const parts = offerString.split(" ");
     return {
-      quantity: parseInt(parts[1], 10), // 5
-      price: parseInt(parts[3], 10), // 599
+      quantity: parseInt(parts[1], 10),
+      price: parseInt(parts[3], 10),
     };
   };
 
-  // Helper: Calculate total for one product
-  const calculateItemTotal = (itemInfo, quantity) => {
-    if (itemInfo.offers && itemInfo.offers.startsWith("Buy")) {
-      const { quantity: offerQty, price: offerPrice } = parseOffer(
-        itemInfo.offers
-      );
-
-      if (quantity >= offerQty) {
-        const bundles = Math.floor(quantity / offerQty);
-        const leftovers = quantity % offerQty;
-        return bundles * offerPrice + leftovers * itemInfo.price;
-      }
-    }
-    // No valid offer or quantity not enough
-    return quantity * itemInfo.price;
-  };
-
-  // Main Function: Calculate total cart amount
   const getCartAmount = () => {
     let totalAmount = 0;
 
+    const offerGroups = {};
+    const normalItems = [];
+
+    // Step 1: Group items
     for (const itemId in cartItems) {
       const itemInfo = products.find((product) => product._id === itemId);
-      const quantity = cartItems[itemId][""]; // Assuming "" is the quantity key
+      const quantity = cartItems[itemId][""];
 
-      if (itemInfo) {
-        totalAmount += calculateItemTotal(itemInfo, quantity);
+      if (!itemInfo) continue;
+
+      if (itemInfo.offers && itemInfo.offers.startsWith("Buy")) {
+        if (!offerGroups[itemInfo.offers]) {
+          offerGroups[itemInfo.offers] = [];
+        }
+        offerGroups[itemInfo.offers].push({ itemInfo, quantity });
+      } else {
+        normalItems.push({ itemInfo, quantity });
       }
+    }
+
+    // Step 2: Handle offer groups
+    for (const offerString in offerGroups) {
+      const { quantity: offerQty, price: offerPrice } = parseOffer(offerString);
+      const items = offerGroups[offerString];
+
+      let totalOfferQuantity = 0;
+      items.forEach(({ quantity }) => {
+        totalOfferQuantity += quantity;
+      });
+
+      const bundles = Math.floor(totalOfferQuantity / offerQty);
+      const leftovers = totalOfferQuantity % offerQty;
+
+      // Offer bundle total
+      totalAmount += bundles * offerPrice;
+
+      // Step 3: Calculate leftover prices
+      let remainingLeftovers = leftovers;
+      for (const { itemInfo, quantity } of items) {
+        if (remainingLeftovers === 0) break;
+
+        const leftoverCount = Math.min(quantity, remainingLeftovers);
+        totalAmount += leftoverCount * itemInfo.price;
+        remainingLeftovers -= leftoverCount;
+      }
+    }
+
+    // Step 4: Handle normal items
+    for (const { itemInfo, quantity } of normalItems) {
+      totalAmount += itemInfo.price * quantity;
     }
 
     return totalAmount;

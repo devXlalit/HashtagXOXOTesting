@@ -15,7 +15,7 @@ import SearchBar from "./components/SearchBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Verify from "./pages/Verify";
-
+import PaymentForm from "./pages/PaymentForm";
 const App = () => {
   return (
     <>
@@ -40,6 +40,7 @@ const App = () => {
           <Route path="/place-order" element={<PlaceOrder />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/verify" element={<Verify />} />
+          <Route path="/payment" element={<PaymentForm />} />
         </Routes>
         <div className="px-10 bg-[#E2C799] shadow-lg ring-1 ring-gray-900/5 rounded-lg">
           <Footer />

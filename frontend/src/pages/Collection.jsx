@@ -106,7 +106,7 @@ const Collection = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+        <div className="grid grid-cols-2 place-self-center gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-5">
           {filterProducts.map((item) => (
             <ProductItem
               key={item._id}

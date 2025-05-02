@@ -5,12 +5,12 @@ import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
-  const { productId } = useParams(); 
+  const { productId } = useParams();
   const { products, currency, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
-  
+
   const fetchProductData = async () => {
     products.map((item) => {
       if (item._id === productId) {
@@ -26,12 +26,12 @@ const Product = () => {
   }, [productId, products]);
 
   return productData ? (
-    <div className="border-t-2 px-10 pt-10 transition-opacity ease-in duration-500 opacity-100">
+    <div className="border-t-2 px-5 pt-10 transition-opacity ease-in duration-500 opacity-100">
       {/*----------- Product Data-------------- */}
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
         {/*---------- Product Images------------- */}
         <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
-          <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
+          <div className="flex px-0 sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
             {productData.image.map((item, index) => (
               <img
                 onClick={() => setImage(item)}
@@ -69,20 +69,14 @@ const Product = () => {
           </div>
           {/* <hr className="mt-8 sm:w-4/5" /> */}
           <p className="mt-5 text-gray-500 md:w-4/5">
-            {/* {productData.description} */}
-            Immerse yourself in the magic of nature with our Forest Wonder Face
-            Pack! This enchanting blend harnesses the nourishing power of lush
-            botanicals, earthy clay, and revitalizing extracts to transport your
-            skin to a serene woodland retreat. Designed to detoxify, hydrate,
-            and rejuvenate, this face pack unveils a fresh, radiant complexion
-            while enveloping you in the calming essence of the forest.
+            {productData.description}
           </p>
         </div>
       </div>
 
       <RelatedProducts
         category={productData.category}
-        subCategory={productData.subCategory}
+        currentProductId={productId}
       />
     </div>
   ) : (

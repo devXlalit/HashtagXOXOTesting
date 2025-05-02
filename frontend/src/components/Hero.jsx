@@ -6,48 +6,26 @@ import "slick-carousel/slick/slick-theme.css";
 const Hero = () => {
   var settings = {
     dots: true,
-    fade: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
     autoplay: true,
-    autoplaySpeed: 2000,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
   return (
     <>
       <div className="z-10">
         <Slider className=" -z-10" {...settings}>
-          <img
-            className="w-full"
-            src="https://picsum.photos/id/1/600/200"
-            alt=""
-          />
-          <img
-            className="w-full object-cover"
-            src="https://picsum.photos/id/2/600/200"
-            alt=""
-          />
-          <img
-            className="w-full object-cover"
-            src="https://picsum.photos/id/3/600/200"
-            alt=""
-          />
-          <img
-            className="w-full object-cover"
-            src="https://picsum.photos/id/4/600/200"
-            alt=""
-          />
-          <img
-            className="w-full object-cover"
-            src="https://picsum.photos/id/5/600/200"
-            alt=""
-          />
-          <img
-            className="w-full object-cover"
-            src="https://picsum.photos/id/6/600/200"
-            alt=""
-          />
+          <img className="w-full" src="/web.webp" alt="" />
+          <img className="w-full object-cover" src="/web.webp" alt="" />
+          <img className="w-full object-cover" src="/web.webp" alt="" />
+          <img className="w-full object-cover" src="/web.webp" alt="" />
+          <img className="w-full object-cover" src="/web.webp" alt="" />
+          <img className="w-full object-cover" src="/web.webp" alt="" />
         </Slider>
       </div>
     </>

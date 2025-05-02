@@ -18,7 +18,7 @@ const BestSeller = () => {
         <Title title={"BEST SELLERS"} />
       </div>
 
-      <div className="flex flex-wrap">
+      <div className="grid grid-cols-2 gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-5">
         {bestSeller.map((item, index) => (
           <ProductItem
             key={index}
