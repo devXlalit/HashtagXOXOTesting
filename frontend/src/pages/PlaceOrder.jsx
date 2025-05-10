@@ -19,7 +19,6 @@ const PlaceOrder = () => {
     cartItems,
     setCartItems,
     getCartAmount,
-    delivery_fee,
     products,
     updateQuantity,
   } = useContext(ShopContext);

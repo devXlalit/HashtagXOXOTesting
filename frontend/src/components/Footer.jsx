@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/Hashatag_XOXO_logo_v2-remove-1_2_upscaled.png";
 const Footer = () => {
   return (
-    <div className="mt-20 pt-10">
+    <div className="mt-20 pt-10 ">
       {/* <hr className="mt-10" /> */}
       <div className="text-sm flex md:flex-nowrap flex-wrap gap-10 md:gap-0 pb-10  ">
         <div>
@@ -20,7 +20,7 @@ const Footer = () => {
         <div className="md:w-1/4 ">
           <p className="md:text-xl font-medium mb-5">QUICK LINKS</p>
           <ul className="flex flex-col w-full gap-1 ">
-            <Link className="hover:underline" to="/about">
+            <Link className="hover:underline" to="/">
               Terms & conditions
             </Link>
             <Link to="/" className="hover:underline">

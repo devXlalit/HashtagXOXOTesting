@@ -3,11 +3,11 @@ import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 import { useParams } from "react-router-dom";
+import SideBar from "../components/SideBar";
 
 const Collection = () => {
   const { productcategory } = useParams();
   const { products, search, showSearch } = useContext(ShopContext);
-
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
@@ -92,33 +92,44 @@ const Collection = () => {
   }, [sortType]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pr-6 pt-10 border-t">
-      <div className="flex-1">
-        <div className="flex justify-between text-base sm:text-2xl mb-4">
-          <Title text1={"ALL"} text2={"COLLECTIONS"} />
-          <select
-            onChange={(e) => setSortType(e.target.value)}
-            className="border-2 p-2 border-gray-300 text-sm px-2"
-          >
-            <option value="relavent">Sort by: Relevant</option>
-            <option value="low-high">Sort by: Low to High</option>
-            <option value="high-low">Sort by: High to Low</option>
-          </select>
-        </div>
+    <>
+      <div className="flex w-full">
+        <SideBar />
+        <div className="md:w-3/4 ">
+          <div className="flex  flex-col sm:flex-row gap-1 sm:gap-10 pr-6 pt-10 border-t">
+            <div className="">
+              <div className="flex justify-between text-base sm:text-2xl mb-4">
+                {/* <Title title={"Collection"} /> */}
+                <span></span>
+                {/* <h1 className="text-2xl pl-10 font-medium text-[#9A3B3B]">
+                  COLLECTIONS
+                </h1> */}
+                <select
+                  onChange={(e) => setSortType(e.target.value)}
+                  className="border-2 p-2 justify-between border-gray-300 text-sm px-2"
+                >
+                  <option value="relavent">Sort by: Relevant</option>
+                  <option value="low-high">Sort by: Low to High</option>
+                  <option value="high-low">Sort by: High to Low</option>
+                </select>
+              </div>
 
-        <div className="grid grid-cols-2 place-self-center gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-5">
-          {filterProducts.map((item) => (
-            <ProductItem
-              key={item._id}
-              name={item.name}
-              id={item._id}
-              price={item.price}
-              image={item.image}
-            />
-          ))}
+              <div className="grid grid-cols-2 place-self-center gap-y-5 gap-x-2 md:grid-cols-2 px-10 place-items-center lg:grid-cols-4">
+                {filterProducts.map((item) => (
+                  <ProductItem
+                    key={item._id}
+                    name={item.name}
+                    id={item._id}
+                    price={item.price}
+                    image={item.image}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

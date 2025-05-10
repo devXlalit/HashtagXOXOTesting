@@ -42,7 +42,7 @@ const App = () => {
           <Route path="/verify" element={<Verify />} />
           <Route path="/payment" element={<PaymentForm />} />
         </Routes>
-        <div className="px-10 bg-[#E2C799] shadow-lg ring-1 ring-gray-900/5 rounded-lg">
+        <div className="px-10 bg-opacity-60 bg-[#E2C799] shadow-lg ring-1 ring-gray-900/5 rounded-lg">
           <Footer />
         </div>
       </div>
