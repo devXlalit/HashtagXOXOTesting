@@ -25,7 +25,7 @@ const CartTotal = () => {
   return (
     <div className="w-full">
       <div className="text-2xl">
-        <h1 className="text-[#9A3B3B] font-medium opacity-80">CART TOTAL</h1>
+        <h1 className="text-[#DF4C84] font-medium opacity-80">CART TOTAL</h1>
       </div>
 
       <div className="flex flex-col gap-2 mt-2 text-sm">
@@ -43,7 +43,7 @@ const CartTotal = () => {
           />
           <button
             onClick={handleApplyCoupon}
-            className="text-white ml-1 bg-[#9A3B3B] text-sm px-5 rounded-lg py-2 font-medium"
+            className="text-white ml-1 bg-[#DF4C84] text-sm px-5 rounded-lg py-2 font-medium"
           >
             APPLY
           </button>

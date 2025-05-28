@@ -15,7 +15,7 @@ const BestSeller = () => {
   return (
     <div className="my-10">
       <div className="text-left text-3xl py-8">
-        <Title title={"BEST SELLERS"} />
+        <Title title={"Best Sellers"} />
       </div>
 
       <div className="grid grid-cols-2 gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-5">

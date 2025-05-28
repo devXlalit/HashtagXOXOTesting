@@ -22,8 +22,8 @@ const RelatedProducts = ({ category, currentProductId }) => {
 
   return (
     <div className="my-24">
-      <div className="text-center text-3xl py-5">
-        <Title title={"RELATED PRODUCTS"} />
+      <div className="text-center text-3xl py-8">
+        <Title title={"Related Products"} />
       </div>
 
       <div className="grid grid-cols-2 gap-y-5 gap-x-2 md:grid-cols-3 md:px-10 place-items-center lg:grid-cols-5">

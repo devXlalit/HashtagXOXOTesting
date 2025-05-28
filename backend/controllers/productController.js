@@ -12,6 +12,7 @@ const addProduct = async (req, res) => {
       offers,
       bestseller,
       newproduct,
+      delDescription
     } = req.body;
 
     const image1 = req.files.image1 && req.files.image1[0];
@@ -35,6 +36,7 @@ const addProduct = async (req, res) => {
     const productData = {
       name,
       description,
+      delDescription,
       category,
       price: Number(price),
       offers,

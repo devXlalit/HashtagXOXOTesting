@@ -3,7 +3,8 @@ import { assets } from "../assets/assets";
 import axios from "axios";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify";
-
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const Add = ({ token }) => {
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
@@ -12,6 +13,7 @@ const Add = ({ token }) => {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [delDescription, setDelDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [offers, setoffers] = useState("");
@@ -31,6 +33,7 @@ const Add = ({ token }) => {
       formData.append("offers", offers);
       formData.append("bestseller", bestseller);
       formData.append("newproduct", newproduct);
+      formData.append("delDescription", delDescription);
 
       image1 && formData.append("image1", image1);
       image2 && formData.append("image2", image2);
@@ -52,6 +55,7 @@ const Add = ({ token }) => {
         setImage3(false);
         setImage4(false);
         setPrice("");
+        setDelDescription("");
       } else {
         toast.error(response.data.message);
       }
@@ -60,6 +64,8 @@ const Add = ({ token }) => {
       toast.error(error.message);
     }
   };
+
+  console.log(delDescription);
 
   return (
     <form
@@ -139,8 +145,8 @@ const Add = ({ token }) => {
 
       <div className="w-full">
         <p className="mb-2">Product description</p>
-        <textarea
-          onChange={(e) => setDescription(e.target.value)}
+        <ReactQuill
+          onChange={setDescription}
           value={description}
           className="w-full max-w-[500px] px-3 py-2"
           type="text"
@@ -148,7 +154,18 @@ const Add = ({ token }) => {
           required
         />
       </div>
-
+      <div className="w-full">
+        <p className="mb-2">Brief Description</p>
+        <ReactQuill
+          onChange={setDelDescription}
+          value={delDescription}
+          className="w-full max-w-[500px] px-3 py-2"
+          type="text"
+          theme="snow"
+          placeholder="Write detailed product description here"
+          required
+        />
+      </div>
       <div className="flex flex-col sm:flex-row gap-2 w-full sm:gap-8">
         <div>
           <p className="mb-2">Product category</p>

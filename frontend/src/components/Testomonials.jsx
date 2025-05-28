@@ -6,27 +6,27 @@ import image2 from "../assets/WhatsApp-Image-2021-03-31-at-6.13.56-PM.jpeg";
 import image3 from "../assets/vineet.jpg";
 const TestomonialsContent = [
   {
-    image: image2,
+    image: image1,
     name: "Pushpa",
     desc: "#XOXO products are amazing! Whatever I have used, my skin looks better than ever. Just put it on and feel like you're loving yourself! Seriously, everyone should try this!",
   },
   {
-    image: image3,
+    image: image1,
     name: "Vineet",
-    desc: "I’ve gotta say, #XOXO has changed my routine! I never thought I’d care this much about skincare, but their products are a game changer. My skin feels fresh and looks way better. Plus, they’re simple to use, which is a win for me. Definitely a fan!",
+    desc: "#XOXO products are amazing! Whatever I have used, my skin looks better than ever. Just put it on and feel like you're loving yourself! Seriously, everyone should try this!",
   },
   {
     image: image1,
     name: "Sarita",
-    desc: "I've never felt more confident in my skin! #XOXO products have transformed my self-care routine. The quality is exceptional, and I love how they celebrate individuality. Each item feels like a little hug for my skin. I can’t recommend them enough!",
+    desc: "#XOXO products are amazing! Whatever I have used, my skin looks better than ever. Just put it on and feel like you're loving yourself! Seriously, everyone should try this!",
   },
 ];
 const Testomonials = () => {
   return (
-    <div className="w-full">
-      <Title title={"CLIENT'S TESTIMONIALS"} />
-      <div className="overflow-x-auto scrollbar-hide">
-        <div className="flex gap-5 px-4 py-6 w-max md:w-full flex-nowrap">
+    <div className="">
+      <Title title={"Client's Testimonials"} />
+      <div className="">
+        <div className="flex md:flex-nowrap flex-wrap gap-5 px-4 md:py-20 py-10 w-full overflow-x-auto scrollbar-hide">
           {TestomonialsContent.map((item, idx) => (
             <TestomonialsCard
               key={idx}

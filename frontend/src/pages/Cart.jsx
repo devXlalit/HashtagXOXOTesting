@@ -55,7 +55,7 @@ const Cart = () => {
                   <p className="text-xs sm:text-lg font-medium">
                     {productData.name}
                   </p>
-                  <div className="flex items-center text-[#9A3B3B] gap-5 mt-2">
+                  <div className="flex items-center text-[#DF4C84] gap-5 mt-2">
                     <p>₹{productData.price}</p>
                   </div>
                 </div>

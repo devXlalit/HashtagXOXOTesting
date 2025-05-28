@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { assets } from "../assets/assets";
 import { Link, NavLink } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { CgProfile } from "react-icons/cg";
@@ -10,7 +9,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
+import { BiShoppingBag } from "react-icons/bi";
 const Navbar = () => {
   const [whatnew, setWhatnew] = useState(false);
   const [offer, setOffer] = useState(false);
@@ -30,6 +29,7 @@ const Navbar = () => {
 
   const uniqueCategories = [...new Set(products.map((item) => item.category))];
   const uniqueOffers = [...new Set(products.map((item) => item.offers))];
+  // console.log();
   const logout = () => {
     navigate("/login");
     localStorage.removeItem("token");
@@ -47,13 +47,31 @@ const Navbar = () => {
   return (
     <div
       id="bag"
-      className=" flex ring-1 z-50 bg-[#efdbb9] text-black ring-zinc-200 shadow-md px-10  items-center justify-between py-3 md:py-1 font-medium"
+      className=" flex z-50 bg-[#F5FAEE] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]  text-[#343a40]  px-10  items-center justify-between py-3 md:py-1 font-medium"
     >
       <Link to="/">
         <img src={HashTagXOXO} alt="logo" className="h-12" />
       </Link>
-      <ul className="hidden md:flex leading-8 z-50 font-normal  md:flex-wrap md:static md:bg-transparent bg-[#efdbb9] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
-        <li
+      <ul className="hidden md:flex leading-8 z-50 font-normal   md:flex-wrap md:static md:bg-transparent bg-[#F04077] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
+        {uniqueOffers.map((item, index) => (
+          <Link to={`/collection/${item}`} key={index}>
+            <li className="">
+              <span className="hover:text-[#F04077]  hover:opacity-100 duration-200">
+                {item}
+              </span>
+            </li>
+          </Link>
+        ))}
+        {uniqueCategories.map((item, index) => (
+          <Link to={`/collection/${item}`} key={index}>
+            <li className="">
+              <span className="hover:text-[#F04077]  hover:opacity-100 duration-200">
+                {item}
+              </span>
+            </li>
+          </Link>
+        ))}
+        {/* <li
           onMouseEnter={() => {
             setWhatnew(true);
           }}
@@ -90,8 +108,8 @@ const Navbar = () => {
               )}
             </ul>
           )}
-        </li>
-        <li
+        </li> */}
+        {/* <li
           onMouseEnter={() => {
             setOffer(true);
           }}
@@ -121,8 +139,8 @@ const Navbar = () => {
               ))}
             </ul>
           )}
-        </li>
-        <li
+        </li> */}
+        {/* <li
           onMouseEnter={() => {
             setCategory(true);
           }}
@@ -152,16 +170,16 @@ const Navbar = () => {
               ))}
             </ul>
           )}
-        </li>
+        </li> */}
         <NavLink
-          to="/contact"
-          className="flex justify-center flex-col items-center gap-1"
+          to="/About"
+          className="flex hover:text-[#F04077]  hover:opacity-100 duration-200 justify-center flex-col items-center gap-1"
         >
-          <p>Contact</p>
+          <p>About</p>
         </NavLink>
         <span className="flex gap-2 md:gap-4 md:flex-row flex-col items-center">
           <FiSearch
-            className="md:ml-6 opacity-90 cursor-pointer"
+            className="md:ml-6  cursor-pointer"
             size={25}
             onClick={() => {
               setShowSearch(true);
@@ -193,10 +211,10 @@ const Navbar = () => {
           )}
           <Link to="/place-order" className="relative">
             {/* <img src={assets.cart_icon} className="w-5 min-w-5" alt="" /> */}
-            <LuShoppingBag size={25} className="opacity-90" />
+            <BiShoppingBag size={25} className="opacity-90" />
             <p
               id="cartcount"
-              className=" absolute right-[-5px]  bottom-[-5px] w-4 text-center leading-4 bg-white text-slate-800 aspect-square rounded-full text-[8px]"
+              className=" absolute right-[-5px]  bottom-[-5px] w-4 text-center leading-4 bg-[#DF4C84] text-white aspect-square rounded-full text-[8px]"
             >
               {getCartCount()}
             </p>
@@ -204,112 +222,30 @@ const Navbar = () => {
         </span>
       </ul>
       {visible && (
-        <ul className=" leading-8 z-50 font-normal md:flex md:flex-wrap md:static md:bg-transparent bg-[#efdbb9] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
-          <li
-            onMouseEnter={() => {
-              setWhatnew(true);
-            }}
-            onClick={() => {
-              setWhatnew((prev) => !prev);
-            }}
-            to="#"
-            className="flex  justify-center items-center gap-1 relative"
-          >
-            <p>What's New</p>
-            <IoIosArrowDown />
-
-            {whatnew && (
-              <ul
-                onMouseLeave={() => {
-                  setWhatnew(false);
-                }}
-                className="absolute   leading-7 top-12 left-0 z-50 px-auto w-72 pl-6 py-6 bg-zinc-100 shadow-lg"
-              >
-                {products.map(
-                  (item, index) =>
-                    item.newproduct && (
-                      <NavLink to={`/product/${item._id}`} key={index}>
-                        <li className="">
-                          <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                            {item.name.split(" ").slice(0, 4).join(" ")}
-                          </span>
-                          <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                            New
-                          </span>
-                        </li>
-                      </NavLink>
-                    )
-                )}
-              </ul>
-            )}
-          </li>
-          <li
-            onMouseEnter={() => {
-              setOffer(true);
-            }}
-            onClick={() => {
-              setOffer((prev) => !prev);
-            }}
-            to="#"
-            className="flex justify-center items-center gap-1 relative"
-          >
-            <p>Offer's</p>
-            <IoIosArrowDown />
-            {offer && (
-              <ul
-                onMouseLeave={() => {
-                  setOffer(false);
-                }}
-                className=" absolute leading-7 top-12 z-50 px-auto w-60 pl-6 py-6 bg-zinc-100 shadow-lg"
-              >
-                {uniqueOffers.map((item, index) => (
-                  <Link to={`/collection/${item}`} key={index}>
-                    <li className="">
-                      <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                        {item}
-                      </span>
-                    </li>
-                  </Link>
-                ))}
-              </ul>
-            )}
-          </li>
-          <li
-            onMouseEnter={() => {
-              setCategory(true);
-            }}
-            onClick={() => {
-              setCategory((prev) => !prev);
-            }}
-            to="#"
-            className="flex justify-center items-center gap-1 relative"
-          >
-            <p>Category</p>
-            <IoIosArrowDown />
-            {category && (
-              <ul
-                onMouseLeave={() => {
-                  setCategory(false);
-                }}
-                className="absolute leading-7 top-12 z-50 px-auto w-60 pl-6 py-6 bg-zinc-100 shadow-lg"
-              >
-                {uniqueCategories.map((item, index) => (
-                  <Link to={`/collection/${item}`} key={index}>
-                    <li className="">
-                      <span className="opacity-80 hover:underline hover:opacity-75 duration-200">
-                        {item}
-                      </span>
-                    </li>
-                  </Link>
-                ))}
-              </ul>
-            )}
-          </li>
+        <ul className=" leading-8 z-50 font-normal text-center md:flex md:flex-wrap md:static md:bg-transparent bg-[#F5FAEE] md:shadow-none shadow-xl py-6 md:py-4 top-[110px] left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
+          {uniqueOffers.map((item, index) => (
+            <Link to={`/collection/${item}`} key={index}>
+              <li className="">
+                <span className="hover:text-[#F04077]  hover:opacity-100 duration-200">
+                  {item}
+                </span>
+              </li>
+            </Link>
+          ))}
+          {uniqueCategories.map((item, index) => (
+            <Link to={`/collection/${item}`} key={index}>
+              <li className="">
+                <span className="hover:text-[#F04077]  hover:opacity-100 duration-200">
+                  {item}
+                </span>
+              </li>
+            </Link>
+          ))}
           <NavLink
-            to="/contact"
+            to="/About"
             className="flex justify-center flex-col items-center gap-1"
           >
-            <p>Contact</p>
+            <p>About</p>
           </NavLink>
           <span className="flex gap-2 md:gap-4 md:flex-row flex-col items-center">
             <FiSearch
@@ -347,11 +283,10 @@ const Navbar = () => {
               </div>
             )}
             <Link to="/place-order" className="relative">
-              {/* <img src={assets.cart_icon} className="w-5 min-w-5" alt="" /> */}
-              <LuShoppingBag size={25} className="opacity-90" />
+              <BiShoppingBag size={25} className="opacity-90" />
               <p
                 id="cartcount"
-                className=" absolute right-[-5px]  bottom-[-5px] w-4 text-center leading-4 bg-white text-slate-800 aspect-square rounded-full text-[8px]"
+                className=" absolute right-[-5px] shadow-xl  bottom-[-5px] w-4 text-center leading-4 bg-[#DF4C84] aspect-square rounded-full text-[8px]"
               >
                 {getCartCount()}
               </p>
@@ -365,52 +300,8 @@ const Navbar = () => {
           setVisible((prev) => !prev);
         }}
         size={25}
-        className=" md:hidden absolute top-6 right-10"
+        className=" md:hidden absolute top-15 right-10"
       />
-
-      {/* <div
-        className={`absolute z-40 top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
-          visible ? "w-full" : "w-0"
-        }`}
-      >
-        <div className="flex z-40 flex-col text-gray-600">
-          <div
-            onClick={() => setVisible(false)}
-            className="flex z-40 items-center gap-4 p-3 cursor-pointer"
-          >
-            <img className="h-4 rotate-180" src={assets.dropdown_icon} alt="" />
-            <p>Back</p>
-          </div>
-          <NavLink
-            onClick={() => setVisible(false)}
-            className="py-2 pl-6 border"
-            to="/"
-          >
-            HOME
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            className="py-2 pl-6 border"
-            to="/collection"
-          >
-            COLLECTION
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            className="py-2 pl-6 border"
-            to="/about"
-          >
-            ABOUT
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            className="py-2 pl-6 border"
-            to="/contact"
-          >
-            CONTACT
-          </NavLink>
-        </div>
-      </div> */}
     </div>
   );
 };

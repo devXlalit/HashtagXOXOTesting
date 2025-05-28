@@ -16,9 +16,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Verify from "./pages/Verify";
 import PaymentForm from "./pages/PaymentForm";
+import Topbar from "./components/topbar";
 const App = () => {
   return (
     <>
+      <Topbar />
       <Navbar />
       <div className="">
         <ToastContainer />
@@ -42,7 +44,7 @@ const App = () => {
           <Route path="/verify" element={<Verify />} />
           <Route path="/payment" element={<PaymentForm />} />
         </Routes>
-        <div className="px-10 bg-opacity-60 bg-[#E2C799] shadow-lg ring-1 ring-gray-900/5 rounded-lg">
+        <div className="px-10 bg-[#F5FAEE] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] rounded-lg">
           <Footer />
         </div>
       </div>

@@ -26,30 +26,29 @@ const Product = () => {
   }, [productId, products]);
 
   return productData ? (
-    <div className="border-t-2 px-5 pt-10 transition-opacity ease-in duration-500 opacity-100">
+    <div className="px-5 pt-5 text-[#343a40] transition-opacity ease-in duration-500 opacity-100">
       {/*----------- Product Data-------------- */}
-      <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
-        {/*---------- Product Images------------- */}
-        <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
-          <div className="flex px-0 sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
+      <div className="flex md:flex-row flex-col  md:px-40 mt-10">
+        <div className="flex-1 flex flex-col">
+          <div className="">
+            <img className="aspect-square w-[85%]" src={image} alt="" />
+          </div>
+          <div className="flex px-0 overflow-x-auto gap-2 w-full mt-2">
             {productData.image.map((item, index) => (
               <img
                 onClick={() => setImage(item)}
                 src={item}
                 key={index}
-                className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer"
+                className="w-[18%] cursor-pointer"
                 alt=""
               />
             ))}
           </div>
-          <div className="w-full sm:w-[80%]">
-            <img className="w-full h-auto" src={image} alt="" />
-          </div>
         </div>
 
-        {/* -------- Product Info ---------- */}
         <div className="flex-1">
-          <h1 className="font-medium text-3xl my-6">{productData.name}</h1>
+          <h1 className="font-normal text-3xl mt-6 mb-2">{productData.name}</h1>
+
           <div className=" flex items-center gap-1 mt-2">
             <img src={assets.star_icon} alt="" className="w-3 5" />
             <img src={assets.star_icon} alt="" className="w-3 5" />
@@ -57,21 +56,40 @@ const Product = () => {
             <img src={assets.star_icon} alt="" className="w-3 5" />
             <img src={assets.star_dull_icon} alt="" className="w-3 5" />
           </div>
-          <p className="mt-5 text-3xl  leading-6">₹{productData.price}</p>
-          <span className="opacity-60 text-sm">inclusive of all taxes</span>
+          {/* <p className="text-md font-medium pt-3">Size: 30 ML</p> */}
+          <p className=" text-sm md:text-2xl pt-3 text-[#868e96] font-regular">
+            Rs.{productData.price}{" "}
+            <span className="line-through text-[#868e96] text-xl font-light">
+              Rs.{Math.floor(productData.price * 2)}
+            </span>
+          </p>
+          <span className="opacity-60 text-sm">Inclusive of all taxes</span>
           <div>
             <button
               onClick={() => addToCart(productData._id, size)}
-              className="bg-black mt-5 text-white px-8 py-3 text-sm active:bg-gray-700"
+              className="bg-[#DF4C84] mt-5 text-white px-8 py-3 text-sm active:bg-gray-700"
             >
               ADD TO CART
             </button>
           </div>
-          {/* <hr className="mt-8 sm:w-4/5" /> */}
-          <p className="mt-5 text-gray-500 md:w-4/5">
+          {/* <p className="mt-5 text-gray-500 text-md leading-5 md:w-4/5">
             {productData.description}
-          </p>
+          </p> */}
+          <div
+            className="mt-5 text-gray-500 text-lg leading-6 md:w-4/5" // Tailwind typography for nice formatting
+            dangerouslySetInnerHTML={{ __html: productData.description }}
+          />
         </div>
+      </div>
+      <div className="md:px-40 py-10">
+        <p className=" text-md md:text-3xl  text-[#DF4C84] ring-1 ring-[#DF4C84]  p-2">
+          Description
+        </p>
+        <div
+          className="prose text-md p-3 text-[#343a40] md:p-6 leading-5 md:text-xl w-full border-[#DF4C84]" // Tailwind typography for nice formatting
+          dangerouslySetInnerHTML={{ __html: productData.delDescription }}
+        />
+        <hr />
       </div>
 
       <RelatedProducts

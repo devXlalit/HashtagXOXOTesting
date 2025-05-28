@@ -151,7 +151,7 @@ const PlaceOrder = () => {
   return (
     <>
       <div className="px-10 my-10">
-        <Title title={"CART DETAILS"} />
+        <Title title={"Cart Details"} />
         {cartData.map((item, index) => {
           const productData = products.find(
             (product) => product._id === item._id
@@ -208,9 +208,9 @@ const PlaceOrder = () => {
         className="flex px-10 flex-col mb-10 sm:flex-row justify-between gap-4 sm:pt-14 min-h-[80vh] border-t"
       >
         {/* ------------- Left Side ---------------- */}
-        <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
-          <div className="text-xl text-left sm:text-2xl my-3">
-            <Title title={"DELIVERY INFORMATION"} />
+        <div className="flex flex-col gap-4 w-full sm:max-w-[650px]">
+          <div className=" text-left  my-3">
+            <Title title={"Delivery Information"} />
           </div>
           <div className="flex gap-3">
             <input
@@ -301,13 +301,13 @@ const PlaceOrder = () => {
         </div>
 
         {/* ------------- Right Side ------------------ */}
-        <div className="mt-8">
+        <div className="mt-8 w-1/2">
           <div className="">
             <CartTotal />
           </div>
 
           <div className="mt-12">
-            <h1 className="text-2xl text-[#9A3B3B] font-medium opacity-90 pb-4">
+            <h1 className="text-2xl text-[#DF4C84] font-medium opacity-90 pb-4">
               Payment Method
             </h1>
             {/* --------------- Payment Method Selection ------------- */}
@@ -341,7 +341,7 @@ const PlaceOrder = () => {
             <div className="w-full text-end mt-8">
               <button
                 type="submit"
-                className="bg-[#9A3B3B] text-white px-16 py-3 text-sm"
+                className="bg-[#DF4C84] text-white px-16 py-3 text-sm"
               >
                 PLACE ORDER
               </button>

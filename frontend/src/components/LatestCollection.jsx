@@ -13,8 +13,8 @@ const LatestCollection = () => {
 
   return (
     <div className="my-10">
-      <div className="text-left py-8 text-3xl">
-        <Title title={"NEW PRODUCTS"} />
+      <div className="text-left py-8 text-5xl">
+        <Title title={"Latest Collection"} />
       </div>
 
       {/* Rendering Products */}

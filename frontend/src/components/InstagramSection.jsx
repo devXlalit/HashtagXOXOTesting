@@ -8,20 +8,55 @@ const InstagramSection = () => {
     script.src = "https://www.instagram.com/embed.js";
     script.async = true;
     document.body.appendChild(script);
+
+    // Reload Instagram embed script when component updates
+    return () => {
+      if (window.instgrm) {
+        window.instgrm.Embeds.process();
+      }
+    };
   }, []);
 
-  const videoLinks = [
-    "https://www.instagram.com/reel/DH2UQ4XzcW0/?igsh=MXhic3MwZ2Z1cHk2Mg==",
-    "https://www.instagram.com/reel/DH1pMtPzbX7/?igsh=YWJteGUweGJldWg1",
-    "https://www.instagram.com/reel/DHSRHYRTbNL/?igsh=OGQ2MGY4eGlqamZt",
-    "https://www.instagram.com/reel/DHYYeUoTr3q/?igsh=aGtlZmxjM3dkbjQw",
-    "https://www.instagram.com/reel/DHXauF8z6JH/?igsh=MWI1dG5vc3cybzJvZg==",
-    "https://www.instagram.com/reel/DHQqIURTC3m/?igsh=MW5scmlzYjJxaW1jOQ==",
+  const instagramPosts = [
+    {
+      id: 1,
+      imageUrl:
+        "https://hashtagxoxo.com/wp-content/uploads/sb-instagram-feed-images/496624113_1408344010352551_917697545453723158_n.heicfull.jpg", // Use the post's image URL
+      postLink: "https://www.instagram.com/p/DJbD6zFxDS9/",
+      username: "hash_tagxoxo",
+      profilePic: instalogo,
+    },
+    {
+      id: 2,
+      imageUrl:
+        "https://hashtagxoxo.com/wp-content/uploads/sb-instagram-feed-images/496624113_1408344010352551_917697545453723158_n.heicfull.jpg", // Use the post's image URL
+      postLink: "https://www.instagram.com/p/DJbD6zFxDS9/",
+      username: "hash_tagxoxo",
+      profilePic: instalogo,
+    },
+    {
+      id: 3,
+      imageUrl:
+        "https://hashtagxoxo.com/wp-content/uploads/sb-instagram-feed-images/496624113_1408344010352551_917697545453723158_n.heicfull.jpg", // Use the post's image URL
+      postLink: "https://www.instagram.com/p/DJbD6zFxDS9/",
+      username: "hash_tagxoxo",
+      profilePic: instalogo,
+    },
+    {
+      id: 4,
+      imageUrl:
+        "https://hashtagxoxo.com/wp-content/uploads/sb-instagram-feed-images/496624113_1408344010352551_917697545453723158_n.heicfull.jpg", // Use the post's image URL
+      postLink: "https://www.instagram.com/p/DJbD6zFxDS9/",
+      username: "hash_tagxoxo",
+      profilePic: instalogo,
+    },
+
+    // Add more posts as needed
   ];
 
   return (
     <div className="my-20 md:px-10">
-      <Title title={"FOLLOW US ON INSTAGRAM"} />
+      <Title title={"Follow Us On Instagram"} />
 
       {/* Instagram profile display */}
       <div className="flex mt-10 gap-3 items-center mb-6">
@@ -32,33 +67,64 @@ const InstagramSection = () => {
         />
         <div>
           <p className="md:text-2xl font-medium leading-6">@hash_tagxoxo</p>
-          <p className="text-xs md:text-sm pl-1 text-[#C08261] font-medium opacity-80">
+          <p className="text-xs md:text-sm pl-1 text-[#DF4C84] font-medium opacity-80">
             Beauty, cosmetic & personal care
           </p>
         </div>
       </div>
 
-      {/* Instagram video posts */}
-      <div className="md:grid grid md:grid-cols-3 gap-5 justify-center md:px-10  items-center">
-        {videoLinks.map((link, index) => (
-          <div
-            key={index}
-            className=" w-full max-w-sm aspect-square overflow-hidden rounded-xl shadow-lg"
+      {/* Instagram posts grid */}
+      <div className="flex flex-wrap justify-center gap-6">
+        {instagramPosts.map((post) => (
+          <a
+            key={post.id}
+            href={post.postLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
           >
-            <blockquote
-              className="instagram-media"
-              data-instgrm-permalink={link}
-              data-instgrm-version="14"
-              style={{
-                width: "100%",
-                height: "100%",
-                border: "0",
-                margin: "0 auto",
-              }}
-            ></blockquote>
-          </div>
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden w-72 h-72 flex flex-col">
+              {/* Header */}
+              <div className="flex items-center p-3 border-b">
+                <img
+                  src={post.profilePic}
+                  alt={post.username}
+                  className="h-8 w-8 rounded-full mr-2"
+                />
+                <span className="font-semibold">{post.username}</span>
+              </div>
+              {/* Image */}
+              <div className="flex-1 flex items-center justify-center bg-gray-100">
+                <img
+                  src={post.imageUrl}
+                  alt="Instagram post"
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </div>
+          </a>
         ))}
       </div>
+
+      {/* Add custom CSS to hide Instagram controller */}
+      <style jsx>{`
+        .instagram-media {
+          margin: 0 !important;
+        }
+        .instagram-media iframe {
+          margin: 0 !important;
+        }
+        /* Hide Instagram controller */
+        .instagram-media iframe {
+          height: 450px !important;
+        }
+        .instagram-media iframe::before {
+          display: none !important;
+        }
+        .instagram-media iframe::after {
+          display: none !important;
+        }
+      `}</style>
     </div>
   );
 };
