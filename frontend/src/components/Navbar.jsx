@@ -15,7 +15,9 @@ const Navbar = () => {
   const [offer, setOffer] = useState(false);
   const [category, setCategory] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
   const { products } = useContext(ShopContext);
+
   const location = useLocation();
 
   const {
@@ -71,6 +73,10 @@ const Navbar = () => {
             </li>
           </Link>
         ))}
+
+        <Link to={`/collection/giftcard`}>Gift Card</Link>
+
+        {/* /*{" "} */}
         {/* <li
           onMouseEnter={() => {
             setWhatnew(true);
@@ -108,7 +114,7 @@ const Navbar = () => {
               )}
             </ul>
           )}
-        </li> */}
+        </li>{" "} */}
         {/* <li
           onMouseEnter={() => {
             setOffer(true);
@@ -177,6 +183,7 @@ const Navbar = () => {
         >
           <p>About</p>
         </NavLink>
+        <NavLink to="/contact">Contact Us</NavLink>
         <span className="flex gap-2 md:gap-4 md:flex-row flex-col items-center">
           <FiSearch
             className="md:ml-6  cursor-pointer"
@@ -188,22 +195,32 @@ const Navbar = () => {
           />
           <CgProfile
             className="cursor-pointer opacity-90"
+            onMouseEnter={() => {
+              setDropDown(true);
+            }}
             size={25}
             onClick={() => (token ? null : navigate("/login"))}
           />
 
           {/* Dropdown Menu */}
-          {token && (
-            <div className="group-hover:block z-40 hidden absolute dropdown-menu right-0 pt-4">
-              <div className="flex flex-col gap-2 w-36 py-3 px-5  bg-slate-100 text-gray-500 rounded">
-                <p className="cursor-pointer hover:text-black">My Profile</p>
+          {token && dropDown && (
+            <div
+              onMouseLeave={() => {
+                setDropDown(false);
+              }}
+              className="group-hover:block z-40 absolute bg-[#F5FAEE]  shadow-xl dropdown-menu right-20 top-20 pt-4"
+            >
+              <div className="flex flex-col gap-2 w-36 py-3 px-5   rounded">
                 <p
                   onClick={() => navigate("/orders")}
-                  className="cursor-pointer hover:text-black"
+                  className="cursor-pointer hover:text-[#DF4C84] duration-200"
                 >
                   Orders
                 </p>
-                <p onClick={logout} className="cursor-pointer hover:text-black">
+                <p
+                  onClick={logout}
+                  className="cursor-pointer hover:text-[#DF4C84] duration-200"
+                >
                   Logout
                 </p>
               </div>

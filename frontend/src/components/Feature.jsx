@@ -7,7 +7,7 @@ import Title from "./Title";
 const Feature = () => {
   return (
     <div className="relative py-10">
-      <Title title={"Beyond Beauty We Craft Confidence"} />
+      <Title title={"Why Choose Us"} />
       <marquee loop="infinite" direction="left" bahavior="scroll" className="">
         <span className="flex py-20 items-center gap-20 justify-center">
           <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-32" />

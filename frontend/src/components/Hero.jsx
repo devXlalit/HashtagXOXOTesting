@@ -20,7 +20,11 @@ const Hero = () => {
     <>
       <div className="z-10">
         <Slider className=" -z-10" {...settings}>
-          <img className="w-full object-fit" src="/web.webp" alt="" />
+          <img
+            className="w-full object-fit"
+            src="/Diwali Banner-01.png"
+            alt=""
+          />
           <img className="w-full object-fit" src="/web.webp" alt="" />
           <img className="w-full object-fit" src="/web.webp" alt="" />
           <img className="w-full object-fit" src="/web.webp" alt="" />

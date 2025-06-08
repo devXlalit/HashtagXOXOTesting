@@ -7,8 +7,6 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 const ProductItem = ({ id, image, name, price }) => {
   const { currency } = useContext(ShopContext);
   const [isHovered, setIsHovered] = useState(false);
-  //TODO: Create a function that take category as prop and return the product with the same category
-  //TODO: Create a function that take offers as prop and return the product with the same offers
 
   return (
     <Link
@@ -19,7 +17,7 @@ const ProductItem = ({ id, image, name, price }) => {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="w-40  md:w-60 hover:scale-105 duration-300 overflow-hidden relative"
+        className="w-40  md:w-60 duration-300 overflow-hidden relative"
       >
         {!isHovered ? (
           <img

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/Hashatag_XOXO_logo_v2-remove-1_2_upscaled.png";
 const Footer = () => {
   return (
-    <div className="mt-20 pt-10  ">
+    <div className="pt-14 mt-40 ">
       {/* <hr className="mt-10" /> */}
       <div className="text-sm flex md:flex-nowrap flex-wrap gap-10 md:gap-0 pb-10  ">
         <div>
@@ -37,7 +37,10 @@ const Footer = () => {
             <Link to="tel:+91 78286 86093" className="hover:text-[#DF4C84]">
               +91 78286 86093
             </Link>
-            <Link to="mailto:Hello@hashtagxoxo.com" className="hover:text-[#DF4C84]">
+            <Link
+              to="mailto:Hello@hashtagxoxo.com"
+              className="hover:text-[#DF4C84]"
+            >
               Hello@hashtagxoxo.com
             </Link>
           </ul>

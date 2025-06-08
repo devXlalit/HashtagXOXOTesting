@@ -17,12 +17,37 @@ const ShopContextProvider = (props) => {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
 
-  const addToCart = async (itemId, size) => {
-    // if (!size) {
-    //     toast.error('Select Product Size');
-    //     return;
-    // }
+  const giftCard = [
+    {
+      id: 1,
+      image:
+        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
+      name: "Gift Card",
+      description: "Gift Card for your loved ones",
+      price: 500,
+      category: "Gift Card",
+    },
+    {
+      id: 2,
+      image:
+        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
+      name: "Gift Card",
+      description: "Gift Card for your loved ones",
+      price: 1000,
+      category: "Gift Card",
+    },
+    {
+      id: 3,
+      image:
+        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
+      name: "Gift Card",
+      description: "Gift Card for your loved ones",
+      price: 1500,
+      category: "Gift Card",
+    },
+  ];
 
+  const addToCart = async (itemId, size) => {
     let cartData = structuredClone(cartItems);
     if (cartData[itemId]) {
       if (cartData[itemId][size]) {
@@ -157,56 +182,20 @@ const ShopContextProvider = (props) => {
   const getCartAmount = () => {
     let totalAmount = 0;
 
-    const offerGroups = {};
-    const normalItems = [];
-
-    // Step 1: Group items
     for (const itemId in cartItems) {
-      const itemInfo = products.find((product) => product._id === itemId);
-      const quantity = cartItems[itemId][""];
-
-      if (!itemInfo) continue;
-
-      if (itemInfo.offers && itemInfo.offers.startsWith("Buy")) {
-        if (!offerGroups[itemInfo.offers]) {
-          offerGroups[itemInfo.offers] = [];
+      for (const size in cartItems[itemId]) {
+        const quantity = cartItems[itemId][size];
+        if (quantity > 0) {
+          // Check if it's a gift card
+          const gift = giftCard.find((g) => String(g.id) === String(itemId));
+          if (gift) {
+            totalAmount += gift.price * quantity;
+          } else {
+            const product = products.find((p) => p._id === itemId);
+            if (product) totalAmount += product.price * quantity;
+          }
         }
-        offerGroups[itemInfo.offers].push({ itemInfo, quantity });
-      } else {
-        normalItems.push({ itemInfo, quantity });
       }
-    }
-
-    // Step 2: Handle offer groups
-    for (const offerString in offerGroups) {
-      const { quantity: offerQty, price: offerPrice } = parseOffer(offerString);
-      const items = offerGroups[offerString];
-
-      let totalOfferQuantity = 0;
-      items.forEach(({ quantity }) => {
-        totalOfferQuantity += quantity;
-      });
-
-      const bundles = Math.floor(totalOfferQuantity / offerQty);
-      const leftovers = totalOfferQuantity % offerQty;
-
-      // Offer bundle total
-      totalAmount += bundles * offerPrice;
-
-      // Step 3: Calculate leftover prices
-      let remainingLeftovers = leftovers;
-      for (const { itemInfo, quantity } of items) {
-        if (remainingLeftovers === 0) break;
-
-        const leftoverCount = Math.min(quantity, remainingLeftovers);
-        totalAmount += leftoverCount * itemInfo.price;
-        remainingLeftovers -= leftoverCount;
-      }
-    }
-
-    // Step 4: Handle normal items
-    for (const { itemInfo, quantity } of normalItems) {
-      totalAmount += itemInfo.price * quantity;
     }
 
     return totalAmount;

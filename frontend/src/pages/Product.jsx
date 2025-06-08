@@ -30,8 +30,8 @@ const Product = () => {
       {/*----------- Product Data-------------- */}
       <div className="flex md:flex-row flex-col  md:px-40 mt-10">
         <div className="flex-1 flex flex-col">
-          <div className="">
-            <img className="aspect-square w-[85%]" src={image} alt="" />
+          <div className="px-4">
+            <img className="aspect-square md:w-[85%]" src={image} alt="" />
           </div>
           <div className="flex px-0 overflow-x-auto gap-2 w-full mt-2">
             {productData.image.map((item, index) => (
@@ -76,7 +76,7 @@ const Product = () => {
             {productData.description}
           </p> */}
           <div
-            className="mt-5 text-gray-500 text-lg leading-6 md:w-4/5" // Tailwind typography for nice formatting
+            className="mt-5 prose text-gray-500 text-lg leading-6 md:w-4/5" // Tailwind typography for nice formatting
             dangerouslySetInnerHTML={{ __html: productData.description }}
           />
         </div>

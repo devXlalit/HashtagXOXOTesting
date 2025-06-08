@@ -4,6 +4,7 @@ import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 import { useParams } from "react-router-dom";
 import SideBar from "../components/SideBar";
+import Giftcard from "../components/Giftcard";
 
 const Collection = () => {
   const { productcategory } = useParams();
@@ -91,11 +92,40 @@ const Collection = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType]);
 
+  const giftCard = [
+    {
+      id: 1,
+      image:
+        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
+      name: "Gift Card",
+      description: "Gift Card for your loved ones",
+      price: 500,
+      category: "Gift Card",
+    },
+    {
+      id: 2,
+      image:
+        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
+      name: "Gift Card",
+      description: "Gift Card for your loved ones",
+      price: 1000,
+      category: "Gift Card",
+    },
+    {
+      id: 3,
+      image:
+        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
+      name: "Gift Card",
+      description: "Gift Card for your loved ones",
+      price: 1500,
+      category: "Gift Card",
+    },
+  ];
   return (
     <>
       <div className="flex w-full">
         <SideBar />
-        <div className="md:w-3/4 ">
+        <div className="">
           <div className="flex  flex-col sm:flex-row gap-1 sm:gap-10 pr-6 pt-10 border-t">
             <div className="">
               <div className="flex justify-between text-base sm:text-2xl mb-4">
@@ -114,7 +144,7 @@ const Collection = () => {
                 </select>
               </div>
 
-              <div className="grid grid-cols-2 place-self-center gap-y-5 gap-x-2 md:grid-cols-2 px-10 place-items-center lg:grid-cols-4">
+              <div className="grid grid-cols-2 gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-5">
                 {filterProducts.map((item) => (
                   <ProductItem
                     key={item._id}
@@ -124,6 +154,17 @@ const Collection = () => {
                     image={item.image}
                   />
                 ))}
+
+                {productcategory.includes("giftcard") &&
+                  giftCard.map((item, index) => (
+                    <Giftcard
+                      id={item.id}
+                      image={item.image}
+                      name={item.name}
+                      desc={item.desc}
+                      price={item.price}
+                    />
+                  ))}
               </div>
             </div>
           </div>
