@@ -1,4 +1,4 @@
-name: 🚀 Deploy to bluehost (bluehost-prod)
+name: 🚀 Deploy Frontend to Bluehost (bluehost-prod)
 
 on:
   push:
@@ -10,25 +10,28 @@ jobs:
     environment: bluehost-prod
 
     steps:
-      - uses: actions/checkout@v4
+      - name: 📦 Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: Install and build frontend
+
+      - name: ⚙️ Install and build Vite frontend
         working-directory: ./frontend
-      - run: |
+        run: |
           npm install
           npm run build
 
-      - name: Deploy to Bluehost via FTP
+      - name: 🚀 Deploy to Bluehost via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server:               ${{ secrets.FTP_HOST }}
-          username:             ${{ secrets.FTP_USERNAME }}
-          password:             ${{ secrets.FTP_PASSWORD }}
-          protocol:             ftp
-          port:                 21
-          local-dir:            /frontend/dist/
-          server-dir:           /public_html/
-          dangerous-clean-slate: true   # optional
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: frontend/dist/
+          server-dir: /public_html/
+          dangerous-clean-slate: true
