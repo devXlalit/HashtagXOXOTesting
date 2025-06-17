@@ -3,6 +3,7 @@ import React from "react";
 import FeatureCard from "./FeatureCard";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 import Title from "./Title";
+import { Link } from "react-router-dom";
 
 const Feature = () => {
   return (
@@ -55,6 +56,23 @@ const Feature = () => {
           desc="Versatile, inclusive, and designed for all—embrace self-care that knows no gender!  "
         />
       </div> */}
+      <div className="relative">
+        <img
+          src="/beautiful-composition-spa-bath-concept-with-copyspace.jpg"
+          alt=""
+          className="w-full h-[30vw] object-cover"
+        />
+        <span className="absolute top-6 right-7 md:top-40 md:right-64 ">
+          <h1 className="text-sm md:text-4xl leading-tight md:leading-9 font-medium opacity-80">
+            Know about your skin start <br /> a skin quiz now!
+          </h1>
+          <Link to="/skinquiz" onClick={() => scrollTo(0, 0)}>
+            <button className="py-1 scale-50 -ml-6 md:ml-0 md:scale-100 px-4 mt-1 md:mt-6 shadow-md hover:ring-1 ring-black hover:bg-transparent hover:text-black transition-all duration-200 bg-[#DF4C84] rounded-md text-white">
+              Take Quiz
+            </button>
+          </Link>
+        </span>
+      </div>
     </div>
   );
 };
