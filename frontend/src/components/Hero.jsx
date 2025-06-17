@@ -13,7 +13,7 @@ const Hero = () => {
     axios
       .get(`${backendUrl}/api/get-images?folder=banner`)
       .then((res) => {
-        const uniqueUrls = [...new Set(res.data.map((img) => img.url))]; // just in case
+        const uniqueUrls = [...new Set(res.data.map((img) => img.url))];
         setImages(res.data);
       })
       .catch((err) => console.error("Failed to load images", err));
