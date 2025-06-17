@@ -1,0 +1,34 @@
+name: 🚀 Deploy to bluehost (bluehost-prod)
+
+on:
+  push:
+    branches: [ bluehost-prod ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: bluehost-prod
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install and build frontend
+        working-directory: ./frontend
+      - run: |
+          npm install
+          npm run build
+
+      - name: Deploy to Bluehost via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:               ${{ secrets.FTP_HOST }}
+          username:             ${{ secrets.FTP_USERNAME }}
+          password:             ${{ secrets.FTP_PASSWORD }}
+          protocol:             ftp
+          port:                 21
+          local-dir:            /frontend/dist/
+          server-dir:           /public_html/
+          dangerous-clean-slate: true   # optional
