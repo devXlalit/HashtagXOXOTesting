@@ -1,36 +1,50 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { assets } from "../assets/assets";
-import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const Hero = () => {
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${backendUrl}/api/get-images?folder=banner`)
+      .then((res) => {
+        const uniqueUrls = [...new Set(res.data.map((img) => img.url))];
+        setImages(res.data);
+      })
+      .catch((err) => console.error("Failed to load images", err));
+  }, []);
   var settings = {
     dots: true,
-    infinite: true,
+    infinite: images.length > 1,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
     autoplay: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
   };
+
   return (
     <>
       <div className="z-10">
-        <Slider className=" -z-10" {...settings}>
-          <img
-            className="w-full object-fit"
-            src="/Diwali Banner-01.png"
-            alt=""
-          />
-          <img className="w-full object-fit" src="/web.webp" alt="" />
-          <img className="w-full object-fit" src="/web.webp" alt="" />
-          <img className="w-full object-fit" src="/web.webp" alt="" />
-          <img className="w-full object-fit" src="/web.webp" alt="" />
-          <img className="w-full object-fit" src="/web.webp" alt="" />
-        </Slider>
+        {images.length > 0 && (
+          <Link to="/skinquiz">
+            <Slider className="-z-10" {...settings}>
+              {images.map((img) => (
+                <img
+                  key={img.id}
+                  src={img.url}
+                  alt={img.public_id}
+                  className="w-full object-fit"
+                />
+              ))}
+            </Slider>
+          </Link>
+        )}
       </div>
     </>
   );
