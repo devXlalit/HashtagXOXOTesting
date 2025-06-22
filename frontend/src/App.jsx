@@ -18,6 +18,7 @@ import Verify from "./pages/Verify";
 import PaymentForm from "./pages/PaymentForm";
 import Topbar from "./components/topbar";
 import Giftcardpage from "./pages/Giftcardpage";
+import SkinQuiz from "./pages/SkinQuiz";
 const App = () => {
   return (
     <>
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/verify" element={<Verify />} />
           <Route path="/payment" element={<PaymentForm />} />
           <Route path="/giftcard/:id" element={<Giftcardpage />} />
+          <Route path="/skinquiz" element={<SkinQuiz />} />
         </Routes>
         <div className="px-10  bg-[#F5FAEE] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] rounded-lg">
           <Footer />
