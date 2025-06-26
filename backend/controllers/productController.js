@@ -12,7 +12,7 @@ const addProduct = async (req, res) => {
       offers,
       bestseller,
       newproduct,
-      delDescription
+      delDescription,
     } = req.body;
 
     const image1 = req.files.image1 && req.files.image1[0];
@@ -32,7 +32,6 @@ const addProduct = async (req, res) => {
         return result.secure_url;
       })
     );
-
     const productData = {
       name,
       description,

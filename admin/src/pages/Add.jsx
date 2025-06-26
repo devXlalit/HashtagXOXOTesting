@@ -16,9 +16,22 @@ const Add = ({ token }) => {
   const [delDescription, setDelDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [offers, setoffers] = useState("");
+  const [offers, setOffers] = useState([]);
   const [bestseller, setBestseller] = useState(false);
   const [newproduct, setNewProduct] = useState(false);
+
+  const availableOffers = [
+    "Buy 1 at 299",
+    "Buy 2 at 299",
+    "Buy 3 at 399",
+    "Buy 5 at 599",
+  ];
+
+  const handleOfferChange = (offer) => {
+    setOffers((prev) =>
+      prev.includes(offer) ? prev.filter((o) => o !== offer) : [...prev, offer]
+    );
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -30,10 +43,10 @@ const Add = ({ token }) => {
       formData.append("description", description);
       formData.append("price", price);
       formData.append("category", category);
-      formData.append("offers", offers);
       formData.append("bestseller", bestseller);
       formData.append("newproduct", newproduct);
       formData.append("delDescription", delDescription);
+      formData.append("offers", JSON.stringify(offers));
 
       image1 && formData.append("image1", image1);
       image2 && formData.append("image2", image2);
@@ -190,16 +203,17 @@ const Add = ({ token }) => {
 
         <div>
           <p className="mb-2">Offer's</p>
-          <select
-            onChange={(e) => setoffers(e.target.value)}
-            value={offers}
-            className="w-full px-3 py-2"
-          >
-            <option value="">Select Offer</option>
-            <option value="Buy 5 at 599">Buy 5 at 599</option>
-            <option value="Buy 2 at 299">Buy 2 at 299</option>
-            <option value="Buy 3 at 399">Buy 3 at 399</option>
-          </select>
+          {availableOffers.map((offer) => (
+            <label key={offer} className="block">
+              <input
+                type="checkbox"
+                value={offer}
+                checked={offers.includes(offer)}
+                onChange={() => handleOfferChange(offer)}
+              />
+              <span className="ml-2">{offer}</span>
+            </label>
+          ))}
         </div>
 
         <div>
