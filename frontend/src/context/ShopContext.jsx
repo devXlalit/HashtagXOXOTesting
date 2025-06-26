@@ -124,6 +124,79 @@ const ShopContextProvider = (props) => {
     }
   };
 
+  const parseOffers = (offerArray) => {
+    try {
+      const offers = JSON.parse(offerArray[0]); // it's a JSON string inside an array
+      return offers.map((offerStr) => {
+        const [_, qty, __, price] = offerStr.split(" ");
+        return {
+          raw: offerStr,
+          quantity: parseInt(qty),
+          price: parseInt(price),
+        };
+      });
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const getCartAmount = () => {
+    let totalAmount = 0;
+
+    const offerMap = {}; // Map offer key like "Buy 2 at 299" to product entries
+    const regularItems = [];
+
+    for (const itemId in cartItems) {
+      const product = products.find((p) => p._id === itemId);
+      if (!product) continue;
+
+      const offers = parseOffers(product.offers);
+
+      for (const size in cartItems[itemId]) {
+        const quantity = cartItems[itemId][size];
+
+        if (offers.length > 0) {
+          offers.forEach((offer) => {
+            const key = `${offer.quantity}@${offer.price}`;
+            if (!offerMap[key]) offerMap[key] = [];
+            offerMap[key].push({ product, quantity });
+          });
+        } else {
+          regularItems.push({ product, quantity });
+        }
+      }
+    }
+
+    // Apply grouped offers
+    for (const key in offerMap) {
+      const [offerQty, offerPrice] = key.split("@").map(Number);
+      const items = offerMap[key];
+
+      // Total combined quantity of all products in this offer group
+      let totalQty = items.reduce((sum, item) => sum + item.quantity, 0);
+      const eligibleGroups = Math.floor(totalQty / offerQty);
+      const remainingItems = totalQty % offerQty;
+
+      totalAmount += eligibleGroups * offerPrice;
+
+      // Add normal price for remaining items
+      let remaining = remainingItems;
+      for (const item of items) {
+        if (remaining <= 0) break;
+        const count = Math.min(remaining, item.quantity);
+        totalAmount += count * item.product.price;
+        remaining -= count;
+      }
+    }
+
+    // Add items that don't have offers
+    for (const item of regularItems) {
+      totalAmount += item.quantity * item.product.price;
+    }
+
+    return totalAmount;
+  };
+
   // const getCartAmount = () => {
   //   const totalQuantity = Object.values(cartItems).reduce(
   //     (sum, obj) => sum + obj[""],
@@ -171,35 +244,28 @@ const ShopContextProvider = (props) => {
   // };
   // Helper: Parse offer string like "Buy 5 at 599" into {quantity, price}
   // Helper: Parse offer string like "Buy 5 at 599" into {quantity, price}
-  const parseOffer = (offerString) => {
-    const parts = offerString.split(" ");
-    return {
-      quantity: parseInt(parts[1], 10),
-      price: parseInt(parts[3], 10),
-    };
-  };
 
-  const getCartAmount = () => {
-    let totalAmount = 0;
+  // const getCartAmount = () => {
+  //   let totalAmount = 0;
 
-    for (const itemId in cartItems) {
-      for (const size in cartItems[itemId]) {
-        const quantity = cartItems[itemId][size];
-        if (quantity > 0) {
-          // Check if it's a gift card
-          const gift = giftCard.find((g) => String(g.id) === String(itemId));
-          if (gift) {
-            totalAmount += gift.price * quantity;
-          } else {
-            const product = products.find((p) => p._id === itemId);
-            if (product) totalAmount += product.price * quantity;
-          }
-        }
-      }
-    }
+  //   for (const itemId in cartItems) {
+  //     for (const size in cartItems[itemId]) {
+  //       const quantity = cartItems[itemId][size];
+  //       if (quantity > 0) {
+  //         // Check if it's a gift card
+  //         const gift = giftCard.find((g) => String(g.id) === String(itemId));
+  //         if (gift) {
+  //           totalAmount += gift.price * quantity;
+  //         } else {
+  //           const product = products.find((p) => p._id === itemId);
+  //           if (product) totalAmount += product.price * quantity;
+  //         }
+  //       }
+  //     }
+  //   }
 
-    return totalAmount;
-  };
+  //   return totalAmount;
+  // };
 
   const getProductsData = async () => {
     try {

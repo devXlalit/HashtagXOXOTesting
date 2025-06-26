@@ -30,7 +30,23 @@ const Navbar = () => {
   } = useContext(ShopContext);
 
   const uniqueCategories = [...new Set(products.map((item) => item.category))];
-  const uniqueOffers = [...new Set(products.map((item) => item.offers))];
+  let allOffers = [];
+
+  products.forEach((product) => {
+    product.offers.forEach((offerStr) => {
+      try {
+        const parsed = JSON.parse(offerStr); // Convert stringified array to real array
+        allOffers.push(...parsed); // Merge all offers
+      } catch (e) {
+        console.error("Invalid JSON in offers:", offerStr);
+      }
+    });
+  });
+
+  // Step 2: Get only unique offers
+  const uniqueOffers = [...new Set(allOffers)];
+
+  console.log(uniqueOffers);
   // console.log();
   const logout = () => {
     navigate("/login");
@@ -45,7 +61,7 @@ const Navbar = () => {
     setOffer(false);
     setCategory(false);
   }, [location]);
-
+  console.log(uniqueOffers);
   return (
     <div
       id="bag"

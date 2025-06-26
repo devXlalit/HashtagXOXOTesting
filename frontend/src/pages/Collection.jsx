@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../context/ShopContext"; 
+import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 import { useParams } from "react-router-dom";
@@ -24,25 +24,34 @@ const Collection = () => {
       );
     }
 
-    // Route param filter: handle both category and offers
     if (productcategory && productcategory.toLowerCase() !== "all") {
       let decodedParam = decodeURIComponent(productcategory)
         .toLowerCase()
         .trim();
 
-      // Clean trailing slash or hyphen from route
       decodedParam = decodedParam.replace(/[-\/]+$/, "").trim();
 
-      const isOffer = products.some(
-        (item) => item.offers?.toLowerCase().trim() === decodedParam
-      );
+      // Filter by offer if the decodedParam matches any offer string
+      productsCopy = productsCopy.filter((item) => {
+        if (!item.offers || item.offers.length === 0) return false;
 
-      if (isOffer) {
-        productsCopy = productsCopy.filter(
-          (item) => item.offers?.toLowerCase().trim() === decodedParam
-        );
-      } else {
-        productsCopy = productsCopy.filter(
+        try {
+          // Parse each stringified offers array
+          return item.offers.some((offerString) => {
+            const parsedOffers = JSON.parse(offerString); // turns string into array
+            return parsedOffers.some(
+              (offer) => offer.toLowerCase().trim() === decodedParam
+            );
+          });
+        } catch (e) {
+          console.error("Offer parsing failed for item:", item, e);
+          return false;
+        }
+      });
+
+      // If no match is found in offers, try category fallback
+      if (productsCopy.length === 0) {
+        productsCopy = products.filter(
           (item) => item.category?.toLowerCase().trim() === decodedParam
         );
       }
