@@ -7,6 +7,7 @@ import Feature from "../components/Feature";
 import Testomonials from "../components/Testomonials.jsx";
 import InstagramSection from "../components/InstagramSection.jsx";
 import Contact from "../components/Contact.jsx";
+
 const Home = () => {
   return (
     <>

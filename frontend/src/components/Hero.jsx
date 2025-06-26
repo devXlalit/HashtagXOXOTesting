@@ -18,6 +18,7 @@ const Hero = () => {
       })
       .catch((err) => console.error("Failed to load images", err));
   }, []);
+  
   var settings = {
     dots: true,
     infinite: images.length > 1,
