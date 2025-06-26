@@ -2,7 +2,7 @@ name: 🚀 Deploy Frontend to Bluehost (bluehost-prod)
 
 on:
   push:
-    branches: [ bluehost-prod ]
+    branches: [bluehost-prod]
 
 jobs:
   build-and-deploy:
