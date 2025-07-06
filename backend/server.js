@@ -17,7 +17,7 @@ connectDB();
 connectCloudinary();
 
 const allowedOrigins = [
-  "http://localhost:5143", // for local dev
+  "http://localhost:5173", // for local dev
   "https://hashtag-xoxo-testing.vercel.app", // your actual deployed frontend URL
   "https://www.hashtagxoxo.com", // your actual deployed frontend URL
   "https://hashtagxoxo.com", // your actual deployed frontend URL
@@ -41,6 +41,7 @@ app.use(
     credentials: true, // if you're using cookies or auth headers
   })
 );
+app.options("*", cors()); // handle preflight for all routes
 
 // api endpoints
 app.use("/api/user", userRouter);
