@@ -20,30 +20,43 @@ const allowedOrigins = [
   "http://localhost:5173", // for local dev
   "http://localhost:5174", // for local dev
   "https://hashtag-xoxo-testing.vercel.app", // your actual deployed frontend URL
+  "https://hashtag-xoxo-admin-testing.vercel.app",
   "https://www.hashtagxoxo.com", // your actual deployed frontend URL
   "https://hashtagxoxo.com", // your actual deployed frontend URL
   "https://admin.hashtagxoxo.com", // your actual deployed frontend URL
 ];
 // middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// CORS setup
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
+        return callback(new Error("Blocked by CORS"), false);
       }
       return callback(null, true);
     },
-    credentials: true, // if you're using cookies or auth headers
+    credentials: true,
   })
 );
-app.options("*", cors()); // handle preflight for all routes
 
+// Handle preflight with the SAME CORS config
+app.options(
+  "*",
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return callback(new Error("Blocked by CORS"), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // api endpoints
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
