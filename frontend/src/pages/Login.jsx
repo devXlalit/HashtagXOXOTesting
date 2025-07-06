@@ -119,7 +119,7 @@ const Login = () => {
             onClick={() => setCurrentState("Login")}
             className=" cursor-pointer"
           >
-            Login Here
+            Already have account!?
           </p>
         )}
       </div>

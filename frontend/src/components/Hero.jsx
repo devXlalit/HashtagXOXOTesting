@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { assets } from "../assets/assets";
+import React, { useContext } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+import { ShopContext } from "../context/ShopContext";
 
 const Hero = () => {
-  const [images, setImages] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`${backendUrl}/api/get-images?folder=banner`)
-      .then((res) => {
-        const uniqueUrls = [...new Set(res.data.map((img) => img.url))];
-        setImages(res.data);
-      })
-      .catch((err) => console.error("Failed to load images", err));
-  }, []);
-  
+  const { bannerImg } = useContext(ShopContext);
+
   var settings = {
     dots: true,
-    infinite: images.length > 1,
+    infinite: bannerImg.length > 1,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -32,10 +21,10 @@ const Hero = () => {
   return (
     <>
       <div className="z-10">
-        {images.length > 0 && (
+        {bannerImg.length > 0 && (
           <Link to="/skinquiz">
             <Slider className="-z-10" {...settings}>
-              {images.map((img) => (
+              {bannerImg.map((img) => (
                 <img
                   key={img.id}
                   src={img.url}

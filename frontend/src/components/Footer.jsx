@@ -20,11 +20,8 @@ const Footer = () => {
         <div className="md:w-1/4 ">
           <p className="md:text-xl font-medium mb-5">QUICK LINKS</p>
           <ul className="flex flex-col w-full gap-1 ">
-            <Link className="hover:text-[#DF4C84]" to="/">
+            <Link className="hover:text-[#DF4C84]" to="/termsnconditions">
               Terms & conditions
-            </Link>
-            <Link to="/" className="hover:text-[#DF4C84]">
-              Privacy policy
             </Link>
             <Link to="/About" className="hover:text-[#DF4C84]">
               About us

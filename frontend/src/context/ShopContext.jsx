@@ -14,7 +14,9 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
   const [couponCode, setCouponCode] = useState([]);
+  const [topHeading, setTopHeading] = useState("");
   const [token, setToken] = useState("");
+  const [bannerImg, setBannerImg] = useState([]);
   const navigate = useNavigate();
 
   // const giftCard = [
@@ -89,6 +91,35 @@ const ShopContextProvider = (props) => {
     }
   };
 
+  const getTopHeading = async () => {
+    try {
+      const response = await axios.get(backendUrl + "/api/heading/list");
+      if (response.data.success) {
+        setTopHeading(response.data.heading);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
+  const getBannerImage = async () => {
+    try {
+      const response = await axios.get(
+        backendUrl + "/api/get-images?folder=banner"
+      );
+      if (response.data) {
+        setBannerImg(response.data); // <-- set directly
+      } else {
+        toast.error("No images found");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   const getCartCount = () => {
     let totalCount = 0;
     for (const items in cartItems) {
@@ -143,55 +174,125 @@ const ShopContextProvider = (props) => {
   const getCartAmount = () => {
     let totalAmount = 0;
 
-    const offerMap = {}; // Map offer key like "Buy 2 at 299" to product entries
-    const regularItems = [];
+    // 1. Build a map: offerString -> [{product, quantity, itemId}]
+    const offerGroups = {}; // { offerString: [{product, quantity, itemId}] }
+    const noOfferProducts = []; // [{product, quantity, itemId}]
+    const productOffersMap = {}; // { productId: [offersArr] }
 
     for (const itemId in cartItems) {
       const product = products.find((p) => p._id === itemId);
       if (!product) continue;
 
-      const offers = parseOffers(product.offers);
-
+      // Sum all sizes for this product
+      let quantity = 0;
       for (const size in cartItems[itemId]) {
-        const quantity = cartItems[itemId][size];
+        quantity += cartItems[itemId][size];
+      }
+      if (quantity === 0) continue;
 
-        if (offers.length > 0) {
-          offers.forEach((offer) => {
-            const key = `${offer.quantity}@${offer.price}`;
-            if (!offerMap[key]) offerMap[key] = [];
-            offerMap[key].push({ product, quantity });
-          });
-        } else {
-          regularItems.push({ product, quantity });
+      // Parse offers array (handle your data structure)
+      let offersArr = [];
+      if (
+        product.offers &&
+        Array.isArray(product.offers) &&
+        product.offers.length > 0
+      ) {
+        try {
+          offersArr = JSON.parse(product.offers[0]);
+        } catch (e) {
+          offersArr = [];
         }
       }
-    }
 
-    // Apply grouped offers
-    for (const key in offerMap) {
-      const [offerQty, offerPrice] = key.split("@").map(Number);
-      const items = offerMap[key];
-
-      // Total combined quantity of all products in this offer group
-      let totalQty = items.reduce((sum, item) => sum + item.quantity, 0);
-      const eligibleGroups = Math.floor(totalQty / offerQty);
-      const remainingItems = totalQty % offerQty;
-
-      totalAmount += eligibleGroups * offerPrice;
-
-      // Add normal price for remaining items
-      let remaining = remainingItems;
-      for (const item of items) {
-        if (remaining <= 0) break;
-        const count = Math.min(remaining, item.quantity);
-        totalAmount += count * item.product.price;
-        remaining -= count;
+      if (offersArr.length > 0) {
+        productOffersMap[product._id] = offersArr;
+        offersArr.forEach((offer) => {
+          if (!offerGroups[offer]) offerGroups[offer] = [];
+          offerGroups[offer].push({ product, quantity, itemId });
+        });
+      } else {
+        noOfferProducts.push({ product, quantity, itemId });
       }
     }
 
-    // Add items that don't have offers
-    for (const item of regularItems) {
-      totalAmount += item.quantity * item.product.price;
+    // 2. Parse all unique offers and sort by quantity descending (most relevant first)
+    const parsedOffers = [];
+    Object.keys(offerGroups).forEach((offerStr) => {
+      const match = offerStr.match(/^Buy (\d+) at (\d+)$/);
+      if (match) {
+        parsedOffers.push({
+          raw: offerStr,
+          quantity: parseInt(match[1]),
+          price: parseInt(match[2]),
+        });
+      }
+    });
+    parsedOffers.sort((a, b) => b.quantity - a.quantity); // Highest quantity first
+
+    // 3. Track how many units of each product have been used in offers
+    const usedUnits = {};
+
+    // 4. Apply offers from highest quantity to lowest, cascading down
+    parsedOffers.forEach((offerObj) => {
+      const { raw: offer, quantity: offerQty, price: offerPrice } = offerObj;
+      const items = offerGroups[offer];
+      if (!items) return;
+
+      // Only use units that haven't been used by a higher offer
+      let availableItems = items
+        .map(({ product, quantity, itemId }) => {
+          const used = usedUnits[itemId] || 0;
+          return { product, quantity: quantity - used, itemId };
+        })
+        .filter(({ quantity }) => quantity > 0);
+
+      let totalQty = availableItems.reduce(
+        (sum, { quantity }) => sum + quantity,
+        0
+      );
+
+      // While we can apply this offer, do so
+      while (totalQty >= offerQty) {
+        totalAmount += offerPrice;
+
+        // Mark used units for offer
+        let unitsToMark = offerQty;
+        // Distribute used units for offer across products (prioritize higher price)
+        let sortedItems = [...availableItems].sort(
+          (a, b) => b.product.price - a.product.price
+        );
+        for (const { product, quantity, itemId } of sortedItems) {
+          if (unitsToMark === 0) break;
+          const use = Math.min(quantity, unitsToMark);
+          usedUnits[itemId] = (usedUnits[itemId] || 0) + use;
+          unitsToMark -= use;
+          // Update availableItems for next round
+          const item = availableItems.find((i) => i.itemId === itemId);
+          if (item) item.quantity -= use;
+        }
+        // Recalculate totalQty for next possible offer application
+        availableItems = availableItems.filter(({ quantity }) => quantity > 0);
+        totalQty = availableItems.reduce(
+          (sum, { quantity }) => sum + quantity,
+          0
+        );
+      }
+      // Any leftovers after all possible offers are applied will be handled by lower offers or normal price
+    });
+
+    // 5. Add products without offers or not used in any offer group
+    for (const itemId in cartItems) {
+      const product = products.find((p) => p._id === itemId);
+      if (!product) continue;
+      let quantity = 0;
+      for (const size in cartItems[itemId]) {
+        quantity += cartItems[itemId][size];
+      }
+      const used = usedUnits[itemId] || 0;
+      const left = quantity - used;
+      if (left > 0) {
+        totalAmount += product.price * left;
+      }
     }
 
     return totalAmount;
@@ -300,6 +401,8 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     getProductsData();
     getCouponCode();
+    getTopHeading();
+    getBannerImage();
   }, []);
 
   useEffect(() => {
@@ -331,6 +434,8 @@ const ShopContextProvider = (props) => {
     setToken,
     token,
     couponCode,
+    topHeading,
+    bannerImg,
   };
 
   return (

@@ -90,6 +90,9 @@ const PlaceOrder = () => {
   };
 
   const onSubmitHandler = async (event) => {
+    if (!token) {
+      alert("Please login first!");
+    }
     event.preventDefault();
     try {
       let orderItems = [];

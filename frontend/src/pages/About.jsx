@@ -57,22 +57,29 @@ const About = () => {
         </div>
       </div>
       <div className="md:px-14">
-        <div className="text-2xl py-10 md:py-40 ">
-          <Title title={"Our Founders"} />
+        <div className="text-2xl md:block hidden py-10 md:py-40 ">
+          <Title title={"The Founders"} />
         </div>
         <div className="flex flex-col md:flex-row md:gap-10 items-center justify-center">
-          <div className="md:w-1/3">
-            <h1 className="text-4xl font-bold">
-              Meet The Team <br /> Our Professionals
+          <div className="w-full md:w-3/5 text-center md:text-left">
+            <h1 className="md:text-4xl mt-10 text-left text-2xl font-bold">
+              Meet Our Founders
             </h1>
-            <hr className="w-40  my-6" />
-            <p className="bg-zinc-100 py-14 px-4 md:mb-0 mb-10 -ml-3">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam
-              similique architecto ad sit. Quis animi voluptatem obcaecati
-              itaque debitis quibusdam ab voluptates iure?
+            <hr className="w-full  my-6" />
+            <p className="bg-zinc-100 md:py-12 p-8 md:text-left md:text-base md:px-8 md:mb-0 mb-10 -ml-3">
+              We didn’t just start a brand—we started a movement. Hashtag XOXO
+              is our heartfelt journey to bring you skincare that heals, hugs,
+              and honors your natural beauty. Rooted in ancient Indian wisdom
+              and powered by plant-based purity, every product is a promise of
+              self-love. Because we believe true beauty begins with being
+              kind—to your skin, your soul, and the earth. Hashtag XOXO
+              celebrates Indian beauty—bold, radiant, rooted, and
+              unapologetically authentic. We’re here to remind the world that
+              everything your skin needs has always grown right here, on Indian
+              soil.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col px-8 items-center justify-center">
             <img src="/richa.jpeg" alt="" className="rounded-full w-28" />
             <p className="text-xl font-medium mt-4">Richa Malviya</p>
             <p className="text-sm text-center">Founder</p>
@@ -105,7 +112,7 @@ const About = () => {
               </a>
             </span>
           </div>
-          <div className="flex flex-col bg-zinc-100 px-12 py-14 md:mt-0 mt-10 items-center justify-center">
+          <div className="flex flex-col bg-zinc-100 px-12 py-12 md:py-20 md:mt-0 mt-10 items-center justify-center">
             <img src="/vineet.jpeg" alt="" className="rounded-full w-28" />
             <p className="text-xl font-medium mt-4">Vineet Sharma</p>
             <p className="text-sm text-center">Founder</p>
