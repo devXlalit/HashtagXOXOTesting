@@ -16,10 +16,31 @@ const port = process.env.PORT || 4000;
 connectDB();
 connectCloudinary();
 
+const allowedOrigins = [
+  "http://localhost:3000", // for local dev
+  "https://your-frontend.vercel.app", // your actual deployed frontend URL
+  "https://www.hashtagxoxo.com", // your actual deployed frontend URL
+  "https://hashtagxoxo.com", // your actual deployed frontend URL
+  "https://admin.hashtagxoxo.com", // your actual deployed frontend URL
+];
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg =
+          "The CORS policy for this site does not allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true, // if you're using cookies or auth headers
+  })
+);
 
 // api endpoints
 app.use("/api/user", userRouter);
