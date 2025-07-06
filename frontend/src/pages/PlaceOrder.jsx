@@ -123,6 +123,9 @@ const PlaceOrder = () => {
         case "cod":
           const response = await axios.post(
             backendUrl + "/api/order/place",
+            {
+              withCredentials: true,
+            },
             orderData,
             { headers: { token } }
           );
@@ -137,6 +140,9 @@ const PlaceOrder = () => {
         case "ccavenue":
           const ccavenueResponse = await axios.post(
             backendUrl + "/api/order/ccavenue",
+            {
+              withCredentials: true,
+            },
             orderData,
             { headers: { token } }
           );
