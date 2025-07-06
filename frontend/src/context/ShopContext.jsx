@@ -67,6 +67,9 @@ const ShopContextProvider = (props) => {
       try {
         await axios.post(
           backendUrl + "/api/cart/add",
+          {
+            withCredentials: true,
+          },
           { itemId, size },
           { headers: { token } }
         );
@@ -79,7 +82,9 @@ const ShopContextProvider = (props) => {
 
   const getCouponCode = async () => {
     try {
-      const response = await axios.get(backendUrl + "/api/coupon/list");
+      const response = await axios.get(backendUrl + "/api/coupon/list", {
+        withCredentials: true,
+      });
       if (response.data.success) {
         setCouponCode(response.data.coupon.reverse());
       } else {
@@ -93,7 +98,9 @@ const ShopContextProvider = (props) => {
 
   const getTopHeading = async () => {
     try {
-      const response = await axios.get(backendUrl + "/api/heading/list");
+      const response = await axios.get(backendUrl + "/api/heading/list", {
+        withCredentials: true,
+      });
       if (response.data.success) {
         setTopHeading(response.data.heading);
       } else {
@@ -108,7 +115,10 @@ const ShopContextProvider = (props) => {
   const getBannerImage = async () => {
     try {
       const response = await axios.get(
-        backendUrl + "/api/get-images?folder=banner"
+        backendUrl + "/api/get-images?folder=banner",
+        {
+          withCredentials: true,
+        }
       );
       if (response.data) {
         setBannerImg(response.data); // <-- set directly
@@ -145,6 +155,9 @@ const ShopContextProvider = (props) => {
       try {
         await axios.post(
           backendUrl + "/api/cart/update",
+          {
+            withCredentials: true,
+          },
           { itemId, size, quantity },
           { headers: { token } }
         );
@@ -370,7 +383,9 @@ const ShopContextProvider = (props) => {
 
   const getProductsData = async () => {
     try {
-      const response = await axios.get(backendUrl + "/api/product/list");
+      const response = await axios.get(backendUrl + "/api/product/list", {
+        withCredentials: true,
+      });
       if (response.data.success) {
         setProducts(response.data.products.reverse());
       } else {
@@ -386,7 +401,9 @@ const ShopContextProvider = (props) => {
     try {
       const response = await axios.post(
         backendUrl + "/api/cart/get",
-        {},
+        {
+          withCredentials: true,
+        },
         { headers: { token } }
       );
       if (response.data.success) {
