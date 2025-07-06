@@ -42,7 +42,7 @@ const Sidebar = () => {
           to="/heading"
         >
           <img className="w-5 h-5" src={assets.order_icon} alt="" />
-          <p className="hidden md:block">Add top heading</p>
+          <p className="hidden md:block">Add Top heading</p>
         </NavLink>
       </div>
     </div>
