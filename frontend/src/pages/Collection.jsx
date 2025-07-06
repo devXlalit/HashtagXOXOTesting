@@ -4,7 +4,6 @@ import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 import { useParams } from "react-router-dom";
 import SideBar from "../components/SideBar";
-import Giftcard from "../components/Giftcard";
 
 const Collection = () => {
   const { productcategory } = useParams();
@@ -101,40 +100,11 @@ const Collection = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType]);
 
-  const giftCard = [
-    {
-      id: 1,
-      image:
-        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
-      name: "Gift Card",
-      description: "Gift Card for your loved ones",
-      price: 500,
-      category: "Gift Card",
-    },
-    {
-      id: 2,
-      image:
-        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
-      name: "Gift Card",
-      description: "Gift Card for your loved ones",
-      price: 1000,
-      category: "Gift Card",
-    },
-    {
-      id: 3,
-      image:
-        "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
-      name: "Gift Card",
-      description: "Gift Card for your loved ones",
-      price: 1500,
-      category: "Gift Card",
-    },
-  ];
   return (
     <>
       <div className="flex w-full">
         <SideBar />
-        <div className="">
+        <div className="w-full md:w-5/6">
           <div className="flex  flex-col sm:flex-row gap-1 sm:gap-10 pr-6 pt-10 border-t">
             <div className="">
               <div className="flex justify-between text-base sm:text-2xl mb-4">
@@ -163,17 +133,6 @@ const Collection = () => {
                     image={item.image}
                   />
                 ))}
-
-                {productcategory.includes("giftcard") &&
-                  giftCard.map((item, index) => (
-                    <Giftcard
-                      id={item.id}
-                      image={item.image}
-                      name={item.name}
-                      desc={item.desc}
-                      price={item.price}
-                    />
-                  ))}
               </div>
             </div>
           </div>

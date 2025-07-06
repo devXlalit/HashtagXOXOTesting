@@ -11,22 +11,26 @@ const Feature = () => {
       <Title title={"Why Choose Us"} />
       <marquee loop="infinite" direction="left" bahavior="scroll" className="">
         <span className="flex py-20 items-center gap-20 justify-center">
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-32" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-32" />
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
+          <img src="/Certificate logo-02.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
+          <img src="/Certificate logo-01.png" alt="" className="w-40" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
+
+          <img src="/Certificate logo-03.png" alt="" className="w-40" />
         </span>
       </marquee>
       {/* <img src={bannerImg} alt="testimonial img" className="w-full " /> */}
@@ -60,10 +64,10 @@ const Feature = () => {
         <img
           src="/beautiful-composition-spa-bath-concept-with-copyspace.jpg"
           alt=""
-          className="w-full h-[30vw] object-cover"
+          className="w-full h-[30vw] object-top object-cover"
         />
-        <span className="absolute top-6 right-7 md:top-40 md:right-64 ">
-          <h1 className="text-sm md:text-4xl leading-tight md:leading-9 font-medium opacity-80">
+        <span className="absolute top-6 right-7 md:top-36 md:right-52 ">
+          <h1 className="text-sm md:text-5xl leading-tight md:leading-12 font-medium opacity-80">
             Know about your skin start <br /> a skin quiz now!
           </h1>
           <Link to="/skinquiz" onClick={() => scrollTo(0, 0)}>

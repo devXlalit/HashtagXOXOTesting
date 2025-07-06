@@ -12,16 +12,24 @@ a.active hr {
   /* font-size: 14px; */
   /* font-family: "Inter", sans-serif; */
   box-sizing: border-box;
-  scroll-behavior: smooth;  
-}
-
-::-webkit-scrollbar {
-  display: none;
+  scroll-behavior: smooth;
 }
 
 @media (max-width: 640px) {
   a.active {
     background-color: black;
     color: white;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

@@ -3,9 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { CgProfile } from "react-icons/cg";
 import { FiSearch } from "react-icons/fi";
-import { LuShoppingBag } from "react-icons/lu";
 import HashTagXOXO from "../assets/Hashatag_XOXO_logo_v2-remove-1_2_upscaled.png";
-import { IoIosArrowDown } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -46,7 +44,6 @@ const Navbar = () => {
   // Step 2: Get only unique offers
   const uniqueOffers = [...new Set(allOffers)];
 
-  console.log(uniqueOffers);
   // console.log();
   const logout = () => {
     navigate("/login");
@@ -61,14 +58,13 @@ const Navbar = () => {
     setOffer(false);
     setCategory(false);
   }, [location]);
-  console.log(uniqueOffers);
   return (
     <div
       id="bag"
       className=" flex z-50 bg-[#F5FAEE] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]  text-[#343a40]  px-10  items-center justify-between py-3 md:py-1 font-medium"
     >
       <Link to="/">
-        <img src={HashTagXOXO} alt="logo" className="h-12" />
+        <img src={HashTagXOXO} alt="logo" className=" w-12 md:w-24" />
       </Link>
       <ul className="hidden md:flex leading-8 z-50 font-normal   md:flex-wrap md:static md:bg-transparent bg-[#F04077] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
         {uniqueOffers.map((item, index) => (
@@ -89,8 +85,6 @@ const Navbar = () => {
             </li>
           </Link>
         ))}
-
-        <Link to={`/collection/giftcard`}>Gift Card</Link>
 
         {/* /*{" "} */}
         {/* <li
@@ -202,6 +196,7 @@ const Navbar = () => {
         <NavLink to="/contact">Contact Us</NavLink>
         <span className="flex gap-2 md:gap-4 md:flex-row flex-col items-center">
           <FiSearch
+            title="search"
             className="md:ml-6  cursor-pointer"
             size={25}
             onClick={() => {
@@ -210,6 +205,7 @@ const Navbar = () => {
             }}
           />
           <CgProfile
+            title="login"
             className="cursor-pointer opacity-90"
             onMouseEnter={() => {
               setDropDown(true);
@@ -255,7 +251,7 @@ const Navbar = () => {
         </span>
       </ul>
       {visible && (
-        <ul className=" leading-8 z-50 font-normal text-center md:flex md:flex-wrap md:static md:bg-transparent bg-[#F5FAEE] md:shadow-none shadow-xl py-6 md:py-4 top-[110px] left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
+        <ul className=" leading-8 z-50 font-normal text-center md:flex md:flex-wrap md:static md:bg-transparent bg-[#F5FAEE] md:shadow-none shadow-xl py-6 md:py-4 top-[70px] left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
           {uniqueOffers.map((item, index) => (
             <Link to={`/collection/${item}`} key={index}>
               <li className="">

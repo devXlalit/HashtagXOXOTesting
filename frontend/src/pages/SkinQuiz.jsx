@@ -127,7 +127,7 @@ const SkinQuiz = () => {
       : [];
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-xl rounded-xl">
+    <div className="max-w-3xl mx-auto mt-10 p-6  bg-white shadow-xl rounded-xl">
       <h2 className="text-2xl font-bold mb-4 text-center">
         🌿 Find Your Skincare Match
       </h2>

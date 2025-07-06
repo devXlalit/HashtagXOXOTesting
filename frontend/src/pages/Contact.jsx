@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
 const Contact = () => {
-  const [state, handleSubmit] = useForm("manjewva");
+  const [state, handleSubmit] = useForm("xzzgwldn");
   if (state.succeeded) {
     toast.success("Thanks for your enquiry! We will get back to you soon.");
   }
