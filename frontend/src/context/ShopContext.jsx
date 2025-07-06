@@ -19,36 +19,6 @@ const ShopContextProvider = (props) => {
   const [bannerImg, setBannerImg] = useState([]);
   const navigate = useNavigate();
 
-  // const giftCard = [
-  //   {
-  //     id: 1,
-  //     image:
-  //       "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
-  //     name: "Gift Card",
-  //     description: "Gift Card for your loved ones",
-  //     price: 500,
-  //     category: "Gift Card",
-  //   },
-  //   {
-  //     id: 2,
-  //     image:
-  //       "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
-  //     name: "Gift Card",
-  //     description: "Gift Card for your loved ones",
-  //     price: 1000,
-  //     category: "Gift Card",
-  //   },
-  //   {
-  //     id: 3,
-  //     image:
-  //       "https://marketplace.canva.com/EAFDjw6INg8/2/0/800w/canva-beige-modern-floral-watercolor-gift-voucher-W51Cx9tpUxM.jpg",
-  //     name: "Gift Card",
-  //     description: "Gift Card for your loved ones",
-  //     price: 1500,
-  //     category: "Gift Card",
-  //   },
-  // ];
-
   const addToCart = async (itemId, size) => {
     let cartData = structuredClone(cartItems);
     if (cartData[itemId]) {
