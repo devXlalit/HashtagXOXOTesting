@@ -17,8 +17,8 @@ connectDB();
 connectCloudinary();
 
 const allowedOrigins = [
-  "http://localhost:3000", // for local dev
-  "https://your-frontend.vercel.app", // your actual deployed frontend URL
+  "http://localhost:5143", // for local dev
+  "https://hashtag-xoxo-testing.vercel.app", // your actual deployed frontend URL
   "https://www.hashtagxoxo.com", // your actual deployed frontend URL
   "https://hashtagxoxo.com", // your actual deployed frontend URL
   "https://admin.hashtagxoxo.com", // your actual deployed frontend URL
