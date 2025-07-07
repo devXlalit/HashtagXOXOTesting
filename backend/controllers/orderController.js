@@ -1,7 +1,8 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
+import mongoose from "mongoose";
 import nodeCCAvenue from "node-ccavenue";
-
+import jwt from "jsonwebtoken";
 const ccav = new nodeCCAvenue.Configure({
   merchant_id: process.env.MERCHANT_ID,
   working_key: process.env.WORKING_KEY,
@@ -17,7 +18,20 @@ const encodeOrderData = (orderData) => {
 // Place order using COD method
 const placeOrder = async (req, res) => {
   try {
-    const { userId, items, amount, address } = req.body;
+    const { items, amount, address } = req.body;
+    const token = req.headers.token;
+
+    let userId;
+    let isGuest = false;
+
+    if (!token || token.startsWith("guest")) {
+      isGuest = true;
+      userId = "guest" + Math.floor(Math.random() * 100000);
+    } else {
+      // ✅ decode the token to extract real user ID
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      userId = decoded.id || decoded._id; // depends on how you signed it
+    }
 
     const orderData = {
       userId,
@@ -32,15 +46,25 @@ const placeOrder = async (req, res) => {
     const newOrder = new orderModel(orderData);
     await newOrder.save();
 
-    await userModel.findByIdAndUpdate(userId, { cartData: {} });
+    if (!isGuest && userId && mongoose.Types.ObjectId.isValid(userId)) {
+      await userModel.findByIdAndUpdate(userId, {
+        $set: { cartData: {} },
+        $push: { orders: newOrder._id },
+      });
+    }
 
-    res.json({ success: true, message: "Order Placed" });
+    res.json({
+      success: true,
+      message: isGuest
+        ? "Order placed successfully as guest"
+        : "Order placed successfully",
+      isGuest,
+    });
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
+    console.error("Order Error:", error.message);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
-
 // Place order using CCAvenue
 const placeOrderCCAvenue = async (req, res) => {
   try {
