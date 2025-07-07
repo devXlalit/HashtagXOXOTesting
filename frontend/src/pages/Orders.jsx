@@ -16,10 +16,10 @@ const Orders = () => {
 
       const response = await axios.post(
         backendUrl + "/api/order/userorders",
+        {},
         {
-          withCredentials: true,
-        },
-        { headers: { token } }
+          headers: { token },
+        }
       );
       if (response.data.success) {
         let allOrdersItem = [];

@@ -16,17 +16,11 @@ const Login = () => {
     event.preventDefault();
     try {
       if (currentState === "Sign Up") {
-        const response = await axios.post(
-          backendUrl + "/api/user/register",
-          {
-            withCredentials: true,
-          },
-          {
-            name,
-            email,
-            password,
-          }
-        );
+        const response = await axios.post(backendUrl + "/api/user/register", {
+          name,
+          email,
+          password,
+        });
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem("token", response.data.token);
@@ -36,9 +30,7 @@ const Login = () => {
       } else {
         const response = await axios.post(
           backendUrl + "/api/user/login",
-          {
-            withCredentials: true,
-          },
+
           {
             email,
             password,
