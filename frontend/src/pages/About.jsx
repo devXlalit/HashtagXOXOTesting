@@ -6,11 +6,10 @@ import { FaLinkedinIn } from "react-icons/fa";
 
 const About = () => {
   return (
-    <div className="px-10 text-[#212529]">
-      <div className="text-2xl py-5 md:py-20 border-t">
-        <Title title={"About Us"} />
-      </div>
-      <div className="flex  justify-center md:flex-nowrap flex-wrap gap-10">
+    <div className=" text-[#212529]">
+      <img src="/web banner About Us-02.png" alt="" className="w-full" />
+      <img src="/web banner About Us-03.png" alt="" className="w-full" />
+      {/* <div className="flex  justify-center md:flex-nowrap flex-wrap gap-10">
         <div className="w-80 md:w-2/5 h-1/2 p-6 ring-4 text-[#343a40] ring-[#343a40] ">
           <p className="text-4xl font-medium">Vision</p>
           <p className="text-xl font-medium pl-1">What we do</p>
@@ -32,8 +31,8 @@ const About = () => {
           className="w-full md:w-1/2 md:mt-14 shadow-sm"
           loading="lazy"
         />
-      </div>
-      <div className="flex pt-20 justify-center md:flex-nowrap flex-wrap  gap-10">
+      </div> */}
+      {/* <div className="flex pt-20 justify-center md:flex-nowrap flex-wrap  gap-10">
         <img
           src="/10139.jpg"
           alt=""
@@ -55,8 +54,8 @@ const About = () => {
             one gentle glow at a time!
           </p>
         </div>
-      </div>
-      <div className="md:px-14">
+      </div> */}
+      <div className="px-10 md:px-14">
         <div className="text-2xl md:block hidden py-10 md:py-40 ">
           <Title title={"The Founders"} />
         </div>
@@ -79,71 +78,53 @@ const About = () => {
               soil.
             </p>
           </div>
-          <div className="flex flex-col px-8 items-center justify-center">
-            <img src="/richa.jpeg" alt="" className="rounded-full w-28" />
-            <p className="text-xl font-medium mt-4">Richa Malviya</p>
-            <p className="text-sm text-center">Founder</p>
-            <span className="flex gap-2 mt-4">
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaFacebookF
-                  size={20}
+          <div className="flex">
+            <div className="flex flex-col px-12 py-12 md:py-20 bg-[#ff8787] items-center justify-center">
+              <img src="/richa.jpeg" alt="" className="rounded-full w-28" />
+              <p className="text-xl font-medium mt-4">Richa Malviya</p>
+              <p className="text-sm text-center">Founder</p>
+              <span className="flex gap-2 mt-4">
+                <a
+                  href="https://www.facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-pink-400 duration-200"
+                >
+                  <FaInstagram size={22} />
+                </a>
+                <a
+                  href="https://www.facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-blue-500 duration-200"
-                />
-              </a>
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-pink-400 duration-200"
-              >
-                <FaInstagram size={22} />
-              </a>
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blue-500 duration-200"
-              >
-                <FaLinkedinIn size={22} />
-              </a>
-            </span>
-          </div>
-          <div className="flex flex-col bg-zinc-100 px-12 py-12 md:py-20 md:mt-0 mt-10 items-center justify-center">
-            <img src="/vineet.jpeg" alt="" className="rounded-full w-28" />
-            <p className="text-xl font-medium mt-4">Vineet Sharma</p>
-            <p className="text-sm text-center">Founder</p>
-            <span className="flex gap-2 mt-4">
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaFacebookF
-                  size={20}
+                >
+                  <FaLinkedinIn size={22} />
+                </a>
+              </span>
+            </div>
+            <div className="flex flex-col bg-zinc-200 px-12 py-12 md:py-20 md:mt-0 mt-10 items-center justify-center">
+              <img src="/vineet.jpeg" alt="" className="rounded-full w-28" />
+              <p className="text-xl font-medium mt-4">Vineet Sharma</p>
+              <p className="text-sm text-center">Founder</p>
+              <span className="flex gap-2 mt-4">
+                <a
+                  href="https://www.facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-pink-400 duration-200"
+                >
+                  <FaInstagram size={22} />
+                </a>
+                <a
+                  href="https://www.facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-blue-500 duration-200"
-                />
-              </a>
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-pink-400 duration-200"
-              >
-                <FaInstagram size={22} />
-              </a>
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blue-500 duration-200"
-              >
-                <FaLinkedinIn size={22} />
-              </a>
-            </span>
+                >
+                  <FaLinkedinIn size={22} />
+                </a>
+              </span>
+            </div>
           </div>
         </div>
       </div>

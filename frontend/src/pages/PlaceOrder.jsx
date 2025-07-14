@@ -325,7 +325,7 @@ const PlaceOrder = () => {
           </div>
 
           <div className="mt-12">
-            <h1 className="text-2xl text-[#DF4C84] font-medium opacity-90 pb-4">
+            <h1 className="text-2xl text-[#ff8787] font-medium opacity-90 pb-4">
               Payment Method
             </h1>
             {/* --------------- Payment Method Selection ------------- */}
@@ -359,7 +359,7 @@ const PlaceOrder = () => {
             <div className="w-full text-end mt-8">
               <button
                 type="submit"
-                className="bg-[#DF4C84] text-white px-16 py-3 text-sm"
+                className="bg-[#ff8787] text-white px-16 py-3 text-sm"
               >
                 PLACE ORDER
               </button>

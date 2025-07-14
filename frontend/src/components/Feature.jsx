@@ -1,38 +1,34 @@
-import React from "react";
-
-import FeatureCard from "./FeatureCard";
-import { VscWorkspaceTrusted } from "react-icons/vsc";
 import Title from "./Title";
 import { Link } from "react-router-dom";
-
+import Marquee from "react-fast-marquee";
 const Feature = () => {
   return (
     <div className="relative py-10">
       <Title title={"Why Choose Us"} />
-      <marquee loop="infinite" direction="left" bahavior="scroll" className="">
-        <span className="flex py-20 items-center gap-20 justify-center">
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
-          <img src="/Certificate logo-02.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
-          <img src="/Certificate logo-01.png" alt="" className="w-40" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
+      <Marquee>
+        <span className="flex mt-10  bg-[#ffe3e3] items-center gap-20 justify-center">
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-52" />
+          <img src="/Certificate logo-02.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-52" />
+          <img src="/Certificate logo-01.png" alt="" className="w-52" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-52" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-52" />
 
-          <img src="/Certificate logo-03.png" alt="" className="w-40" />
+          <img src="/Certificate logo-03.png" alt="" className="w-52" />
         </span>
-      </marquee>
+      </Marquee>
       {/* <img src={bannerImg} alt="testimonial img" className="w-full " /> */}
       {/* <span className="absolute bg-black/40 top-0 w-full h-[62.5vw]"></span>
       <span className="absolute  top-14 md:top-52 text-white font-medium text-shadow-lg text-2xl md:text-5xl w-full text-center">
@@ -62,16 +58,13 @@ const Feature = () => {
       </div> */}
       <div className="relative">
         <img
-          src="/beautiful-composition-spa-bath-concept-with-copyspace.jpg"
+          src="/web banner 1-02.png"
           alt=""
           className="w-full h-[30vw] object-top object-cover"
         />
-        <span className="absolute top-6 right-7 md:top-36 md:right-52 ">
-          <h1 className="text-sm md:text-5xl leading-tight md:leading-12 font-medium opacity-80">
-            Know about your skin start <br /> a skin quiz now!
-          </h1>
+        <span className="absolute md:bottom-6 -bottom-2 left-[27%] md:left-[30.5%] ">
           <Link to="/skinquiz" onClick={() => scrollTo(0, 0)}>
-            <button className="py-1 scale-50 -ml-6 md:ml-0 md:scale-100 px-4 mt-1 md:mt-6 shadow-md hover:ring-1 ring-black hover:bg-transparent hover:text-black transition-all duration-200 bg-[#DF4C84] rounded-md text-white">
+            <button className="py-1 scale-50 -ml-6 md:ml-0 md:scale-125 px-4 mt-1 md:mt-6 shadow-md hover:ring-1 ring-black hover:bg-tr ansparent hover:text-black transition-all duration-200 bg-[#ff8787] rounded-md text-white">
               Take Quiz
             </button>
           </Link>

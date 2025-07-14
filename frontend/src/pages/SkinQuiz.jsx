@@ -45,26 +45,30 @@ const results = {
   A: {
     title: "🧴 Oily or Acne-Prone Skin",
     products: [
-      "Salicylic Acid Serum",
+      "Dynamic Duo Serum",
       "Activated Charcoal Face Pack",
       "Rice Water Scrub",
     ],
   },
   B: {
     title: "🍊 Dry, Dull Skin Needing Hydration",
-    products: ["Vitamin C Serum", "Moisturizer", "Coffee Scrub"],
+    products: ["Aquavita Bloom Serum", "Moisturizer", "Coffee Scrub"],
   },
   C: {
     title: "🌺 Mature or Uneven Textured Skin",
-    products: ["Kumkumadi Serum", "Multani Mitti Face Pack", "Moisturizer"],
+    products: [
+      "Rediant Royale Serum",
+      "Multani Mitti Face Pack",
+      "Moisturizer",
+    ],
   },
   D: {
     title: "🌾 Sensitive or Combination Skin",
-    products: ["Rice Water Scrub", "Kumkumadi Serum", "Moisturizer"],
+    products: ["Rice Water Scrub", "Rediant Royale Serum", "Moisturizer"],
   },
   E: {
     title: "☀️ Normal Skin with Occasional Tan",
-    products: ["Sunscreen", "Vitamin C Serum", "Coffee Scrub"],
+    products: ["Sunscreen", "Aquavita Bloom Serum", "Coffee Scrub"],
   },
 };
 
@@ -81,6 +85,7 @@ const SkinQuiz = () => {
   };
 
   const handleSubmit = () => {
+    console.log(answers);
     if (answers.includes("")) {
       alert("Please answer all questions.");
       return;
@@ -117,15 +122,41 @@ const SkinQuiz = () => {
 
   const matchedProducts =
     submitted && result
-      ? products
-          .filter((item) => {
-            const name = item.name.toLowerCase();
-            const keywords = extractKeywords(result.products);
-            return keywords.some((word) => name.includes(word));
-          })
-          .slice(0, 3)
+      ? [
+          // 1. Exact Matches
+          ...products.filter((item) =>
+            result.products.some(
+              (recommendedName) =>
+                recommendedName.toLowerCase() === item.name.toLowerCase()
+            )
+          ),
+
+          // 2. Partial Matches by keywords (excluding already matched ones)
+          ...products.filter((item) => {
+            const itemName = item.name.toLowerCase();
+
+            // avoid duplicate matches from exact ones
+            const isExactMatch = result.products.some(
+              (recommendedName) => recommendedName.toLowerCase() === itemName
+            );
+            if (isExactMatch) return false;
+
+            const recommendedKeywords = result.products.flatMap(
+              (name) =>
+                name
+                  .toLowerCase()
+                  .split(/[\s–(),.]+/)
+                  .filter((w) => w.length > 3) // Ignore short/common words
+            );
+
+            return recommendedKeywords.some((keyword) =>
+              itemName.includes(keyword)
+            );
+          }),
+        ].slice(0, 6) // total number of suggestions to show
       : [];
 
+  console.log(matchedProducts);
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6  bg-white shadow-xl rounded-xl">
       <h2 className="text-2xl font-bold mb-4 text-center">
@@ -166,7 +197,7 @@ const SkinQuiz = () => {
           ))}
           <button
             onClick={handleSubmit}
-            className="mt-6 w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
+            className="mt-6 font-bold w-full bg-[#ff8787] text-white py-3 rounded-lg hover:bg-[#ff8787]/90"
           >
             Submit Quiz
           </button>

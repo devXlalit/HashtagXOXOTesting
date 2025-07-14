@@ -13,23 +13,27 @@ const BestSeller = () => {
   }, [products]);
 
   return (
-    <div className="my-10">
-      <div className="text-left text-3xl py-8">
-        <Title title={"Best Sellers"} />
-      </div>
+    <>
+      {bestSeller.length > 0 && (
+        <div className="my-10">
+          <div className="text-left text-3xl py-8">
+            <Title title={"Best Sellers"} />
+          </div>
 
-      <div className="grid grid-cols-2 gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-5">
-        {bestSeller.map((item, index) => (
-          <ProductItem
-            key={index}
-            id={item._id}
-            name={item.name}
-            image={item.image}
-            price={item.price}
-          />
-        ))}
-      </div>
-    </div>
+          <div className="grid grid-cols-2 gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-5">
+            {bestSeller.map((item, index) => (
+              <ProductItem
+                key={index}
+                id={item._id}
+                name={item.name}
+                image={item.image}
+                price={item.price}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

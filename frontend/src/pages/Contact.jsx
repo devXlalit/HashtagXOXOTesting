@@ -80,7 +80,7 @@ const Contact = () => {
         <button
           type="submit"
           disabled={state.submitting}
-          className="bg-[#F04077] col-span-2 text-white grid-row-2 px-4 py-2 "
+          className="bg-[#ff8787] col-span-2 text-white grid-row-2 px-4 py-2 "
         >
           Submit
         </button>

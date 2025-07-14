@@ -19,6 +19,7 @@ connectCloudinary();
 const allowedOrigins = [
   "http://localhost:5173", // for local dev
   "http://localhost:5174", // for local dev
+  "http://192.168.1.8:5173",
   "https://hashtag-xoxo-testing.vercel.app", // your actual deployed frontend URL
   "https://hashtag-xoxo-admin-testing.vercel.app",
   "https://www.hashtagxoxo.com", // your actual deployed frontend URL

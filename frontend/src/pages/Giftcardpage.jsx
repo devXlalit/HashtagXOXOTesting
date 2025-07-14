@@ -71,7 +71,7 @@ const Giftcardpage = () => {
               onClick={() => {
                 addToCart(id, giftCardData.price);
               }}
-              className="bg-[#DF4C84] mt-5 text-white px-8 py-3 text-sm active:bg-gray-700"
+              className="bg-[#ff8787] mt-5 text-white px-8 py-3 text-sm active:bg-gray-700"
             >
               ADD TO CART
             </button>

@@ -4,13 +4,13 @@ import { FaQuoteRight } from "react-icons/fa";
 
 const TestomonialsCard = ({ image, name, desc }) => {
   return (
-    <div className="flex w-[500px] text-[#343a40] relative md:justify-between items-center gap-10  rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] p-6 md:p-8">
+    <div className="flex w-[500px] bg-[#ffc9c9] text-[#343a40] relative md:justify-between items-center gap-10  rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] p-6 md:p-8">
       <div className="">
         <FaQuoteRight
-          color="#dee2e6"
+          color="#ffff"
           className="absolute text-xl md:text-5xl top-3 left-7 md:left-10"
         />
-        <p className=" w-[300px]  font-normal text-xs md:text-base pt-6 md:pt-12">
+        <p className=" w-[300px]  font-normal text-xs md:text-lg pt-6 md:pt-12">
           {desc}
         </p>
         <p className="text-right pt-2 text-xs md:text-base md:pt-0">__{name}</p>

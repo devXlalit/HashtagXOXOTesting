@@ -21,6 +21,12 @@ a.active hr {
     color: white;
   }
 }
+body {
+  position: relative;
+  background: url("/5358842.png") repeat;
+  background-size: fill; /* or 'contain' or your preferred value */
+  z-index: 0;
+}
 
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */

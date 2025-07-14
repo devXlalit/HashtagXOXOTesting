@@ -29,7 +29,7 @@ const Hero = () => {
                   key={img.id}
                   src={img.url}
                   alt={img.public_id}
-                  className="w-full object-fit"
+                  className="w-full z-30 object-fit"
                 />
               ))}
             </Slider>

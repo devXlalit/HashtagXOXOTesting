@@ -194,10 +194,15 @@ const Add = ({ token }) => {
             <option value="Scrub">Scrub</option>
             <option value="Sunscreen">Sunscreen</option>
             <option value="Moisturizer">Moisturizer</option>
-            <option value="HairOil">HairOil</option>
+            <option value="Hair Oil">Hair Oil</option>
             <option value="shampoo">shampoo</option>
             <option value="soaps">soaps</option>
             <option value="fragrances">fragrances</option>
+            <option value="toner">Toner</option>
+            <option value="lip balm">Lip Balm</option>
+            <option value="body mist">Body Mist</option>
+            <option value="undereye cream">Undereye Cream</option>
+            <option value="wipes">Wipes</option>
           </select>
         </div>
 

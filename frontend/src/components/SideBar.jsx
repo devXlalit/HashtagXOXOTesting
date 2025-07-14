@@ -52,7 +52,7 @@ const SideBar = () => {
         onMouseLeave={() => {
           setOffer(false);
         }}
-        className="pl-10 leading-8"
+        className="pl-10 leading-8 font-bold uppercase"
       >
         {uniqueOffers.map((item, index) => (
           <Link to={`/collection/${item}`} key={index}>
@@ -68,7 +68,7 @@ const SideBar = () => {
         onMouseLeave={() => {
           setCategory(false);
         }}
-        className="leading-8 pl-10"
+        className="leading-8 pl-10 font-bold uppercase"
       >
         {uniqueCategories.map((item, index) => (
           <Link to={`/collection/${item}`} key={index}>

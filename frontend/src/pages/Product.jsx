@@ -67,7 +67,7 @@ const Product = () => {
           <div>
             <button
               onClick={() => addToCart(productData._id, size)}
-              className="bg-[#DF4C84] mt-5 text-white px-8 py-3 text-sm active:bg-gray-700"
+              className="bg-[#ff8787] mt-5 text-white px-8 py-3 text-sm active:bg-gray-700"
             >
               ADD TO CART
             </button>
@@ -82,11 +82,11 @@ const Product = () => {
         </div>
       </div>
       <div className="md:px-40 py-10">
-        <p className=" text-md md:text-3xl  text-[#DF4C84] ring-1 ring-[#DF4C84]  p-2">
+        <p className=" text-md md:text-3xl  text-[#ff8787] ring-1 ring-[#ff8787]  p-2">
           Description
         </p>
         <div
-          className="prose text-md p-3 text-[#343a40] md:p-6 leading-5 md:text-xl w-full border-[#DF4C84]" // Tailwind typography for nice formatting
+          className="prose text-md p-3 text-[#343a40] md:p-6 leading-5 md:text-xl w-full border-[#ff8787]" // Tailwind typography for nice formatting
           dangerouslySetInnerHTML={{ __html: productData.delDescription }}
         />
         <hr />

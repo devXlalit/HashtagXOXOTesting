@@ -66,11 +66,11 @@ const Navbar = () => {
       <Link to="/">
         <img src={HashTagXOXO} alt="logo" className=" w-12 md:w-24" />
       </Link>
-      <ul className="hidden md:flex leading-8 z-50 font-normal   md:flex-wrap md:static md:bg-transparent bg-[#F04077] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
+      <ul className="hidden md:flex leading-8 z-50 font-bold uppercase text-xl  md:flex-wrap md:static md:bg-transparent bg-[#F04077] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
         {uniqueOffers.map((item, index) => (
           <Link to={`/collection/${item}`} key={index}>
             <li className="">
-              <span className="hover:text-[#F04077]  hover:opacity-100 duration-200">
+              <span className="hover:text-[#ff8787]  hover:opacity-100 duration-200">
                 {item}
               </span>
             </li>
@@ -79,7 +79,7 @@ const Navbar = () => {
         {uniqueCategories.map((item, index) => (
           <Link to={`/collection/${item}`} key={index}>
             <li className="">
-              <span className="hover:text-[#F04077]  hover:opacity-100 duration-200">
+              <span className="hover:text-[#ff8787]  hover:opacity-100 duration-200">
                 {item}
               </span>
             </li>
@@ -225,13 +225,13 @@ const Navbar = () => {
               <div className="flex flex-col gap-2 w-36 py-3 px-5   rounded">
                 <p
                   onClick={() => navigate("/orders")}
-                  className="cursor-pointer hover:text-[#DF4C84] duration-200"
+                  className="cursor-pointer hover:text-[#ff8787] duration-200"
                 >
                   Orders
                 </p>
                 <p
                   onClick={logout}
-                  className="cursor-pointer hover:text-[#DF4C84] duration-200"
+                  className="cursor-pointer hover:text-[#ff8787] duration-200"
                 >
                   Logout
                 </p>
@@ -243,7 +243,7 @@ const Navbar = () => {
             <BiShoppingBag size={25} className="opacity-90" />
             <p
               id="cartcount"
-              className=" absolute right-[-5px]  bottom-[-5px] w-4 text-center leading-4 bg-[#DF4C84] text-white aspect-square rounded-full text-[8px]"
+              className=" absolute right-[-5px]  bottom-[-5px] w-4 text-center leading-4 bg-[#ff8787] text-white aspect-square rounded-full text-[8px]"
             >
               {getCartCount()}
             </p>
@@ -315,7 +315,7 @@ const Navbar = () => {
               <BiShoppingBag size={25} className="opacity-90" />
               <p
                 id="cartcount"
-                className=" absolute right-[-5px] shadow-xl  bottom-[-5px] w-4 text-center leading-4 bg-[#DF4C84] aspect-square rounded-full text-[8px]"
+                className=" absolute right-[-5px] shadow-xl  bottom-[-5px] w-4 text-center leading-4 bg-[#ff8787] aspect-square rounded-full text-[8px]"
               >
                 {getCartCount()}
               </p>

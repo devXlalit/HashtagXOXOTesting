@@ -30,7 +30,7 @@ const App = () => {
         <>
           <Topbar />
           <Navbar />
-          <div className="">
+          <div className=" ">
             <ToastContainer />
             <SearchBar />
             <Routes>
