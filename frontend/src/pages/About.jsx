@@ -77,6 +77,13 @@ const About = () => {
               everything your skin needs has always grown right here, on Indian
               soil.
             </p>
+            {/* <a
+              href="/Hashtag XOXO Catalogue 2025.pdf"
+              download
+              className="bg-[#ff8787] px-4 py-2 rounded-md text-white ring-1 ring-[#ff8787] font-semibold hover:text-[#ff8787] hover:bg-transparent duration-200"
+            >
+              Download Brochure
+            </a> */}
           </div>
           <div className="flex">
             <div className="flex flex-col px-12 py-12 md:py-20 bg-[#ff8787] items-center justify-center">
@@ -85,7 +92,7 @@ const About = () => {
               <p className="text-sm text-center">Founder</p>
               <span className="flex gap-2 mt-4">
                 <a
-                  href="https://www.facebook.com"
+                  href="https://www.instagram.com/hash_tagxoxo/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-pink-400 duration-200"
@@ -93,7 +100,7 @@ const About = () => {
                   <FaInstagram size={22} />
                 </a>
                 <a
-                  href="https://www.facebook.com"
+                  href="https://www.linkedin.com/in/richa-malviya-977151103/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-500 duration-200"
@@ -108,7 +115,7 @@ const About = () => {
               <p className="text-sm text-center">Founder</p>
               <span className="flex gap-2 mt-4">
                 <a
-                  href="https://www.facebook.com"
+                  href="https://www.instagram.com/hash_tagxoxo/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-pink-400 duration-200"
@@ -116,7 +123,7 @@ const About = () => {
                   <FaInstagram size={22} />
                 </a>
                 <a
-                  href="https://www.facebook.com"
+                  href="https://www.linkedin.com/in/vineet-sharma-1128b155/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-500 duration-200"

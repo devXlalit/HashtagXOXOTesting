@@ -64,7 +64,7 @@ const Navbar = () => {
       className=" flex z-50 bg-[#F5FAEE] shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]  text-[#343a40]  px-10  items-center justify-between py-3 md:py-1 font-medium"
     >
       <Link to="/">
-        <img src={HashTagXOXO} alt="logo" className=" w-12 md:w-24" />
+        <img src={HashTagXOXO} alt="logo" className=" w-12 z-50 md:w-24" />
       </Link>
       <ul className="hidden md:flex leading-8 z-50 font-bold uppercase text-xl  md:flex-wrap md:static md:bg-transparent bg-[#F04077] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
         {uniqueOffers.map((item, index) => (
@@ -251,7 +251,7 @@ const Navbar = () => {
         </span>
       </ul>
       {visible && (
-        <ul className=" leading-8 z-50 font-normal text-center md:flex md:flex-wrap md:static md:bg-transparent bg-[#F5FAEE] md:shadow-none shadow-xl py-6 md:py-4 top-[70px] left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
+        <ul className=" leading-8 z-50 font-normal text-center md:flex md:flex-wrap md:static md:bg-transparent bg-[#F5FAEE] md:shadow-none shadow-xl py-6 md:py-4 top-[90px] left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
           {uniqueOffers.map((item, index) => (
             <Link to={`/collection/${item}`} key={index}>
               <li className="">

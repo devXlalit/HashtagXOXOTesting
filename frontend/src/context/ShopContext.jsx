@@ -17,6 +17,7 @@ const ShopContextProvider = (props) => {
   const [topHeading, setTopHeading] = useState("");
   const [token, setToken] = useState("");
   const [bannerImg, setBannerImg] = useState([]);
+  const [offerApplied, setIsofferapplied] = useState(false);
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -32,7 +33,7 @@ const ShopContextProvider = (props) => {
       cartData[itemId][size] = 1;
     }
     setCartItems(cartData);
-
+    alert("Product added to cart!!");
     if (token) {
       try {
         await axios.post(
@@ -237,7 +238,7 @@ const ShopContextProvider = (props) => {
       // While we can apply this offer, do so
       while (totalQty >= offerQty) {
         totalAmount += offerPrice;
-
+        setIsofferapplied(true);
         // Mark used units for offer
         let unitsToMark = offerQty;
         // Distribute used units for offer across products (prioritize higher price)
@@ -261,6 +262,74 @@ const ShopContextProvider = (props) => {
         );
       }
       // Any leftovers after all possible offers are applied will be handled by lower offers or normal price
+    });
+
+    // 2b. Handle Buy X Get Y offers (e.g., "Buy 1 Get 1", "Buy 2 Get 1")
+    const buyXGetYOffers = [];
+
+    Object.keys(offerGroups).forEach((offerStr) => {
+      const match = offerStr.match(/^Buy (\d+) Get (\d+)$/i);
+      if (match) {
+        buyXGetYOffers.push({
+          raw: offerStr,
+          buy: parseInt(match[1]),
+          get: parseInt(match[2]),
+        });
+      }
+    });
+
+    // For each Buy X Get Y offer, apply the logic
+    buyXGetYOffers.forEach((offerObj) => {
+      const { raw: offer, buy, get } = offerObj;
+      const items = offerGroups[offer];
+      if (!items) return;
+
+      // Only use units that haven't been used by a higher offer
+      let availableItems = items
+        .map(({ product, quantity, itemId }) => {
+          const used = usedUnits[itemId] || 0;
+          return { product, quantity: quantity - used, itemId };
+        })
+        .filter(({ quantity }) => quantity > 0);
+
+      // Flatten to an array of individual units with price and itemId
+      let unitList = [];
+      availableItems.forEach(({ product, quantity, itemId }) => {
+        for (let i = 0; i < quantity; i++) {
+          unitList.push({ product, price: product.price, itemId });
+        }
+      });
+
+      // Sort by price descending (most expensive first)
+      unitList.sort((a, b) => b.price - a.price);
+
+      const groupSize = buy + get;
+      let groupCount = Math.floor(unitList.length / groupSize);
+
+      let unitsUsed = 0;
+      for (let g = 0; g < groupCount; g++) {
+        // For each group, charge for the X most expensive, give Y cheapest free
+        const group = unitList.slice(g * groupSize, (g + 1) * groupSize);
+        // Charge for the first X (already sorted by price desc)
+        for (let i = 0; i < buy; i++) {
+          totalAmount += group[i].price;
+          usedUnits[group[i].itemId] = (usedUnits[group[i].itemId] || 0) + 1;
+        }
+        // Mark the free items as used too
+        for (let i = buy; i < groupSize; i++) {
+          usedUnits[group[i].itemId] = (usedUnits[group[i].itemId] || 0) + 1;
+        }
+        unitsUsed += groupSize;
+      }
+
+      // Remove used units from unitList for leftovers
+      unitList = unitList.slice(groupCount * groupSize);
+
+      // Any leftovers (not enough for another group), charge normal price
+      unitList.forEach(({ price, itemId }) => {
+        totalAmount += price;
+        usedUnits[itemId] = (usedUnits[itemId] || 0) + 1;
+      });
     });
 
     // 5. Add products without offers or not used in any offer group
@@ -416,6 +485,7 @@ const ShopContextProvider = (props) => {
     getCartCount,
     updateQuantity,
     getCartAmount,
+    offerApplied,
     navigate,
     backendUrl,
     setToken,

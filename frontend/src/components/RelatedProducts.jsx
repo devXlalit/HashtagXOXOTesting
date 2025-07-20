@@ -15,7 +15,6 @@ const RelatedProducts = ({ category, currentProductId }) => {
       productsCopy = productsCopy.filter(
         (item) => item.category === category && item._id !== currentProductId
       );
-
       setRelated(productsCopy.slice(0, 5)); // Take only 5 products
     }
   }, [products, category, currentProductId]);

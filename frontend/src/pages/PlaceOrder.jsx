@@ -319,7 +319,7 @@ const PlaceOrder = () => {
         </div>
 
         {/* ------------- Right Side ------------------ */}
-        <div className="mt-8 w-1/2">
+        <div className="mt-8 md:w-1/2">
           <div className="">
             <CartTotal />
           </div>

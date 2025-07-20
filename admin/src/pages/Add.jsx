@@ -25,6 +25,8 @@ const Add = ({ token }) => {
     "Buy 2 at 299",
     "Buy 3 at 399",
     "Buy 5 at 599",
+    "Buy 2 Get 1",
+    "Buy 1 Get 1",
   ];
 
   const handleOfferChange = (offer) => {

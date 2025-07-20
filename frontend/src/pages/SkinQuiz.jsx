@@ -45,30 +45,30 @@ const results = {
   A: {
     title: "🧴 Oily or Acne-Prone Skin",
     products: [
-      "Dynamic Duo Serum",
-      "Activated Charcoal Face Pack",
-      "Rice Water Scrub",
+      "Dynamic Duo Face Serum",
+      "Carbon Detox Face Pack",
+      "Rice Revive Scrub",
     ],
   },
   B: {
     title: "🍊 Dry, Dull Skin Needing Hydration",
-    products: ["Aquavita Bloom Serum", "Moisturizer", "Coffee Scrub"],
+    products: ["Aquavita Bloom Face serum", "Ginseng Gold Moisturizer", "Coffee Crush Scrub"],
   },
   C: {
     title: "🌺 Mature or Uneven Textured Skin",
     products: [
-      "Rediant Royale Serum",
+      "Radiant Royale Face Serum",
       "Multani Mitti Face Pack",
-      "Moisturizer",
+      "Ginseng Gold Moisturizer",
     ],
   },
   D: {
     title: "🌾 Sensitive or Combination Skin",
-    products: ["Rice Water Scrub", "Rediant Royale Serum", "Moisturizer"],
+    products: ["Rice Revive Scrub", "Radiant Royale Face Serum", "Ginseng Gold Moisturizer"],
   },
   E: {
     title: "☀️ Normal Skin with Occasional Tan",
-    products: ["Sunscreen", "Aquavita Bloom Serum", "Coffee Scrub"],
+    products: ["Sunny Side Sunscreen", "Aquavita Bloom Face Serum", "Coffee Crush Scrub"],
   },
 };
 
@@ -76,6 +76,7 @@ const SkinQuiz = () => {
   const { products } = useContext(ShopContext);
   const [answers, setAnswers] = useState(Array(questions.length).fill(""));
   const [submitted, setSubmitted] = useState(false);
+  let SuggestedPro = []
 
   const handleSelect = (qIndex, optIndex) => {
     const letter = String.fromCharCode(65 + optIndex);
@@ -85,7 +86,6 @@ const SkinQuiz = () => {
   };
 
   const handleSubmit = () => {
-    console.log(answers);
     if (answers.includes("")) {
       alert("Please answer all questions.");
       return;
@@ -98,65 +98,52 @@ const SkinQuiz = () => {
     setSubmitted(false);
   };
 
-  const calculateResult = () => {
-    const counts = {};
-    answers.forEach((a) => {
-      counts[a] = (counts[a] || 0) + 1;
-    });
-    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-    const topAnswer = sorted[0][0];
-    return results[topAnswer];
-  };
 
-  const extractKeywords = (phrases) => {
-    return phrases.flatMap(
-      (p) =>
-        p
-          .split(/[\s–(),.]+/) // split on space or punctuation
-          .map((word) => word.toLowerCase().trim())
-          .filter((w) => w.length > 3) // ignore short words like "the", "or"
-    );
-  };
 
-  const result = submitted ? calculateResult() : null;
 
-  const matchedProducts =
-    submitted && result
-      ? [
-          // 1. Exact Matches
-          ...products.filter((item) =>
-            result.products.some(
-              (recommendedName) =>
-                recommendedName.toLowerCase() === item.name.toLowerCase()
-            )
-          ),
 
-          // 2. Partial Matches by keywords (excluding already matched ones)
-          ...products.filter((item) => {
-            const itemName = item.name.toLowerCase();
 
-            // avoid duplicate matches from exact ones
-            const isExactMatch = result.products.some(
-              (recommendedName) => recommendedName.toLowerCase() === itemName
-            );
-            if (isExactMatch) return false;
+  const mostFeq = (answer) =>{
+  let res = null;
 
-            const recommendedKeywords = result.products.flatMap(
-              (name) =>
-                name
-                  .toLowerCase()
-                  .split(/[\s–(),.]+/)
-                  .filter((w) => w.length > 3) // Ignore short/common words
-            );
+  for(let i = 0; i <= answers.length; i++ ){
+    for(let j = i+1; j< answer.length; j++){
+      if(answer[i]==answers[j]){
+        res = answer[i]
+      }
+    }
+  }
+  return res;
+}
 
-            return recommendedKeywords.some((keyword) =>
-              itemName.includes(keyword)
-            );
-          }),
-        ].slice(0, 6) // total number of suggestions to show
-      : [];
+const ans = mostFeq(answers)
 
-  console.log(matchedProducts);
+
+const findProd = () => {
+  if (!ans || !results?.[ans]?.products || !products) return;
+
+  const matchedIds = new Set(); 
+
+  for (let i = 0; i < products.length; i++) {
+    const product = products[i];
+    const productName = product?.name?.toLowerCase();
+
+    for (let j = 0; j < results[ans].products.length; j++) {
+      const keyword = results[ans].products[j]?.toLowerCase();
+      
+
+      if(productName.includes(keyword)){
+        SuggestedPro.push(products[i])
+      }
+
+    }
+  }
+};
+
+
+  findProd()
+
+  const result = submitted ? findProd : null;
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6  bg-white shadow-xl rounded-xl">
       <h2 className="text-2xl font-bold mb-4 text-center">
@@ -204,9 +191,9 @@ const SkinQuiz = () => {
         </div>
       ) : (
         <div>
-          <h3 className="text-xl font-semibold mb-3">{result?.title}</h3>
+          <h3 className="text-xl font-semibold mb-3">{results?.[ans]?.title}</h3>
           <ul className="list-disc list-inside space-y-2 mb-4">
-            {result?.products.map((p, i) => (
+            {results?.[ans]?.products.map((p, i) => (
               <li key={i}>{p}</li>
             ))}
           </ul>
@@ -222,13 +209,13 @@ const SkinQuiz = () => {
             </ul>
           </div>
 
-          {matchedProducts.length > 0 && (
+          {SuggestedPro.length > 0 && (
             <div className="mt-8">
               <h4 className="text-lg font-semibold mb-3">
                 🛍 Recommended Products in Our Store
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {matchedProducts.map((item) => (
+                {SuggestedPro.map((item) => (
                   <ProductItem
                     key={item._id}
                     name={item.name}
@@ -254,3 +241,4 @@ const SkinQuiz = () => {
 };
 
 export default SkinQuiz;
+

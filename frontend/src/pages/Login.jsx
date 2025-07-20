@@ -12,6 +12,7 @@ const Login = () => {
   const [password, setPasword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [phone, setPhone] = useState("");
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
@@ -19,6 +20,7 @@ const Login = () => {
         const response = await axios.post(backendUrl + "/api/user/register", {
           name,
           email,
+          phone,
           password,
         });
         if (response.data.success) {
@@ -83,6 +85,20 @@ const Login = () => {
         placeholder="Email"
         required
       />
+      {currentState === "Login" ? (
+        ""
+      ) : (
+        <input
+          type="tel"
+          onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+          value={phone}
+          maxLength={10}
+          className="w-full px-3 outline-none py-2 border border-gray-800"
+          placeholder="Phone"
+          required
+        />
+      )}
+
       <span className="relative w-full px-3 py-2 border border-gray-800 flex justify-between items-center">
         <input
           onChange={(e) => setPasword(e.target.value)}
