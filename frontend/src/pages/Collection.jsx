@@ -104,7 +104,7 @@ const Collection = () => {
     <>
       <div className="flex w-full">
         <SideBar />
-        <div className="w-full md:w-5/6">
+        <div className="w-full">
           <div className="flex  flex-col sm:flex-row gap-1 sm:gap-10 pr-6 pt-10 border-t">
             <div className="">
               <div className="flex justify-between text-base sm:text-2xl mb-4">
@@ -123,16 +123,18 @@ const Collection = () => {
                 </select>
               </div>
 
-              <div className="grid grid-cols-2 gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-5">
-                {filterProducts.map((item) => (
-                  <ProductItem
-                    key={item._id}
-                    name={item.name}
-                    id={item._id}
-                    price={item.price}
-                    image={item.image}
-                  />
-                ))}
+              <div className="flex  justify-end items-center ">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 place-items-center justify-center gap-y-14 gap-x-4  px-10">
+                  {filterProducts.map((item) => (
+                    <ProductItem
+                      key={item._id}
+                      name={item.name}
+                      id={item._id}
+                      price={item.price}
+                      image={item.image}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>

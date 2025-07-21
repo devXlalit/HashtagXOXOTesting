@@ -66,7 +66,7 @@ const Navbar = () => {
       <Link to="/">
         <img src={HashTagXOXO} alt="logo" className=" w-12 z-50 md:w-24" />
       </Link>
-      <ul className="hidden md:flex leading-8 z-50 font-bold uppercase text-xl  md:flex-wrap md:static md:bg-transparent bg-[#F04077] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
+      <ul className="hidden md:flex leading-8 z-50 font-normal capitalize text-lg  md:flex-wrap md:static md:bg-transparent bg-[#F04077] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
         {uniqueOffers.map((item, index) => (
           <Link to={`/collection/${item}`} key={index}>
             <li className="">

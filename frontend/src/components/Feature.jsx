@@ -6,27 +6,27 @@ const Feature = () => {
     <div className="relative py-10">
       <Title title={"Why Choose Us"} />
       <Marquee>
-        <span className="flex mt-10  bg-[#ffe3e3] items-center gap-20 justify-center">
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-52" />
-          <img src="/Certificate logo-02.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-52" />
-          <img src="/Certificate logo-01.png" alt="" className="w-52" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1 copy@3x.png" alt="" className="w-52" />
-          <img src="/Artboard 1@3x.png" alt="" className="w-52" />
+        <span className="flex mt-10  py-20 items-center gap-20 justify-center">
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
+          <img src="/Certificate logo-02.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
+          <img src="/Certificate logo-01.png" alt="" className="w-40" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 2@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 3@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy 4@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1 copy@3x.png" alt="" className="w-40" />
+          <img src="/Artboard 1@3x.png" alt="" className="w-40" />
 
-          <img src="/Certificate logo-03.png" alt="" className="w-52" />
+          <img src="/Certificate logo-03.png" alt="" className="w-40" />
         </span>
       </Marquee>
       {/* <img src={bannerImg} alt="testimonial img" className="w-full " /> */}
