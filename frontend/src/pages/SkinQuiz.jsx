@@ -52,7 +52,11 @@ const results = {
   },
   B: {
     title: "🍊 Dry, Dull Skin Needing Hydration",
-    products: ["Aquavita Bloom Face serum", "Ginseng Gold Moisturizer", "Coffee Crush Scrub"],
+    products: [
+      "Aquavita Bloom Face serum",
+      "Ginseng Gold Moisturizer",
+      "Coffee Crush Scrub",
+    ],
   },
   C: {
     title: "🌺 Mature or Uneven Textured Skin",
@@ -64,11 +68,19 @@ const results = {
   },
   D: {
     title: "🌾 Sensitive or Combination Skin",
-    products: ["Rice Revive Scrub", "Radiant Royale Face Serum", "Ginseng Gold Moisturizer"],
+    products: [
+      "Rice Revive Scrub",
+      "Radiant Royale Face Serum",
+      "Ginseng Gold Moisturizer",
+    ],
   },
   E: {
     title: "☀️ Normal Skin with Occasional Tan",
-    products: ["Sunny Side Sunscreen", "Aquavita Bloom Face Serum", "Coffee Crush Scrub"],
+    products: [
+      "Sunny Side Sunscreen",
+      "Aquavita Bloom Face Serum",
+      "Coffee Crush Scrub",
+    ],
   },
 };
 
@@ -76,7 +88,7 @@ const SkinQuiz = () => {
   const { products } = useContext(ShopContext);
   const [answers, setAnswers] = useState(Array(questions.length).fill(""));
   const [submitted, setSubmitted] = useState(false);
-  let SuggestedPro = []
+  let SuggestedPro = [];
 
   const handleSelect = (qIndex, optIndex) => {
     const letter = String.fromCharCode(65 + optIndex);
@@ -98,61 +110,57 @@ const SkinQuiz = () => {
     setSubmitted(false);
   };
 
+  const mostFeq = (answer) => {
+    let res = null;
 
-
-
-
-
-  const mostFeq = (answer) =>{
-  let res = null;
-
-  for(let i = 0; i <= answers.length; i++ ){
-    for(let j = i+1; j< answer.length; j++){
-      if(answer[i]==answers[j]){
-        res = answer[i]
+    for (let i = 0; i <= answers.length; i++) {
+      for (let j = i + 1; j < answer.length; j++) {
+        if (answer[i] == answers[j]) {
+          res = answer[i];
+        }
       }
     }
-  }
-  return res;
-}
+    return res;
+  };
 
-const ans = mostFeq(answers)
+  const ans = mostFeq(answers);
 
+  const findProd = () => {
+    if (!ans || !results?.[ans]?.products || !products) return;
 
-const findProd = () => {
-  if (!ans || !results?.[ans]?.products || !products) return;
+    const matchedIds = new Set();
 
-  const matchedIds = new Set(); 
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      const productName = product?.name?.toLowerCase();
 
-  for (let i = 0; i < products.length; i++) {
-    const product = products[i];
-    const productName = product?.name?.toLowerCase();
+      for (let j = 0; j < results[ans].products.length; j++) {
+        const keyword = results[ans].products[j]?.toLowerCase();
 
-    for (let j = 0; j < results[ans].products.length; j++) {
-      const keyword = results[ans].products[j]?.toLowerCase();
-      
-
-      if(productName.includes(keyword)){
-        SuggestedPro.push(products[i])
+        if (productName.includes(keyword)) {
+          SuggestedPro.push(products[i]);
+        }
       }
-
     }
-  }
-};
+  };
 
-
-  findProd()
+  findProd();
 
   const result = submitted ? findProd : null;
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6  bg-white shadow-xl rounded-xl">
       <h2 className="text-2xl font-bold mb-4 text-center">
-        🌿 Find Your Skincare Match
+        🌿
+        {submitted
+          ? "We found what your skin needs!"
+          : "Find Your Skincare Match"}
       </h2>
-      <p className="text-center text-gray-600 mb-6">
-        Answer the questions below to know which products are perfect for your
-        skin needs.
-      </p>
+      {!submitted && (
+        <p className="text-center text-gray-600 mb-6">
+          Answer the questions below to know which products are perfect for your
+          skin needs.
+        </p>
+      )}
 
       {!submitted ? (
         <div className="space-y-6">
@@ -191,7 +199,9 @@ const findProd = () => {
         </div>
       ) : (
         <div>
-          <h3 className="text-xl font-semibold mb-3">{results?.[ans]?.title}</h3>
+          <h3 className="text-xl font-semibold mb-3">
+            {results?.[ans]?.title}
+          </h3>
           <ul className="list-disc list-inside space-y-2 mb-4">
             {results?.[ans]?.products.map((p, i) => (
               <li key={i}>{p}</li>
@@ -241,4 +251,3 @@ const findProd = () => {
 };
 
 export default SkinQuiz;
-

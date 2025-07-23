@@ -251,7 +251,7 @@ const Navbar = () => {
         </span>
       </ul>
       {visible && (
-        <ul className=" leading-8 z-50 font-normal text-center md:flex md:flex-wrap md:static md:bg-transparent bg-[#F5FAEE] md:shadow-none shadow-xl py-6 md:py-4 top-[90px] left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
+        <ul className="capitalize leading-8 z-50 font-normal text-center md:hidden md:flex-wrap md:static md:bg-transparent bg-[#F5FAEE] md:shadow-none shadow-xl py-6 md:py-4 top-[90px] left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
           {uniqueOffers.map((item, index) => (
             <Link to={`/collection/${item}`} key={index}>
               <li className="">
