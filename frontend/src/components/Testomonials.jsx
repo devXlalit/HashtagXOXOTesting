@@ -37,7 +37,7 @@ const Testomonials = () => {
   return (
     <div className=" overflow-hidden flex-col items-center justify-center py-10 md:pt-20 ">
       <Title title={"Client's Testimonials"} />
-      <div className="w-full overflow-y-scroll no-scrollbar">
+      <div className="w-full overflow-y-scroll ">
         <div className="flex w-fit ml-4 py-16  gap-4  ">
           {TestomonialsContent.map((item, idx) => (
             <TestomonialsCard

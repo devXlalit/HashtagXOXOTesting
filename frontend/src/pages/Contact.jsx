@@ -22,18 +22,21 @@ const Contact = () => {
           name="name"
           placeholder="Name"
           className="block col-span-2 md:col-span-1 p-2 border mb-4 "
+          required
         />
         <input
           name="email"
           type="email"
           placeholder="Email"
           className="block col-span-2 md:col-span-1  p-2 border mb-4 "
+          required
         />
         <input
           name="phone"
           type="text"
           placeholder="Phone"
           className="block col-span-2 md:col-span-1  p-2 border mb-4 "
+          required
         />
 
         <input
@@ -41,6 +44,7 @@ const Contact = () => {
           type="text"
           placeholder="City"
           className="block col-span-2 md:col-span-1 p-2 border mb-4 "
+          required
         />
         <input
           name="state"
@@ -53,6 +57,7 @@ const Contact = () => {
           type="text"
           placeholder="Zipcode"
           className="block col-span-2 md:col-span-1  p-2 border mb-4 "
+          required
         />
         <select
           name="user_type"
@@ -69,6 +74,7 @@ const Contact = () => {
           type="text"
           placeholder="Country"
           className="block col-span-2 md:col-span-1 p-2 border mb-4 "
+          required
         />
         <textarea
           name="message"

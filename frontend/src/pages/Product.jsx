@@ -59,9 +59,6 @@ const Product = () => {
           {/* <p className="text-md font-medium pt-3">Size: 30 ML</p> */}
           <p className=" text-sm md:text-2xl pt-3 text-[#868e96] font-regular">
             Rs.{productData.price}{" "}
-            <span className="line-through text-[#868e96] text-xl font-light">
-              Rs.{Math.floor(productData.price * 2)}
-            </span>
           </p>
           <span className="opacity-60 text-sm">Inclusive of all taxes</span>
           <div>

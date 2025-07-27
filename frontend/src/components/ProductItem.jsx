@@ -9,7 +9,7 @@ const ProductItem = ({ id, image, name, price }) => {
   return (
     <Link
       onClick={() => scrollTo(0, 0)}
-      className=" z-0 cursor-pointer  flex flex-col items-center justify-center"
+      className="w-full z-0 cursor-pointer  flex flex-col items-center justify-center"
       to={`/product/${id}`}
     >
       <div
@@ -42,11 +42,8 @@ const ProductItem = ({ id, image, name, price }) => {
         {name}
       </p>
 
-      <p className="text-center text-sm md:text-lg py-2 text-[#868e96] font-regular">
-        Rs.{price}{" "}
-        <span className="line-through text-[#868e96] text-sm font-light">
-          Rs.{Math.floor(price * 2)}
-        </span>
+      <p className="text-center text-sm w-full md:text-lg py-2 text-[#868e96] font-regular">
+        Rs.{price}
       </p>
       <p className="bg-[#ff8787] w-30 justify-center text-white font-semibold md:text-sm text-xs rounded-lg px-3 py-2">
         Order Now

@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const LatestCollection = () => {
   const { products } = useContext(ShopContext);
   const [latestProducts, setLatestProducts] = useState([]);
   const [viewAll, setViewAll] = useState(false);
+
   useEffect(() => {
     setLatestProducts(products.slice(0, 9));
   }, [products]);
@@ -18,27 +21,43 @@ const LatestCollection = () => {
 
       {/* Rendering Products */}
       <div className="grid grid-cols-2 gap-y-5 gap-x-2 md:grid-cols-3 px-10 place-items-center lg:grid-cols-3">
-        <>
-          {viewAll
-            ? products.map((item, index) => (
-                <ProductItem
-                  key={index}
-                  id={item._id}
-                  image={item.image}
-                  name={item.name}
-                  price={item.price}
-                />
-              ))
-            : latestProducts.map((item, index) => (
-                <ProductItem
-                  key={index}
-                  id={item._id}
-                  image={item.image}
-                  name={item.name}
-                  price={item.price}
-                />
-              ))}
-        </>
+        {products.length > 0 ? (
+          <>
+            {viewAll
+              ? products.map((item, index) => (
+                  <ProductItem
+                    key={index}
+                    id={item._id}
+                    image={item.image}
+                    name={item.name}
+                    price={item.price}
+                  />
+                ))
+              : latestProducts.map((item, index) => (
+                  <ProductItem
+                    key={index}
+                    id={item._id}
+                    image={item.image}
+                    name={item.name}
+                    price={item.price}
+                  />
+                ))}
+          </>
+        ) : (
+          <>
+            {[...Array(9)].map((_, index) => (
+              <Skeleton
+                key={index}
+                height={200}
+                width={200}
+                baseColor="#adb5bd"
+                highlightColor="#f8f9fa"
+                className="opacity-40"
+                enableAnimation={true}
+              />
+            ))}
+          </>
+        )}
       </div>
       <p
         onClick={() => {

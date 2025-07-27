@@ -6,7 +6,8 @@ import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
 const Login = () => {
   const [currentState, setCurrentState] = useState("Login");
-  const { token, setToken, navigate, backendUrl } = useContext(ShopContext);
+  const { token, setToken, navigate, backendUrl, setUsername } =
+    useContext(ShopContext);
 
   const [name, setName] = useState("");
   const [password, setPasword] = useState("");
@@ -24,6 +25,8 @@ const Login = () => {
           password,
         });
         if (response.data.success) {
+          setUsername(response.data.username);
+          localStorage.setItem("username", response.data.username);
           setToken(response.data.token);
           localStorage.setItem("token", response.data.token);
         } else {
@@ -39,6 +42,8 @@ const Login = () => {
           }
         );
         if (response.data.success) {
+          setUsername(response.data.username);
+          localStorage.setItem("username", response.data.username);
           setToken(response.data.token);
           localStorage.setItem("token", response.data.token);
         } else {

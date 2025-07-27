@@ -65,7 +65,7 @@ const About = () => {
               Meet Our Founders
             </h1>
             <hr className="w-full  my-6" />
-            <p className="bg-zinc-100 md:py-12 p-8 md:text-left md:text-base md:px-8 md:mb-0 mb-10 -ml-3">
+            <p className="bg-zinc-100  md:py-12 p-8 md:text-left md:text-lg md:px-8 md:mb-0 mb-10 -ml-3">
               We didn’t just start a brand—we started a movement. Hashtag XOXO
               is our heartfelt journey to bring you skincare that heals, hugs,
               and honors your natural beauty. Rooted in ancient Indian wisdom

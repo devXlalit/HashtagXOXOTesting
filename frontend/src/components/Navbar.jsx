@@ -8,13 +8,15 @@ import { IoMenu } from "react-icons/io5";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { BiShoppingBag } from "react-icons/bi";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const Navbar = () => {
   const [whatnew, setWhatnew] = useState(false);
   const [offer, setOffer] = useState(false);
   const [category, setCategory] = useState(false);
   const [visible, setVisible] = useState(false);
   const [dropDown, setDropDown] = useState(false);
-  const { products } = useContext(ShopContext);
+  const { products, username } = useContext(ShopContext);
 
   const location = useLocation();
 
@@ -58,6 +60,8 @@ const Navbar = () => {
     setOffer(false);
     setCategory(false);
   }, [location]);
+
+  console.log(username);
   return (
     <div
       id="bag"
@@ -67,7 +71,7 @@ const Navbar = () => {
         <img src={HashTagXOXO} alt="logo" className=" w-12 z-50 md:w-24" />
       </Link>
       <ul className="hidden md:flex leading-8 z-50 font-normal capitalize text-lg  md:flex-wrap md:static md:bg-transparent bg-[#F04077] md:shadow-none shadow-xl py-6 md:py-4 top-16 left-0 right-0 absolute   md:flex-row flex-col justify-center items-center md:gap-5 ">
-        {uniqueOffers.map((item, index) => (
+        {/* {uniqueOffers.map((item, index) => (
           <Link to={`/collection/${item}`} key={index}>
             <li className="">
               <span className="hover:text-[#ff8787]  hover:opacity-100 duration-200">
@@ -75,12 +79,21 @@ const Navbar = () => {
               </span>
             </li>
           </Link>
-        ))}
+        ))} */}
         {uniqueCategories.map((item, index) => (
           <Link to={`/collection/${item}`} key={index}>
             <li className="">
               <span className="hover:text-[#ff8787]  hover:opacity-100 duration-200">
-                {item}
+                {item || (
+                  <Skeleton
+                    baseColor="#adb5bd"
+                    highlightColor="#f8f9fa"
+                    className="opacity-40"
+                    enableAnimation={true}
+                    width={20}
+                    count={1}
+                  />
+                )}
               </span>
             </li>
           </Link>
@@ -204,16 +217,22 @@ const Navbar = () => {
               navigate(`/collection/all`);
             }}
           />
-          <CgProfile
-            title="login"
-            className="cursor-pointer opacity-90"
-            onMouseEnter={() => {
-              setDropDown(true);
-            }}
-            size={25}
-            onClick={() => (token ? null : navigate("/login"))}
-          />
-
+          <span className="flex gap-1 items-center cursor-pointer">
+            <CgProfile
+              title="login"
+              className="cursor-pointer opacity-90"
+              onMouseEnter={() => {
+                setDropDown(true);
+              }}
+              size={25}
+              onClick={() => (token ? null : navigate("/login"))}
+            />
+            <p className="text-md ">
+              {token
+                ? localStorage.getItem("username")?.split(" ")[0]
+                : "Guest"}
+            </p>
+          </span>
           {/* Dropdown Menu */}
           {token && dropDown && (
             <div
@@ -229,6 +248,7 @@ const Navbar = () => {
                 >
                   Orders
                 </p>
+
                 <p
                   onClick={logout}
                   className="cursor-pointer hover:text-[#ff8787] duration-200"
@@ -252,7 +272,7 @@ const Navbar = () => {
       </ul>
       {visible && (
         <ul className="capitalize leading-8 z-50 font-normal text-center md:hidden md:flex-wrap md:static md:bg-transparent bg-[#F5FAEE] md:shadow-none shadow-xl py-6 md:py-4 top-[90px] left-0 right-0 absolute   md:flex-row flex-col justify-center items-center block md:gap-5 ">
-          {uniqueOffers.map((item, index) => (
+          {/* {uniqueOffers.map((item, index) => (
             <Link to={`/collection/${item}`} key={index}>
               <li className="">
                 <span className="hover:text-[#F04077]  hover:opacity-100 duration-200">
@@ -260,7 +280,7 @@ const Navbar = () => {
                 </span>
               </li>
             </Link>
-          ))}
+          ))} */}
           {uniqueCategories.map((item, index) => (
             <Link to={`/collection/${item}`} key={index}>
               <li className="">
@@ -285,23 +305,29 @@ const Navbar = () => {
                 navigate(`/collection/all`);
               }}
             />
-            <CgProfile
-              className="cursor-pointer opacity-90"
-              size={25}
-              onClick={() => (token ? null : navigate("/login"))}
-            />
-
-            {/* Dropdown Menu */}
+            <span className="flex gap-1 items-center cursor-pointer">
+              <CgProfile
+                className="cursor-pointer opacity-90"
+                size={25}
+                onClick={() => (token ? null : navigate("/login"))}
+              />
+              {token
+                ? localStorage.getItem("username")?.split(" ")[0]
+                : "Guest"}
+              {/* Dropdown Menu */}
+            </span>
             {token && (
               <div className="group-hover:block z-40 hidden absolute dropdown-menu right-0 pt-4">
                 <div className="flex flex-col gap-2 w-36 py-3 px-5  bg-slate-100 text-gray-500 rounded">
                   <p className="cursor-pointer hover:text-black">My Profile</p>
+
                   <p
                     onClick={() => navigate("/orders")}
                     className="cursor-pointer hover:text-black"
                   >
                     Orders
                   </p>
+
                   <p
                     onClick={logout}
                     className="cursor-pointer hover:text-black"

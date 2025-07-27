@@ -18,8 +18,10 @@ const Collection = () => {
 
     // Search filter
     if (showSearch && search) {
-      productsCopy = productsCopy.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
+      productsCopy = productsCopy.filter(
+        (item) =>
+          item.name.toLowerCase().includes(search.toLowerCase()) ||
+          item.description.toLowerCase().includes(search.toLowerCase())
       );
     }
 
@@ -124,7 +126,7 @@ const Collection = () => {
               </div>
 
               <div className="flex  justify-end items-center ">
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 place-items-center justify-center gap-y-14 gap-x-4  px-10">
+                <div className="grid  grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center justify-center gap-y-14 gap-x-8 xl:gap-x-20 px-2 items-center place-content-center md:px-10">
                   {filterProducts.map((item) => (
                     <ProductItem
                       key={item._id}

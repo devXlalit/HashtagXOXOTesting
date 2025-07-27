@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import axios from "axios";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Orders = () => {
-  const { backendUrl, token, currency } = useContext(ShopContext);
+  const { backendUrl, token } = useContext(ShopContext);
 
   const [orderData, setorderData] = useState([]);
 
@@ -42,12 +43,12 @@ const Orders = () => {
   }, [token]);
 
   return (
-    <div className="border-t px-10 pt-16">
+    <div className="border-t px-10 pt-16 relative">
       <div className="text-2xl">
         <Title text1={"MY"} text2={"ORDERS"} />
       </div>
 
-      <div>
+      <div className="mt-10">
         {orderData.map((item, index) => (
           <div
             key={index}
@@ -81,6 +82,14 @@ const Orders = () => {
             </div>
           </div>
         ))}
+        <span className="absolute top-0 right-10 rounded-lg bg-green-500 hover:bg-green-600 duration-200 items-center gap-2 mt-4 text-gray-700">
+          <a
+            className="flex items-center gap-2  text-center text-xl p-2 text-white"
+            href="https://wa.me/9644346445"
+          >
+            <FaWhatsapp size={40} /> For any order related enquiry chat with us
+          </a>
+        </span>
       </div>
     </div>
   );

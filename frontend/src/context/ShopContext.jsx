@@ -18,6 +18,7 @@ const ShopContextProvider = (props) => {
   const [token, setToken] = useState("");
   const [bannerImg, setBannerImg] = useState([]);
   const [offerApplied, setIsofferapplied] = useState(false);
+  const [username, setUsername] = useState(localStorage.getItem("username"));
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -468,6 +469,7 @@ const ShopContextProvider = (props) => {
     }
     if (token) {
       getUserCart(token);
+      setUsername(localStorage.getItem("username"));
     }
   }, [token]);
 
@@ -493,6 +495,8 @@ const ShopContextProvider = (props) => {
     couponCode,
     topHeading,
     bannerImg,
+    setUsername,
+    username,
   };
 
   return (

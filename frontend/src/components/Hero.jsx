@@ -4,7 +4,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const Hero = () => {
   const { bannerImg } = useContext(ShopContext);
 
@@ -21,7 +22,7 @@ const Hero = () => {
   return (
     <>
       <div className="z-10">
-        {bannerImg.length > 0 && (
+        {bannerImg.length > 0 ? (
           <Link to="/skinquiz">
             <Slider className="-z-10" {...settings}>
               {bannerImg.map((img) => (
@@ -34,6 +35,16 @@ const Hero = () => {
               ))}
             </Slider>
           </Link>
+        ) : (
+          <Skeleton
+            height={500}
+            width={"100%"}
+            enableAnimation={true}
+            count={1}
+            baseColor="#adb5bd"
+            highlightColor="#f8f9fa"
+            className="opacity-40"
+          />
         )}
       </div>
     </>
