@@ -20,9 +20,9 @@ const Home = () => {
       </div>
       <Feature />
       <Testomonials />
-      <div className="px-10">
+      {/* <div className="px-10">
         <InstagramSection />
-      </div>
+      </div> */}
     </>
   );
 };
