@@ -74,7 +74,24 @@ const PlaceOrder = () => {
   };
 
   const onSubmitHandler = async (event) => {
+    const eventId = crypto.randomUUID();
     event.preventDefault();
+    fbqTrack(
+      "Purchase",
+      {
+        contents: cartData.map((i) => ({
+          id: i.id,
+          quantity: i.quantity,
+          item_price:
+            i.price || products.find((p) => p._id === i._id)?.price || 0,
+        })),
+        content_type: "product",
+        value: getCartAmount(), // required for Purchase
+        currency: "INR",
+        order_id: cartData._id,
+      },
+      { eventID: eventId }
+    );
 
     if (!token && method !== "cod") {
       alert("Please login first!");
