@@ -4,13 +4,13 @@ import {
   allOrders,
   userOrders,
   updateStatus,
+  placeOrderCCAvenue,
+  metaPurchase,
 } from "../controllers/orderController.js";
 import adminAuth from "../middleware/adminAuth.js";
 import authUser from "../middleware/auth.js";
-import {
-  placeOrderCCAvenue,
-  handleCCAvenueResponse,
-} from "../controllers/orderController.js";
+import { handleCCAvenueResponse } from "../controllers/orderController.js";
+
 const orderRouter = express.Router();
 
 // Admin Features
@@ -19,6 +19,7 @@ orderRouter.post("/status", adminAuth, updateStatus);
 // Payment Features
 // orderRouter.post("/place", authUser, placeOrder);
 orderRouter.post("/place", placeOrder);
+orderRouter.post("/meta/purchase", metaPurchase);
 
 // orderRouter.post("/stripe", authUser, placeOrderStripe);
 orderRouter.post("/ccavenue", authUser, placeOrderCCAvenue);

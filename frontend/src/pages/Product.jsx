@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
-
+import { fbqTrack } from "../../utils/MetaPixel"; // Importing the fbqTrack function
 const Product = () => {
   const { productId } = useParams();
   const { products, currency, addToCart } = useContext(ShopContext);
@@ -25,6 +25,28 @@ const Product = () => {
     fetchProductData();
   }, [productId, products]);
 
+  useEffect(() => {
+    fbqTrack("ViewContent", {
+      content_ids: [productData._id],
+      content_name: productData.name,
+      content_type: "product",
+      value: productData.price,
+      currency: "INR",
+    });
+  }, [productData]);
+
+  const handleAddToCart = () => {
+    addToCart(productData._id, size);
+    fbqTrack("AddToCart", {
+      content_ids: [productData._id],
+      contents: [
+        { id: productData._id, quantity: size, item_price: productData.price },
+      ],
+      content_type: "product",
+      value: productData.price * size,
+      currency: "INR",
+    });
+  };
   return productData ? (
     <div className="px-5 pt-5 text-[#343a40] transition-opacity ease-in duration-500 opacity-100">
       {/*----------- Product Data-------------- */}
@@ -63,7 +85,7 @@ const Product = () => {
           <span className="opacity-60 text-sm">Inclusive of all taxes</span>
           <div>
             <button
-              onClick={() => addToCart(productData._id, size)}
+              onClick={handleAddToCart}
               className="bg-[#ff8787] mt-5 text-white px-8 py-3 text-sm active:bg-gray-700"
             >
               ADD TO CART

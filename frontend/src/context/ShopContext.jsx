@@ -23,6 +23,7 @@ const ShopContextProvider = (props) => {
 
   const addToCart = async (itemId, size) => {
     let cartData = structuredClone(cartItems);
+
     if (cartData[itemId]) {
       if (cartData[itemId][size]) {
         cartData[itemId][size] += 1;
@@ -34,7 +35,9 @@ const ShopContextProvider = (props) => {
       cartData[itemId][size] = 1;
     }
     setCartItems(cartData);
+
     alert("Product added to cart!!");
+
     if (token) {
       try {
         await axios.post(

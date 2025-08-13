@@ -20,8 +20,19 @@ import Topbar from "./components/topbar";
 import SkinQuiz from "./pages/SkinQuiz";
 import Underconstruction from "./pages/Underconstruction";
 import TermsNConditions from "./pages/TermsNConditions";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+export function usePageView() {
+  const location = useLocation();
+  useEffect(() => {
+    // fire a PageView on every route change
+    window.fbq && window.fbq("track", "PageView");
+  }, [location.pathname, location.search]);
+}
 const App = () => {
   const [testing, settesting] = React.useState(false);
+  usePageView();
   return (
     <>
       {testing ? (

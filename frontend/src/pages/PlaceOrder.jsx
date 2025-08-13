@@ -5,7 +5,7 @@ import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { fbqTrack } from "../../utils/MetaPixel";
 import ccavenueLogo from "../assets/ccavenue.webp";
 
 const PlaceOrder = () => {
@@ -52,6 +52,19 @@ const PlaceOrder = () => {
       }
       setCartData(tempData);
     }
+
+    fbqTrack("InitiateCheckout", {
+      num_items: cartData.length,
+      contents: cartData.map((i) => ({
+        id: i._id,
+        quantity: i.quantity,
+        item_price:
+          i.price || products.find((p) => p._id === i._id)?.price || 0,
+      })),
+      value: getCartAmount(),
+      currency: "INR",
+      content_type: "product",
+    });
   }, [cartItems, products]);
 
   const onChangeHandler = (event) => {
@@ -101,6 +114,28 @@ const PlaceOrder = () => {
           );
 
           if (response.data.success) {
+            // --- Call Meta Pixel Purchase API ---
+            try {
+              await axios.post(backendUrl + "/api/order/meta/purchase", {
+                eventId: "purchase_" + Date.now(),
+                orderId: response.data.orderId || "", // If you return orderId from backend
+                total: orderData.amount,
+                currency: "INR",
+                items: orderItems.map((item) => ({
+                  id: item._id,
+                  quantity: item.quantity,
+                  item_price: item.price,
+                })),
+                email: formData.email,
+                phone: formData.phone,
+                eventSourceUrl: window.location.href,
+              });
+            } catch (err) {
+              // Optionally log or ignore pixel errors
+              console.log("Meta Pixel Purchase error", err);
+            }
+            // --- End Meta Pixel Call ---
+
             setCartItems({});
 
             if (response.data.isGuest) {
