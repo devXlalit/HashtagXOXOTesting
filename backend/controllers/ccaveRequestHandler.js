@@ -5,7 +5,7 @@ import fs from "fs";
 import ccav from "../utils/ccavutils.js";
 import querystring from "querystring";
 
-const workingKey = "7564A357383E4915118F033363E5C526"; // Put in the 32-Bit key shared by CCAvenues.
+const workingKey = "9E0758C80814F8AAEF07D9E334432B08"; // Put in the 32-Bit key shared by CCAvenues.
 const accessCode = "AVMW25LJ61AW94WMWA"; // Put in the Access Code shared by CCAvenues.
 
 export const postReq = (request, response) => {
