@@ -52,6 +52,8 @@ const CartTotal = () => {
             placeholder="Enter coupon code"
           />
           <button
+            type="button" // Prevents form submission
+            disabled={!couponInput.trim()}
             onClick={handleApplyCoupon}
             className="text-white ml-1 bg-[#ff8787] text-sm px-5 rounded-lg py-2 font-medium"
           >

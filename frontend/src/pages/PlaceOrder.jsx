@@ -93,10 +93,10 @@ const PlaceOrder = () => {
       { eventID: eventId }
     );
 
-    if (!token && method !== "cod") {
-      alert("Please login first!");
-      return;
-    }
+    // if (!token && method !== "cod") {
+    //   alert("Please login first!");
+    //   return;
+    // }
 
     try {
       let orderItems = [];
