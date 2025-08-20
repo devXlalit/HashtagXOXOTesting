@@ -22,6 +22,7 @@ const PlaceOrder = () => {
     getCartAmount,
     products,
     updateQuantity,
+    getTotalAmount,
   } = useContext(ShopContext);
 
   const [formData, setFormData] = useState({
@@ -61,7 +62,7 @@ const PlaceOrder = () => {
         item_price:
           i.price || products.find((p) => p._id === i._id)?.price || 0,
       })),
-      value: getCartAmount(),
+      value: getTotalAmount(),
       currency: "INR",
       content_type: "product",
     });
@@ -86,7 +87,7 @@ const PlaceOrder = () => {
             i.price || products.find((p) => p._id === i._id)?.price || 0,
         })),
         content_type: "product",
-        value: getCartAmount(), // required for Purchase
+        value: getTotalAmount(), // required for Purchase
         currency: "INR",
         order_id: cartData._id,
       },
@@ -118,7 +119,7 @@ const PlaceOrder = () => {
       let orderData = {
         address: formData,
         items: orderItems,
-        amount: getCartAmount(),
+        amount: getTotalAmount(),
         // userId: token,
       };
 
@@ -136,7 +137,7 @@ const PlaceOrder = () => {
               await axios.post(backendUrl + "/api/order/meta/purchase", {
                 eventId: "purchase_" + Date.now(),
                 orderId: response.data.orderId || "", // If you return orderId from backend
-                total: orderData.amount,
+                total: getTotalAmount(),
                 currency: "INR",
                 items: orderItems.map((item) => ({
                   id: item._id,

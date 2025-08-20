@@ -19,6 +19,8 @@ const ShopContextProvider = (props) => {
   const [bannerImg, setBannerImg] = useState([]);
   const [offerApplied, setIsofferapplied] = useState(false);
   const [username, setUsername] = useState(localStorage.getItem("username"));
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [appliedDiscount, setAppliedDiscount] = useState(0);
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -476,6 +478,38 @@ const ShopContextProvider = (props) => {
     }
   }, [token]);
 
+  const applyCoupon = (code) => {
+    if (offerApplied) {
+      toast.error("Only one offer can be applied at a time!");
+      return false;
+    }
+    const foundCoupon = couponCode.find(
+      (coupon) => coupon.code.toLowerCase() === code.toLowerCase()
+    );
+    if (foundCoupon) {
+      setAppliedCoupon(foundCoupon.code);
+      setAppliedDiscount(foundCoupon.discount);
+      toast.success("Coupon applied!");
+      return true;
+    } else {
+      setAppliedCoupon(null);
+      setAppliedDiscount(0);
+      toast.error("Invalid coupon code");
+      return false;
+    }
+  };
+
+  const getDiscountAmount = () => {
+    const subtotal = getCartAmount();
+    return (subtotal * appliedDiscount) / 100;
+  };
+
+  const getTotalAmount = () => {
+    const subtotal = getCartAmount();
+    const discount = getDiscountAmount();
+    return subtotal - discount;
+  };
+
   const value = {
     products,
     currency,
@@ -500,6 +534,11 @@ const ShopContextProvider = (props) => {
     bannerImg,
     setUsername,
     username,
+    appliedCoupon,
+    appliedDiscount,
+    applyCoupon,
+    getDiscountAmount,
+    getTotalAmount,
   };
 
   return (

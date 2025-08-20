@@ -3,29 +3,24 @@ import { ShopContext } from "../context/ShopContext";
 import { IoIosArrowDown } from "react-icons/io";
 
 const CartTotal = () => {
-  const { getCartAmount, cartItems, couponCode, offerApplied } =
-    useContext(ShopContext);
+  const {
+    getCartAmount,
+    getDiscountAmount,
+    getTotalAmount,
+    couponCode,
+    offerApplied,
+    applyCoupon,
+    appliedDiscount,
+  } = useContext(ShopContext);
   const [couponInput, setCouponInput] = useState("");
-  const [appliedDiscount, setAppliedDiscount] = useState(0);
+
   const handleApplyCoupon = () => {
-    if (offerApplied) {
-      alert("Only one offer can be applied at a time!");
-      return;
-    }
-    const foundCoupon = couponCode.find(
-      (coupon) => coupon.code.toLowerCase() === couponInput.toLowerCase()
-    );
-    if (foundCoupon) {
-      setAppliedDiscount(foundCoupon.discount);
-    } else {
-      setAppliedDiscount(0);
-      alert("Invalid coupon code");
-    }
+    applyCoupon(couponInput);
   };
 
   const subtotal = getCartAmount();
-  const discountAmount = (subtotal * appliedDiscount) / 100;
-  const total = subtotal - discountAmount;
+  const discountAmount = getDiscountAmount();
+  const total = getTotalAmount();
 
   return (
     <div className="w-full ">
@@ -52,8 +47,7 @@ const CartTotal = () => {
             placeholder="Enter coupon code"
           />
           <button
-            type="button" // Prevents form submission
-            disabled={!couponInput.trim()}
+            type="button"
             onClick={handleApplyCoupon}
             className="text-white ml-1 bg-[#ff8787] text-sm px-5 rounded-lg py-2 font-medium"
           >
