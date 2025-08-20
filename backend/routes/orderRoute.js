@@ -22,8 +22,8 @@ orderRouter.post("/place", placeOrder);
 orderRouter.post("/meta/purchase", metaPurchase);
 
 // orderRouter.post("/stripe", authUser, placeOrderStripe);
-orderRouter.post("/ccavenue", authUser, placeOrderCCAvenue);
-orderRouter.post("/ccavenue/response", authUser, handleCCAvenueResponse);
+orderRouter.post("/ccavenue", placeOrderCCAvenue);
+orderRouter.post("/ccavenue/response", handleCCAvenueResponse);
 // orderRouter.post("/ccavenue/resonse", authUser, postRes);
 
 // User Feature

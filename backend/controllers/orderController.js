@@ -141,9 +141,16 @@ const placeOrder = async (req, res) => {
 // Place order using CCAvenue
 const placeOrderCCAvenue = async (req, res) => {
   try {
-    const { userId, items, amount, address } = req.body;
+    let { userId, items, amount, address } = req.body;
+    let isGuest = false;
 
-    if (!userId || !items || !amount || !address) {
+    // Guest user logic
+    if (!userId || (typeof userId === "string" && userId.startsWith("guest"))) {
+      isGuest = true;
+      userId = "guest" + Math.floor(Math.random() * 100000);
+    }
+
+    if (!items || !amount || !address) {
       return res
         .status(400)
         .json({ success: false, message: "Missing order details" });
@@ -192,6 +199,7 @@ const placeOrderCCAvenue = async (req, res) => {
       encRequest: encryptedData,
       access_code: process.env.ACCESS_CODE,
       ccavenue_url: process.env.CCAVENUE_URL,
+      isGuest,
     });
   } catch (error) {
     console.error("CCAvenue Order Error:", error);
