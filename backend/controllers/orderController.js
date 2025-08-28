@@ -220,10 +220,18 @@ const handleCCAvenueResponse = async (req, res) => {
     const trackingId = responseData.get("tracking_id");
     const amount = responseData.get("amount");
 
-    // Convert orderId to ObjectId if valid
-    let mongoOrderId = orderId;
-    if (mongoose.Types.ObjectId.isValid(orderId)) {
-      mongoOrderId = new mongoose.Types.ObjectId(orderId);
+    console.log("CCAvenue Response:", {
+      orderStatus,
+      orderId,
+      trackingId,
+      amount,
+      decryptedData,
+    });
+
+    // Check if orderId is valid
+    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+      console.error("Invalid orderId from CCAvenue:", orderId);
+      return res.redirect(`${process.env.CANCEL_URL}?status=invalid_order`);
     }
 
     // Update order in database
@@ -233,14 +241,20 @@ const handleCCAvenueResponse = async (req, res) => {
       tracking_id: trackingId || null,
     };
 
-    await orderModel.findByIdAndUpdate(mongoOrderId, updateData);
+    const updatedOrder = await orderModel.findByIdAndUpdate(
+      orderId,
+      updateData,
+      { new: true }
+    );
+    if (!updatedOrder) {
+      console.error("Order not found for orderId:", orderId);
+      return res.redirect(`${process.env.CANCEL_URL}?status=order_not_found`);
+    }
 
     // Redirect to frontend with status
     const redirectUrl = `${
       process.env.REDIRECT_URL
-    }?status=${orderStatus.toLowerCase()}&order_id=${orderId}${
-      trackingId ? `&tracking_id=${trackingId}` : ""
-    }`;
+    }?status=${orderStatus.toLowerCase()}&order_id=${orderId}`;
     res.redirect(redirectUrl);
   } catch (error) {
     console.error("CCAvenue Response Error:", error);
