@@ -1,4 +1,4 @@
-import React from "react";
+
 import Title from "./Title";
 import TestomonialsCard from "./TestomonialsCard";
 import image1 from "../assets/anita.jpeg";

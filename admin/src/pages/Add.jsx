@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { assets } from "../assets/assets";
 import axios from "axios";
+import { useState } from "react";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { assets } from "../assets/assets";
 const Add = ({ token }) => {
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);

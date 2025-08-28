@@ -26,44 +26,6 @@ const SideBar = () => {
           PRODUCT CATEGORIES
         </h1>
       </span>
-      {/* <ul
-        onMouseLeave={() => {
-          setWhatnew(false);
-        }}
-        className=" leading-8 pl-10 "
-      >
-        {products.map(
-          (item, index) =>
-            item.newproduct && (
-              <Link to={`/product/${item._id}`} key={index}>
-                <li className="">
-                  <span className=" hover:underline hover:opacity-75 duration-200">
-                    {item.name.split(" ").slice(0, 4).join(" ")}
-                  </span>
-                  <span className="text-xs no-underline font-light pl-2  text-[#9A3B3B]">
-                    New
-                  </span>
-                </li>
-              </Link>
-            )
-        )}
-      </ul> */}
-      <ul
-        onMouseLeave={() => {
-          setOffer(false);
-        }}
-        className="pl-10 leading-8 font-bold uppercase"
-      >
-        {uniqueOffers.map((item, index) => (
-          <Link to={`/collection/${item}`} key={index}>
-            <li className="">
-              <span className=" hover:underline hover:opacity-75 duration-200">
-                {item}
-              </span>
-            </li>
-          </Link>
-        ))}
-      </ul>
       <ul
         onMouseLeave={() => {
           setCategory(false);

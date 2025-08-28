@@ -1,5 +1,3 @@
-import React from "react";
-import { assets } from "../assets/assets";
 import logo from "../assets/Hashatag_XOXO_logo_v2-remove-1_2_upscaled.png";
 const Navbar = ({ setToken }) => {
   return (

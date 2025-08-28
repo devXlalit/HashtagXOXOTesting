@@ -220,6 +220,12 @@ const handleCCAvenueResponse = async (req, res) => {
     const trackingId = responseData.get("tracking_id");
     const amount = responseData.get("amount");
 
+    // Convert orderId to ObjectId if valid
+    let mongoOrderId = orderId;
+    if (mongoose.Types.ObjectId.isValid(orderId)) {
+      mongoOrderId = new mongoose.Types.ObjectId(orderId);
+    }
+
     // Update order in database
     const updateData = {
       payment: orderStatus === "Success",
@@ -227,11 +233,11 @@ const handleCCAvenueResponse = async (req, res) => {
       tracking_id: trackingId || null,
     };
 
-    await orderModel.findByIdAndUpdate(orderId, updateData);
+    await orderModel.findByIdAndUpdate(mongoOrderId, updateData);
 
     // Redirect to frontend with status
     const redirectUrl = `${
-      process.env.CANCEL_URL
+      process.env.REDIRECT_URL
     }?status=${orderStatus.toLowerCase()}&order_id=${orderId}${
       trackingId ? `&tracking_id=${trackingId}` : ""
     }`;

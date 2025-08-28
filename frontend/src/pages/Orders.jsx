@@ -85,7 +85,7 @@ const Orders = () => {
         <span className="absolute top-0 right-10 rounded-lg bg-green-500 hover:bg-green-600 duration-200 items-center gap-2 mt-4 text-gray-700">
           <a
             className="flex items-center gap-2  text-center text-xl p-2 text-white"
-            href="https://wa.me/9644346445"
+            href="https://wa.me/+918788563230"
           >
             <FaWhatsapp size={40} /> For any order related enquiry chat with us
           </a>
