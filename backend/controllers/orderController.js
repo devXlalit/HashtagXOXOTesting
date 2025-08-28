@@ -210,7 +210,13 @@ const placeOrderCCAvenue = async (req, res) => {
 // Handle CCAvenue response
 const handleCCAvenueResponse = async (req, res) => {
   try {
+    console.log("CCAvenue response body:", req.body); // Add this line
     const { encResp } = req.body;
+    if (!encResp) {
+      console.error("encResp missing in CCAvenue response!");
+      return res.redirect(`${process.env.CANCEL_URL}?status=missing_encResp`);
+    }
+
     const decryptedData = ccav.decrypt(encResp);
 
     // Parse decrypted data

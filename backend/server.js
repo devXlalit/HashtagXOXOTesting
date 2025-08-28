@@ -13,6 +13,9 @@ import { getImagesFromFolder } from "./controllers/HeroController.js";
 // App Config
 const app = express();
 const port = process.env.PORT || 4000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 connectDB();
 connectCloudinary();
 
@@ -56,8 +59,6 @@ app.options(
   })
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 // api endpoints
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
