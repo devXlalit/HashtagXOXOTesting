@@ -1,4 +1,4 @@
-  // ccavutil.js (ES Module format)
+// ccavutil.js (ES Module format)
 import crypto from "crypto";
 
 const encrypt = (plainText, workingKey) => {
@@ -33,4 +33,4 @@ const decrypt = (encText, workingKey) => {
   return decoded;
 };
 
-export default { encrypt, decrypt };
+export { encrypt, decrypt };
