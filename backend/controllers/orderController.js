@@ -270,12 +270,12 @@ const handleCCAvenueResponse = async (req, res) => {
 
     // Redirect to frontend with status
     const redirectUrl = `${
-      process.env.REDIRECT_URL
+      process.env.FRONTEND_URL_SUCCESS
     }?status=${orderStatus.toLowerCase()}&order_id=${orderId}`;
     res.redirect(redirectUrl);
   } catch (error) {
     console.error("CCAvenue Response Error:", error);
-    res.redirect(`${process.env.CANCEL_URL}?status=error`);
+    res.redirect(`${process.env.FRONTEND_URL_CANCEL}?status=error`);
   }
 };
 

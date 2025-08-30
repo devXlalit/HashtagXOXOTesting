@@ -20,7 +20,11 @@ orderRouter.post("/place", placeOrder);
 orderRouter.post("/meta/purchase", metaPurchase);
 
 orderRouter.post("/ccavenue", placeOrderCCAvenue);
-orderRouter.post("/ccavenue/response", handleCCAvenueResponse);
+orderRouter.post(
+  "/ccavenue/response",
+  express.urlencoded({ extended: true }),
+  handleCCAvenueResponse
+);
 
 orderRouter.post("/userorders", authUser, userOrders);
 
