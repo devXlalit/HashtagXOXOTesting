@@ -13,24 +13,15 @@ import { handleCCAvenueResponse } from "../controllers/orderController.js";
 
 const orderRouter = express.Router();
 
-// Admin Features
 orderRouter.post("/list", adminAuth, allOrders);
 orderRouter.post("/status", adminAuth, updateStatus);
-// Payment Features
-// orderRouter.post("/place", authUser, placeOrder);
+
 orderRouter.post("/place", placeOrder);
 orderRouter.post("/meta/purchase", metaPurchase);
 
-// orderRouter.post("/stripe", authUser, placeOrderStripe);
 orderRouter.post("/ccavenue", placeOrderCCAvenue);
 orderRouter.post("/ccavenue/response", handleCCAvenueResponse);
-// orderRouter.post("/ccavenue/resonse", authUser, postRes);
 
-// User Feature
 orderRouter.post("/userorders", authUser, userOrders);
-
-// verify payment
-// orderRouter.post("/verifyStripe", authUser, verifyStripe);
-// orderRouter.post("/verifyRazorpay", authUser, verifyRazorpay);
 
 export default orderRouter;

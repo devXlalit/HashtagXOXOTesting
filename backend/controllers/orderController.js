@@ -240,22 +240,33 @@ const handleCCAvenueResponse = async (req, res) => {
       return res.redirect(`${process.env.CANCEL_URL}?status=invalid_order`);
     }
 
-    // Update order in database
+    const normalizedStatus = orderStatus?.toLowerCase();
+    const isSuccess =
+      normalizedStatus === "success" ||
+      normalizedStatus === "successful" ||
+      normalizedStatus === "y";
+
     const updateData = {
-      payment: orderStatus === "Success",
-      status: orderStatus === "Success" ? "Paid" : orderStatus,
+      payment: isSuccess,
+      status: isSuccess ? "Paid" : orderStatus,
       tracking_id: trackingId || null,
     };
 
+    // Try updating the order
     const updatedOrder = await orderModel.findByIdAndUpdate(
       orderId,
       updateData,
-      { new: true }
+      {
+        new: true,
+      }
     );
+
     if (!updatedOrder) {
-      console.error("Order not found for orderId:", orderId);
+      console.error("❌ Order not found or not updated:", orderId);
       return res.redirect(`${process.env.CANCEL_URL}?status=order_not_found`);
     }
+
+    console.log("✅ Order updated:", updatedOrder);
 
     // Redirect to frontend with status
     const redirectUrl = `${
