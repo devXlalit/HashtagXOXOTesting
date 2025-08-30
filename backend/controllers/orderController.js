@@ -2,6 +2,7 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import mongoose from "mongoose";
 import nodeCCAvenue from "node-ccavenue";
+import { encrypt, decrypt } from "../utils/ccavutils.js";
 
 import jwt from "jsonwebtoken";
 const ccav = new nodeCCAvenue.Configure({
@@ -192,7 +193,8 @@ const placeOrderCCAvenue = async (req, res) => {
     };
 
     // Encrypt order data
-    const encryptedData = ccav.encrypt(encodeOrderData(orderDetails));
+    const orderPayload = encodeOrderData(orderDetails);
+    const encryptedData = encrypt(orderPayload, process.env.WORKING_KEY);
 
     res.status(200).json({
       success: true,
@@ -217,7 +219,7 @@ const handleCCAvenueResponse = async (req, res) => {
       return res.redirect(`${process.env.CANCEL_URL}?status=missing_encResp`);
     }
 
-    const decryptedData = ccav.decrypt(encResp);
+    const decryptedData = decrypt(encResp, process.env.WORKING_KEY);
 
     // Parse decrypted data
     const responseData = new URLSearchParams(decryptedData);
