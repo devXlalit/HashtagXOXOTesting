@@ -296,9 +296,9 @@ const handleCCAvenueResponse = async (req, res) => {
 
     const decryptedData = decrypt(encResp, process.env.WORKING_KEY);
 
-    const params = {};
+    const responseData = {};
     // Parse decrypted data
-    const responseData = decryptedData.split("&").forEach((pair) => {
+    decryptedData.split("&").forEach((pair) => {
       const [k, v = ""] = pair.split("=");
       params[k] = decodeURIComponent(v.replace(/\+/g, " "));
     });
