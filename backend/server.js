@@ -27,6 +27,8 @@ const allowedOrigins = [
   "https://hashtag-xoxo-admin-testing.vercel.app",
   "https://www.hashtagxoxo.com", // your actual deployed frontend URL
   "https://hashtagxoxo.com", // your actual deployed frontend URL
+  "https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction",
+  "https://secure.ccavenue.com",
   "https://admin.hashtagxoxo.com", // your actual deployed frontend URL
 ];
 // middlewares

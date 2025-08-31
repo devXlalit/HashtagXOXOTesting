@@ -22,11 +22,7 @@ orderRouter.post("/meta/purchase", metaPurchase);
 
 orderRouter.post("/ccavenue", placeOrderCCAvenue);
 
-orderRouter.post(
-  "/ccavenue/response",
-  express.urlencoded({ extended: false }),
-  handleCCAvenueResponse
-);
+orderRouter.post("/ccavenue/response", handleCCAvenueResponse);
 orderRouter.post("/ccavenue/responsejson", ccavResponseHandler);
 orderRouter.post("/userorders", authUser, userOrders);
 
