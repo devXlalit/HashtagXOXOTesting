@@ -297,11 +297,16 @@ const handleCCAvenueResponse = async (req, res) => {
     const decryptedData = decrypt(encResp, process.env.WORKING_KEY);
 
     const responseData = {};
-    // Parse decrypted data
     decryptedData.split("&").forEach((pair) => {
-      const [k, v = ""] = pair.split("=");
-      params[k] = decodeURIComponent(v.replace(/\+/g, " "));
+      if (!pair) return;
+      const [k, ...rest] = pair.split("=");
+      const rawValue = rest.join("="); // in case value contains '='
+      // replace + with space and decode percent-encoding
+      responseData[k] = decodeURIComponent(
+        (rawValue || "").replace(/\+/g, " ")
+      );
     });
+
     const orderStatus = responseData.get("order_status");
     const orderId = responseData.get("order_id");
     const trackingId = responseData.get("tracking_id");
