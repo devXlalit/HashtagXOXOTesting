@@ -294,14 +294,22 @@ const handleCCAvenueResponse = async (req, res) => {
       return res.redirect(`${process.env.CANCEL_URL}?status=missing_encResp`);
     }
 
-    const decryptedData = decrypt(encResp, process.env.WORKING_KEY);
+    let decryptedData;
+    try {
+      decryptedData = decrypt(encResp, process.env.WORKING_KEY);
+    } catch (err) {
+      console.error("Decrypt failed:", err);
+      const url = `${process.env.FRONTEND_URL_CANCEL}?status=decrypt_error`;
+      return res.status(200).send(toFrontendHtml(url));
+    }
+
+    console.log("Decrypted CCAvenue payload:", decryptedData.slice(0, 500));
 
     const responseData = {};
     decryptedData.split("&").forEach((pair) => {
       if (!pair) return;
       const [k, ...rest] = pair.split("=");
-      const rawValue = rest.join("="); // in case value contains '='
-      // replace + with space and decode percent-encoding
+      const rawValue = rest.join("=");
       responseData[k] = decodeURIComponent(
         (rawValue || "").replace(/\+/g, " ")
       );
@@ -326,27 +334,23 @@ const handleCCAvenueResponse = async (req, res) => {
       return res.redirect(`${process.env.CANCEL_URL}?status=invalid_order`);
     }
 
-    const normalizedStatus = orderStatus?.toLowerCase();
-    const isSuccess =
-      normalizedStatus === "success" ||
-      normalizedStatus === "successful" ||
-      normalizedStatus === "y";
+    const isSuccess = ["success", "successful", "y"].includes(orderStatus);
 
+    // Build update payload
     const updateData = {
       payment: isSuccess,
-      status: isSuccess ? "Paid" : orderStatus,
-      tracking_id: trackingId || null,
+      status: isSuccess
+        ? "Paid"
+        : responseData.order_status || responseData.orderStatus || "Failed",
     };
+    if (trackingId) updateData.tracking_id = trackingId; // optional
 
-    // Try updating the order
+    // Update DB
     const updatedOrder = await orderModel.findByIdAndUpdate(
       orderId,
       updateData,
-      {
-        new: true,
-      }
+      { new: true }
     );
-
     if (!updatedOrder) {
       console.error("❌ Order not found or not updated:", orderId);
       return res.redirect(`${process.env.CANCEL_URL}?status=order_not_found`);
