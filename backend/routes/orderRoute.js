@@ -10,6 +10,7 @@ import {
 import adminAuth from "../middleware/adminAuth.js";
 import authUser from "../middleware/auth.js";
 import { handleCCAvenueResponse } from "../controllers/orderController.js";
+import { ccavResponseHandler } from "../controllers/orderController.js";
 
 const orderRouter = express.Router();
 
@@ -20,12 +21,13 @@ orderRouter.post("/place", placeOrder);
 orderRouter.post("/meta/purchase", metaPurchase);
 
 orderRouter.post("/ccavenue", placeOrderCCAvenue);
+
 orderRouter.post(
   "/ccavenue/response",
-  express.urlencoded({ extended: true }),
+  express.urlencoded({ extended: false }),
   handleCCAvenueResponse
 );
-
+orderRouter.post("/ccavenue/responsejson", ccavResponseHandler);
 orderRouter.post("/userorders", authUser, userOrders);
 
 export default orderRouter;
