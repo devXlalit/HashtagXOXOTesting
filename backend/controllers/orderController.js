@@ -259,7 +259,7 @@ const handleCCAvenueResponse = async (req, res) => {
     // Build update payload
     const updateData = {
       payment: isSuccess,
-      status: isSuccess ? "Paid" : orderStatus || "Failed",
+      status: isSuccess ? "Order Placed" : orderStatus || "Failed",
     };
     if (trackingId) updateData.tracking_id = trackingId; // optional
 
