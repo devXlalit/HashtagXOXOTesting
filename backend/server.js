@@ -18,8 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "*",
-    origin: "https://www.hashtagxoxo.com", // <-- Use your frontend domain
+    origin: "*", // <-- Use your frontend domain
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
