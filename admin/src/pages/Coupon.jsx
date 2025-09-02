@@ -14,12 +14,10 @@ const Coupon = ({ token }) => {
       const response = await axios.get(backendUrl + "/api/coupon/list");
       if (response.data.success) {
         setList(response.data.coupon.reverse());
-        // console.log(response.data);
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -39,7 +37,6 @@ const Coupon = ({ token }) => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -69,7 +66,6 @@ const Coupon = ({ token }) => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };

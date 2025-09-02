@@ -10,14 +10,11 @@ const addCoupon = async (req, res) => {
       discount,
     };
 
-    console.log(couponData);
-
     const newCoupon = new couponModel(couponData);
     await newCoupon.save();
 
     res.json({ success: true, message: "Coupon Added" });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -28,7 +25,6 @@ const listCoupon = async (req, res) => {
     const coupon = await couponModel.find({});
     res.json({ success: true, coupon });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -39,7 +35,6 @@ const removeCoupon = async (req, res) => {
     await couponModel.findByIdAndDelete(req.body.id);
     res.json({ success: true, message: "Coupon Removed" });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };

@@ -9,13 +9,10 @@ const Heading = ({ token }) => {
       const response = await axios.get(backendUrl + "/api/heading/list");
       if (response.data.success) {
         setHeading(response.data.heading[0].heading);
-
-        // console.log(response.data);
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -34,7 +31,6 @@ const Heading = ({ token }) => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -63,7 +59,6 @@ const Heading = ({ token }) => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };

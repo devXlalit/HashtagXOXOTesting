@@ -22,7 +22,6 @@ export default function PaymentForm() {
         body: JSON.stringify(formData),
       });
 
-      console.log("Response from server:", res);
       const html = await res.text();
 
       // Replace current page with the form that auto-submits to CCAvenue

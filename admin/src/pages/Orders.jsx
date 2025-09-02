@@ -41,7 +41,6 @@ const Orders = ({ token }) => {
         await fetchAllOrders();
       }
     } catch (error) {
-      console.log(error);
       toast.error(response.data.message);
     }
   };

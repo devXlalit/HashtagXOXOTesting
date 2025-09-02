@@ -16,7 +16,6 @@ const addHeading = async (req, res) => {
 
     res.json({ success: true, message: "Heading updated" });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -27,7 +26,6 @@ const listHeading = async (req, res) => {
     const heading = await topheadingModel.find({});
     res.json({ success: true, heading });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -38,7 +36,6 @@ const removeHeading = async (req, res) => {
     await topheadingModel.findByIdAndDelete(req.body.id);
     res.json({ success: true, message: "Heading Removed" });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };

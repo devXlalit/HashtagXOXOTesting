@@ -200,7 +200,6 @@ const placeOrderCCAvenue = async (req, res) => {
 
     // Encrypt order data
     const encryptedData = ccav.getEncryptedOrder(orderDetails);
-    console.log("Encrypted CCAvenue order data:", encryptedData);
 
     res.status(200).json({
       success: true,
@@ -217,7 +216,7 @@ const placeOrderCCAvenue = async (req, res) => {
 
 const handleCCAvenueResponse = async (req, res) => {
   try {
-    console.log("CCAvenue response body:", req.body); // Add this line
+    // Add this line
     const { encResp } = req.body;
 
     if (!encResp) {
@@ -234,20 +233,11 @@ const handleCCAvenueResponse = async (req, res) => {
       return res.status(200).send(toFrontendHtml(url));
     }
 
-    console.log("Decrypted CCAvenue payload:", decryptedData);
-
     const orderStatus = decryptedData.order_status;
     const orderId = decryptedData.order_id;
     const trackingId = decryptedData.tracking_id;
     const amount = decryptedData.amount;
 
-    console.log("CCAvenue Response:", {
-      orderStatus,
-      orderId,
-      trackingId,
-      amount,
-      decryptedData,
-    });
     // Check if orderId is valid
     if (!mongoose.Types.ObjectId.isValid(orderId)) {
       console.error("Invalid orderId from CCAvenue:", orderId);
@@ -274,8 +264,6 @@ const handleCCAvenueResponse = async (req, res) => {
       return res.redirect(`${process.env.CANCEL_URL}?status=order_not_found`);
     }
 
-    console.log("✅ Order updated:", updatedOrder);
-
     // Redirect to frontend with status
     const redirectUrl = `${process.env.FRONTEND_URL_SUCCESS}?status=${orderStatus}&order_id=${orderId}`;
     res.send(`<!doctype html>
@@ -295,7 +283,6 @@ const allOrders = async (req, res) => {
     const orders = await orderModel.find({});
     res.json({ success: true, orders });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -307,7 +294,6 @@ const userOrders = async (req, res) => {
     const orders = await orderModel.find({ userId });
     res.json({ success: true, orders });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -319,7 +305,6 @@ const updateStatus = async (req, res) => {
     await orderModel.findByIdAndUpdate(orderId, { status });
     res.json({ success: true, message: "Status Updated" });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };

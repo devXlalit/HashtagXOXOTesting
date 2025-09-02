@@ -46,7 +46,6 @@ const Navbar = () => {
   // Step 2: Get only unique offers
   const uniqueOffers = [...new Set(allOffers)];
 
-  // console.log();
   const logout = () => {
     navigate("/login");
     localStorage.removeItem("token");
@@ -61,7 +60,6 @@ const Navbar = () => {
     setCategory(false);
   }, [location]);
 
-  console.log(username);
   return (
     <div
       id="bag"
