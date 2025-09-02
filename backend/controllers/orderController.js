@@ -294,7 +294,7 @@ const handleCCAvenueResponse = async (req, res) => {
   try {
     console.log("CCAvenue response body:", req.body); // Add this line
     const { encResp } = req.body;
-    console.log("encResponse", encResp);
+
     if (!encResp) {
       console.error("encResp missing in CCAvenue response!");
       return res.redirect(`${process.env.CANCEL_URL}?status=missing_encResp`);
@@ -321,10 +321,10 @@ const handleCCAvenueResponse = async (req, res) => {
     //   );
     // });
 
-    const orderStatus = responseData.get("order_status");
-    const orderId = responseData.get("order_id");
-    const trackingId = responseData.get("tracking_id");
-    const amount = responseData.get("amount");
+    const orderStatus = decryptedData.order_status;
+    const orderId = decryptedData.order_id;
+    const trackingId = decryptedData.tracking_id;
+    const amount = decryptedData.amount;
 
     console.log("CCAvenue Response:", {
       orderStatus,
@@ -333,7 +333,6 @@ const handleCCAvenueResponse = async (req, res) => {
       amount,
       decryptedData,
     });
-
     // Check if orderId is valid
     if (!mongoose.Types.ObjectId.isValid(orderId)) {
       console.error("Invalid orderId from CCAvenue:", orderId);
@@ -345,9 +344,7 @@ const handleCCAvenueResponse = async (req, res) => {
     // Build update payload
     const updateData = {
       payment: isSuccess,
-      status: isSuccess
-        ? "Paid"
-        : responseData.order_status || responseData.orderStatus || "Failed",
+      status: isSuccess ? "Paid" : orderStatus || "Failed",
     };
     if (trackingId) updateData.tracking_id = trackingId; // optional
 
@@ -365,9 +362,7 @@ const handleCCAvenueResponse = async (req, res) => {
     console.log("✅ Order updated:", updatedOrder);
 
     // Redirect to frontend with status
-    const redirectUrl = `${
-      process.env.FRONTEND_URL_SUCCESS
-    }?status=${orderStatus.toLowerCase()}&order_id=${orderId}`;
+    const redirectUrl = `${process.env.FRONTEND_URL_SUCCESS}?status=${orderStatus}&order_id=${orderId}`;
     res.send(`<!doctype html>
      <html><head><meta charset="utf-8"></head>
      <body><script>
