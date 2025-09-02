@@ -215,85 +215,6 @@ const placeOrderCCAvenue = async (req, res) => {
   }
 };
 
-// const ccavResponseHandler = async (req, res) => {
-//   try {
-//     const workingKey = process.env.WORKING_KEY; // Your CCAvenue Working Key
-
-//     // CCAvenue posts encrypted response inside "encResp"
-//     const encryptedResponse = req.body.encResp;
-
-//     if (!encryptedResponse) {
-//       return res.status(400).send("Invalid response from CCAvenue");
-//     }
-
-//     // Decrypt response
-//     const decryptedResponse = decrypt(encryptedResponse, workingKey);
-
-//     // Convert decrypted string into key-value pairs
-//     const responseParams = {};
-//     decryptedResponse.split("&").forEach((pair) => {
-//       const [key, value] = pair.split("=");
-//       responseParams[key] = value;
-//     });
-
-//     // Example: Extract order_id, tracking_id, order_status, etc.
-//     const orderId = responseParams["order_id"];
-//     const trackingId = responseParams["tracking_id"];
-//     const orderStatus = responseParams["order_status"];
-
-//     if (!mongoose.Types.ObjectId.isValid(orderId)) {
-//       console.error("Invalid orderId from CCAvenue:", orderId);
-//       return res.redirect(`${process.env.CANCEL_URL}?status=invalid_order`);
-//     }
-
-//     const normalizedStatus = orderStatus?.toLowerCase();
-//     const isSuccess =
-//       normalizedStatus === "success" ||
-//       normalizedStatus === "successful" ||
-//       normalizedStatus === "y";
-
-//     const updateData = {
-//       payment: isSuccess,
-//       status: isSuccess ? "Paid" : orderStatus,
-//       tracking_id: trackingId || null,
-//     };
-
-//     // Try updating the order
-//     const updatedOrder = await orderModel.findByIdAndUpdate(
-//       orderId,
-//       updateData,
-//       {
-//         new: true,
-//       }
-//     );
-//     if (!updatedOrder) {
-//       console.error("❌ Order not found or not updated:", orderId);
-//       return res.redirect(`${process.env.CANCEL_URL}?status=order_not_found`);
-//     }
-
-//     console.log("✅ Order updated:", updatedOrder);
-//     if (orderStatus === "Success") {
-//       return res.send(
-//         `<h3>Payment Successful</h3><p>Order ID: ${orderId}</p><p>Tracking ID: ${trackingId}</p>`
-//       );
-//     } else if (orderStatus === "Failure") {
-//       return res.send(
-//         `<h3>Payment Failed</h3><p>Order ID: ${orderId}</p><p>Tracking ID: ${trackingId}</p>`
-//       );
-//     } else if (orderStatus === "Aborted") {
-//       return res.send(
-//         `<h3>Payment Aborted</h3><p>Order ID: ${orderId}</p><p>Tracking ID: ${trackingId}</p>`
-//       );
-//     } else {
-//       return res.send(`<h3>Security Error. Illegal access detected</h3>`);
-//     }
-//   } catch (err) {
-//     console.error("CCAvenue Response Handler Error:", err);
-//     return res.status(500).send("Internal Server Error");
-//   }
-// };
-
-// Handle CCAvenue response
 const handleCCAvenueResponse = async (req, res) => {
   try {
     console.log("CCAvenue response body:", req.body); // Add this line
@@ -314,16 +235,6 @@ const handleCCAvenueResponse = async (req, res) => {
     }
 
     console.log("Decrypted CCAvenue payload:", decryptedData);
-
-    // const responseData = {};
-    // decryptedData.split("&").forEach((pair) => {
-    //   if (!pair) return;
-    //   const [k, ...rest] = pair.split("=");
-    //   const rawValue = rest.join("=");
-    //   responseData[k] = decodeURIComponent(
-    //     (rawValue || "").replace(/\+/g, " ")
-    //   );
-    // });
 
     const orderStatus = decryptedData.order_status;
     const orderId = decryptedData.order_id;

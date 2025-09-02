@@ -3,6 +3,7 @@ import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import axios from "axios";
 import { FaWhatsapp } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 
 const Orders = () => {
   const { backendUrl, token } = useContext(ShopContext);
@@ -11,10 +12,6 @@ const Orders = () => {
 
   const loadOrderData = async () => {
     try {
-      if (!token) {
-        return null;
-      }
-
       const response = await axios.post(
         backendUrl + "/api/order/userorders",
         {},
@@ -43,54 +40,67 @@ const Orders = () => {
   }, [token]);
 
   return (
-    <div className="border-t px-10 pt-16 relative">
-      <div className="text-2xl">
-        <Title text1={"MY"} text2={"ORDERS"} />
-      </div>
-
-      <div className="mt-10">
-        {orderData.map((item, index) => (
-          <div
-            key={index}
-            className="py-4 border-t justify-between border-b text-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
-          >
-            <div className="flex items-start gap-6 text-sm">
-              <img className="w-16 sm:w-20" src={item.image[0]} alt="" />
-              <div>
-                <p className="sm:text-base font-medium">{item.name}</p>
-                <div className="flex items-center gap-3 mt-1 text-base text-gray-700">
-                  <p>₹{item.price}</p>
-                  <p>Quantity: {item.quantity}</p>
-                </div>
-                <p className="mt-1">
-                  Date:{" "}
-                  <span className=" text-gray-400">
-                    {new Date(item.date).toDateString()}
-                  </span>
-                </p>
-                <p className="mt-1">
-                  Payment:{" "}
-                  <span className=" text-gray-400">{item.paymentMethod}</span>
-                </p>
-              </div>
-            </div>
-            <div className="pr-10 flex justify-between">
-              <div className="flex items-center gap-2">
-                <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
-                <p className="text-sm md:text-base">{item.status}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-        <span className="absolute top-0 right-10 rounded-lg bg-green-500 hover:bg-green-600 duration-200 items-center gap-2 mt-4 text-gray-700">
-          <a
-            className="flex items-center gap-2  text-center text-xl p-2 text-white"
-            href="https://wa.me/+918788563230"
-          >
-            <FaWhatsapp size={40} /> For any order related enquiry chat with us
-          </a>
+    <div className="relative h-screen">
+      {!token ? (
+        <span className="py-64 text-xl md:text-4xl flex-col leading-tight text-center flex  items-center justify-center gap-4">
+          <FaCheckCircle className="text-4xl md:text-6xl" color="#37b24d" />
+          <p className="">
+            Order placed successfully. <br /> Please check your mail.
+          </p>
         </span>
-      </div>
+      ) : (
+        <div className="border-t px-10 pt-16 relative">
+          <div className="text-2xl">
+            <Title title={"Your Orders"} />
+          </div>
+
+          <div className="mt-10">
+            {orderData.map((item, index) => (
+              <div
+                key={index}
+                className="py-4 border-t justify-between border-b text-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+              >
+                <div className="flex items-start gap-6 text-sm">
+                  <img className="w-16 sm:w-20" src={item.image[0]} alt="" />
+                  <div>
+                    <p className="sm:text-base font-medium">{item.name}</p>
+                    <div className="flex items-center gap-3 mt-1 text-base text-gray-700">
+                      <p>₹{item.price}</p>
+                      <p>Quantity: {item.quantity}</p>
+                    </div>
+                    <p className="mt-1">
+                      Date:{" "}
+                      <span className=" text-gray-400">
+                        {new Date(item.date).toDateString()}
+                      </span>
+                    </p>
+                    <p className="mt-1">
+                      Payment:{" "}
+                      <span className=" text-gray-400">
+                        {item.paymentMethod}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div className="pr-10 flex justify-between">
+                  <div className="flex items-center gap-2">
+                    <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
+                    <p className="text-sm md:text-base">{item.status}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      <span className="absolute top-0 right-10 rounded-lg bg-green-500 hover:bg-green-600 duration-200 items-center gap-2 mt-4 text-gray-700">
+        <a
+          className="flex items-center gap-2  text-center text-xl p-2 text-white"
+          href="https://wa.me/+918788563230"
+        >
+          <FaWhatsapp size={40} /> For any order related enquiry chat with us
+        </a>
+      </span>
     </div>
   );
 };
