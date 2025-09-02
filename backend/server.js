@@ -16,52 +16,10 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 connectDB();
 connectCloudinary();
 
-const allowedOrigins = [
-  "http://localhost:5173", // for local dev
-  "http://localhost:5174", // for local dev
-  "http://192.168.1.8:5173",
-  "https://hashtag-xoxo-testing.vercel.app", // your actual deployed frontend URL
-  "https://hashtag-xoxo-admin-testing.vercel.app",
-  "https://www.hashtagxoxo.com", // your actual deployed frontend URL
-  "https://hashtagxoxo.com", // your actual deployed frontend URL
-  "https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction",
-  "https://secure.ccavenue.com",
-  "https://admin.hashtagxoxo.com", // your actual deployed frontend URL
-];
-// middlewares
-// CORS setup
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        return callback(new Error("Blocked by CORS"), false);
-      }
-      return callback(null, true);
-    },
-    credentials: true,
-  })
-);
-
-// Handle preflight with the SAME CORS config
-app.options(
-  "*",
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        return callback(new Error("Blocked by CORS"), false);
-      }
-      return callback(null, true);
-    },
-    credentials: true,
-  })
-);
-
-// api endpoints
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
