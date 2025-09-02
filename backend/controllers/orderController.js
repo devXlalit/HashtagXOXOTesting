@@ -144,12 +144,17 @@ const placeOrder = async (req, res) => {
 const placeOrderCCAvenue = async (req, res) => {
   try {
     let { userId, items, amount, address } = req.body;
+    const token = req.headers.token;
     let isGuest = false;
 
-    // Guest user logic
-    if (!userId || (typeof userId === "string" && userId.startsWith("guest"))) {
+    // Authenticated user logic (same as COD)
+    if (!token || token.startsWith("guest")) {
       isGuest = true;
       userId = "guest" + Math.floor(Math.random() * 100000);
+    } else {
+      // Decode the token to extract real user ID
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      userId = decoded.id || decoded._id;
     }
 
     if (!items || !amount || !address) {
@@ -194,7 +199,6 @@ const placeOrderCCAvenue = async (req, res) => {
     };
 
     // Encrypt order data
-    // const orderPayload = encodeOrderData(orderDetails);
     const encryptedData = ccav.getEncryptedOrder(orderDetails);
     console.log("Encrypted CCAvenue order data:", encryptedData);
 
