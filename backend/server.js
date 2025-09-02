@@ -20,9 +20,7 @@ app.use(
   cors({
     origin: "*",
     origin: "https://www.hashtagxoxo.com", // <-- Use your frontend domain
-    credentials: true, // <-- Allow credentials
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 connectDB();
