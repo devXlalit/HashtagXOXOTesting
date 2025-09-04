@@ -1,6 +1,7 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import mongoose from "mongoose";
+import crypto from "crypto";
 import nodeCCAvenue from "node-ccavenue";
 // import { encrypt, decrypt } from "../utils/ccavutils.js";
 import querystring from "querystring";
@@ -162,6 +163,16 @@ const placeOrderCCAvenue = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Missing order details" });
     }
+    let existingPending = await orderModel.findOne({
+      userId,
+      paymentMethod: "CCAvenue",
+      payment: false,
+      amount,
+    });
+    if (existingPending) {
+      // Reuse this one instead of creating new
+      return res.json({ success: true, orderId: existingPending._id });
+    }
 
     const orderData = {
       userId,
@@ -177,6 +188,13 @@ const placeOrderCCAvenue = async (req, res) => {
     await newOrder.save();
 
     const orderId = newOrder._id.toString();
+    // For registered users, clear cart and attach orderId
+    if (!isGuest && userId && mongoose.Types.ObjectId.isValid(userId)) {
+      await userModel.findByIdAndUpdate(userId, {
+        $set: { cartData: {} },
+        $push: { orders: newOrder._id },
+      });
+    }
 
     // Prepare order details for CCAvenue
     const orderDetails = {
