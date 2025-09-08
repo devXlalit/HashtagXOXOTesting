@@ -5,6 +5,31 @@ import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { assets } from "../assets/assets";
+export const availableOffers = [
+  "Buy 1 at 299",
+  "Buy 2 at 499",
+  "Buy 3 at 799",
+  "Buy 2 Get 1",
+  "Buy 1 Get 1",
+];
+
+export const categories = [
+  "Serum",
+  "Facewash",
+  "Face pack",
+  "Scrub",
+  "Sunscreen",
+  "Moisturizer",
+  "Hair Oil",
+  "shampoo",
+  "soaps",
+  "fragrances",
+  "Toner",
+  "Lip Balm",
+  "Body Mist",
+  "Undereye Cream",
+  "Wipes",
+];
 const Add = ({ token }) => {
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
@@ -19,14 +44,6 @@ const Add = ({ token }) => {
   const [offers, setOffers] = useState([]);
   const [bestseller, setBestseller] = useState(false);
   const [newproduct, setNewProduct] = useState(false);
-
-  const availableOffers = [
-    "Buy 1 at 299",
-    "Buy 2 at 499",
-    "Buy 3 at 799",
-    "Buy 2 Get 1",
-    "Buy 1 Get 1",
-  ];
 
   const handleOfferChange = (offer) => {
     setOffers((prev) =>
@@ -186,21 +203,11 @@ const Add = ({ token }) => {
             className="w-full px-3 py-2"
           >
             <option value="">Select Category</option>
-            <option value="Serum">Serum</option>
-            <option value="Facewash">Facewash</option>
-            <option value="Face pack">Face pack</option>
-            <option value="Scrub">Scrub</option>
-            <option value="Sunscreen">Sunscreen</option>
-            <option value="Moisturizer">Moisturizer</option>
-            <option value="Hair Oil">Hair Oil</option>
-            <option value="shampoo">shampoo</option>
-            <option value="soaps">soaps</option>
-            <option value="fragrances">fragrances</option>
-            <option value="toner">Toner</option>
-            <option value="lip balm">Lip Balm</option>
-            <option value="body mist">Body Mist</option>
-            <option value="undereye cream">Undereye Cream</option>
-            <option value="wipes">Wipes</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
           </select>
         </div>
 

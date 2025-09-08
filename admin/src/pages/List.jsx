@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { assets } from "../assets/assets";
+import { availableOffers, categories } from "./Add";
 const List = ({ token }) => {
   const [edit, setEdit] = useState(false);
   const [list, setList] = useState([]);
@@ -22,14 +23,6 @@ const List = ({ token }) => {
   const [bestseller, setBestseller] = useState(false);
   const [newproduct, setNewProduct] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const availableOffers = [
-    "Buy 1 at 299",
-    "Buy 2 at 299",
-    "Buy 3 at 399",
-    "Buy 5 at 599",
-    "Buy 2 Get 1",
-    "Buy 1 Get 1",
-  ];
 
   const fetchList = async () => {
     try {
@@ -288,21 +281,11 @@ const List = ({ token }) => {
                   className="w-full px-3 py-2"
                 >
                   <option value="">Select Category</option>
-                  <option value="Serum">Serum</option>
-                  <option value="Facewash">Facewash</option>
-                  <option value="Face pack">Face pack</option>
-                  <option value="Scrub">Scrub</option>
-                  <option value="Sunscreen">Sunscreen</option>
-                  <option value="Moisturizer">Moisturizer</option>
-                  <option value="Hair Oil">Hair Oil</option>
-                  <option value="shampoo">shampoo</option>
-                  <option value="soaps">soaps</option>
-                  <option value="fragrances">fragrances</option>
-                  <option value="toner">Toner</option>
-                  <option value="lip balm">Lip Balm</option>
-                  <option value="body mist">Body Mist</option>
-                  <option value="undereye cream">Undereye Cream</option>
-                  <option value="wipes">Wipes</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
                 </select>
               </div>
 
