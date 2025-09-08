@@ -1,4 +1,3 @@
-
 import Title from "./Title";
 import TestomonialsCard from "./TestomonialsCard";
 import image1 from "../assets/anita.jpeg";
@@ -18,7 +17,8 @@ const TestomonialsContent = [
     desc: "#XOXO के प्रोडक्ट्स कमाल के हैं! मैंने जितने भी इस्तेमाल किए, मेरी स्किन पहले से कहीं ज्यादा अच्छी लगने लगी है। बस लगाओ और फील करो, जैसे खुद से प्यार कर रहे हो! सच में, ये सबको ट्राई करना चाहिए!",
   },
   {
-    image: image1,
+    image:
+      "https://imgs.search.brave.com/TTWjkCnrJRF1di-RfGC9khqVzZWZd4beDFojTfD9KPk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cGl4YWJheS5jb20v/cGhvdG8vMjAyMy8w/Mi8xOC8xMS8wMC9p/Y29uLTc3OTc3MDRf/NjQwLnBuZw",
     name: "Pratik Porwal",
     desc: "I’m totally obsessed with #XOXO! Their products have completely changed my skin game. It feels soft, looks radiant, Every time I apply them, it feels like a mini spa moment.",
   },
