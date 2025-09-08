@@ -22,9 +22,8 @@ const Add = ({ token }) => {
 
   const availableOffers = [
     "Buy 1 at 299",
-    "Buy 2 at 299",
-    "Buy 3 at 399",
-    "Buy 5 at 599",
+    "Buy 2 at 499",
+    "Buy 3 at 799",
     "Buy 2 Get 1",
     "Buy 1 Get 1",
   ];
