@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
 import { fbqTrack } from "../../utils/MetaPixel"; // Importing the fbqTrack function
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency, addToCart } = useContext(ShopContext);
+  const { products, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
@@ -83,10 +83,19 @@ const Product = () => {
             Rs.{productData.price}{" "}
           </p>
           <span className="opacity-60 text-sm">Inclusive of all taxes</span>
-          <div>
+
+          <div className="flex my-4  justify-start gap-2 ">
+            <Link to="/place-order">
+              <button
+                onClick={handleAddToCart}
+                className="bg-[#ff8787] text-white px-8 py-3 text-sm active:bg-gray-700"
+              >
+                BUY NOW
+              </button>
+            </Link>
             <button
               onClick={handleAddToCart}
-              className="bg-[#ff8787] mt-5 text-white px-8 py-3 text-sm active:bg-gray-700"
+              className="bg-[#ff8787] text-white px-8 py-3 text-sm active:bg-gray-700"
             >
               ADD TO CART
             </button>

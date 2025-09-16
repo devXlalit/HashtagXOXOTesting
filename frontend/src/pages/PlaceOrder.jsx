@@ -384,18 +384,20 @@ const PlaceOrder = () => {
             <div className="flex gap-3 flex-col lg:flex-row">
               <div
                 onClick={() => setMethod("ccavenue")}
-                className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
+                className="flex bg-white shadow-sm ring-1 ring-zinc-200 items-center gap-3 border p-2 px-3 cursor-pointer"
               >
                 <p
                   className={`min-w-3.5 h-3.5 border rounded-full ${
                     method === "ccavenue" ? "bg-green-400" : ""
                   }`}
                 ></p>
-                <img className="h-4 mx-4" src={ccavenueLogo} alt="" />
+                <p className="font-medium text-gray-500 text-sm">
+                  ONLINE PAYMENT
+                </p>
               </div>
               <div
                 onClick={() => setMethod("cod")}
-                className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
+                className="flex items-center  bg-white shadow-sm ring-1 ring-zinc-200 gap-3 border p-2 px-3 cursor-pointer"
               >
                 <p
                   className={`min-w-3.5 h-3.5 border rounded-full ${
